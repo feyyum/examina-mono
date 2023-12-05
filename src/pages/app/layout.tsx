@@ -92,6 +92,26 @@ function Layout({ children }: Props) {
     })();
   }, []);
 
+  // Wait for account to exist, if it didn't
+  useEffect(() => {
+    (async () => {
+      if (state.hasBeenSetup && !state.accountExists) {
+        for (;;) {
+          console.log("Checking if fee payer account exists...");
+          const res = await state.zkappWorkerClient!.fetchAccount({
+            publicKey: state.publicKey!,
+          });
+          const accountExists = res.error == null;
+          if (accountExists) {
+            break;
+          }
+          await new Promise((resolve) => setTimeout(resolve, 5000));
+        }
+        dispatch(setClient({ ...state, accountExists: true }));
+      }
+    })();
+  }, [state.hasBeenSetup]);
+
   return (
     <div>
       <main>{children}</main>
