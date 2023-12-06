@@ -1,4 +1,5 @@
 import React from "react";
+import Loader from "@/components/Loader";
 
 // Custom hooks
 import { useContractStatus } from "../../../hooks/useContractStatus";
@@ -8,8 +9,11 @@ type Props = {
 };
 
 function Layout({ children }: Props) {
-  const status = useContractStatus();
-  console.log("STATUS", status);
+  const contract = useContractStatus();
+
+  if (contract.status !== "done" || contract.error) {
+    return <Loader {...contract} />;
+  }
 
   return (
     <div>

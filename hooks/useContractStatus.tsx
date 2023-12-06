@@ -8,7 +8,7 @@ import { PublicKey } from "o1js";
 // Redux imports
 import { setClient } from "../features/client/client";
 
-interface ContractStatus {
+export interface ContractStatus {
   status: "worker" | "account" | "compile" | "done";
   error?: {
     code: number;
@@ -24,6 +24,7 @@ export const useContractStatus = (): ContractStatus => {
   // Return state
   const [returned, setReturned] = useState<ContractStatus>({
     status: "worker",
+    error: undefined,
   });
 
   useEffect(() => {
@@ -43,6 +44,8 @@ export const useContractStatus = (): ContractStatus => {
           await timeout(5);
 
           console.log("Done loading web worker");
+
+          setReturned({ ...returned, status: "account" });
 
           await zkappWorkerClient.setActiveInstanceToBerkeley();
 
@@ -65,6 +68,8 @@ export const useContractStatus = (): ContractStatus => {
           });
 
           const accountExists = res.error == null;
+
+          setReturned({ ...returned, status: "compile" });
 
           await zkappWorkerClient.loadContract();
 
@@ -95,6 +100,8 @@ export const useContractStatus = (): ContractStatus => {
               accountExists,
             })
           );
+
+          setReturned({ ...returned, status: "done" });
         }
       })();
     }
@@ -119,7 +126,5 @@ export const useContractStatus = (): ContractStatus => {
     })();
   }, [state.hasBeenSetup]);
 
-  return {
-    status: returned.status,
-  };
+  return returned;
 };
