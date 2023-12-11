@@ -36,6 +36,8 @@ export const useContractStatus = (): ContractStatus => {
       });
     }
 
+    console.log("CLIENT:", state.zkappWorkerClient);
+
     if (state.zkappWorkerClient === null) {
       (async () => {
         if (!state.hasBeenSetup) {

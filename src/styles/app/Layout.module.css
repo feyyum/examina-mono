@@ -1,0 +1,14 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.content_container {
+  width: 100%;
+  display: flex;
+}
+
+.content {
+  flex: 8;
+}

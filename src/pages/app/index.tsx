@@ -7,7 +7,9 @@ type Props = {};
 function Application({}: Props) {
   return (
     <Layout>
-      <h1>Application</h1>
+      <div style={{ backgroundColor: "#f7f7f7", height: "100%" }}>
+        <h1>Application</h1>
+      </div>
     </Layout>
   );
 }
