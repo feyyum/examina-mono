@@ -1,4 +1,4 @@
-import styles from "../../styles/app/Layout.module.css";
+import styles from "../styles/app/Layout.module.css";
 import React from "react";
 
 // Components
@@ -7,7 +7,7 @@ import Header from "@/components/ui/Header";
 import Sidebar from "@/components/ui/Sidebar";
 
 // Custom hooks
-import { useContractStatus } from "../../../hooks/useContractStatus";
+import { useContractStatus } from "../hooks/useContractStatus";
 
 type Props = {
   children: React.ReactNode;

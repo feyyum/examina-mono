@@ -1,16 +1,26 @@
 "use client";
 import React from "react";
-import Layout from "./layout";
+import styles from "@/styles/app/Dashboard.module.css";
+
+// Custom Components
+import ExamCard from "@/components/ui/ExamCard";
+import SummaryCard from "@/components/ui/SummaryCard";
 
 type Props = {};
 
 function Application({}: Props) {
   return (
-    <Layout>
-      <div style={{ backgroundColor: "#f7f7f7", height: "100%" }}>
-        <h1>Application</h1>
+    <div className={styles.container}>
+      <div className={styles.row}>
+        <ExamCard
+          title="Chemistry"
+          containerStyle={{ maxWidth: "571px", minWidth: "571px" }}
+        />
+        <SummaryCard title="Total Exams" count={8} />
+        <SummaryCard title="Your Score" count={78} />
+        <SummaryCard title="Active Exams" count={4} />
       </div>
-    </Layout>
+    </div>
   );
 }
 

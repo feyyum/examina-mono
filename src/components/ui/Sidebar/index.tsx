@@ -2,6 +2,7 @@ import styles from "./Sidebar.module.css";
 import React from "react";
 import Image from "next/image";
 
+// Icons
 import Home from "../../../icons/home.svg";
 import Edit from "../../../icons/edit.svg";
 import Stats from "../../../icons/stats.svg";

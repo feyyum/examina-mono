@@ -5,6 +5,7 @@
   min-height: calc(100dvh - 80px);
   display: flex;
   flex-direction: column;
+  background-color: var(--white);
   box-shadow: 4px 0px 16px 0px rgba(0, 0, 0, 0.1);
 }
 
