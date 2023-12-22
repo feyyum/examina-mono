@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100vh - 80px);
+  background-color: var(--neutral-150);
+  overflow-y: scroll;
+  padding: 36px;
+}

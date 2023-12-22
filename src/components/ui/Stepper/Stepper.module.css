@@ -1,0 +1,44 @@
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 27px;
+}
+
+.item_container {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.button_container {
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.button_container_active {
+  background-color: var(--purple);
+}
+
+.button_text {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 125% */
+  letter-spacing: 0.2px;
+  color: var(--neutral-400);
+}
+
+.button_text_active {
+  color: var(--white);
+}
+
+.button_text_secondary {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.2px;
+}
