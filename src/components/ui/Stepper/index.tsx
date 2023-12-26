@@ -9,11 +9,12 @@ type Props = {
   steps: string[];
   currentStep: number;
   setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
+  className?: string;
 };
 
-function Stepper({ steps, currentStep, setCurrentStep }: Props) {
+function Stepper({ steps, currentStep, setCurrentStep, className }: Props) {
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${className}`}>
       {steps.map((el, i) => {
         return (
           <div

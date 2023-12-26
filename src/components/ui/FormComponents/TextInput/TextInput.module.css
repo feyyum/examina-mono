@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 125% */
+  letter-spacing: 0.2px;
+  color: var(--dark-blue-black);
+}
+
+.input {
+  height: 64px;
+  border-radius: 16px;
+  border: none;
+  outline: none;
+  text-indent: 20px;
+  font-family: "Urbanist", sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--dark-blue-black);
+}
+
+/* change input value font weight*/
+.input::placeholder {
+  font-weight: 400;
+}
