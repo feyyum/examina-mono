@@ -29,16 +29,28 @@ function TextInput({
   return (
     <div className={`${styles.container} ${containerClassName}`}>
       <h3 className={styles.title}>{title}</h3>
-      <input
-        className={`${styles.input} ${className}`}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        type={type}
-        required={required}
-        disabled={disabled}
-        maxLength={maxLength || 100}
-      />
+      {type === "textarea" ? (
+        <textarea
+          className={`${styles.textarea} ${className}`}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder || "Type here..."}
+          required={required}
+          disabled={disabled}
+          maxLength={maxLength || 2000}
+        />
+      ) : (
+        <input
+          className={`${styles.input} ${className}`}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          type={type}
+          required={required}
+          disabled={disabled}
+          maxLength={maxLength || 100}
+        />
+      )}
     </div>
   );
 }

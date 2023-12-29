@@ -37,6 +37,15 @@ function CreateExam({}: Props) {
               console.log(exam);
             }}
           />
+          <TextInput
+            title="Assessment Description"
+            value={exam.description}
+            onChange={(e) => {
+              dispatch(setExam({ ...exam, description: e }));
+              console.log(exam);
+            }}
+            type="textarea"
+          />
         </div>
       )}
       {currentStep === 1 && (
