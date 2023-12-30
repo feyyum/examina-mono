@@ -28,7 +28,7 @@ function CreateExam({}: Props) {
       />
 
       {currentStep === 0 && (
-        <div>
+        <div className={styles.exam_details_container}>
           <TextInput
             title="Assessment Title"
             value={exam.title}
@@ -46,6 +46,10 @@ function CreateExam({}: Props) {
             }}
             type="textarea"
           />
+
+          <div className={styles.button_container}>
+            <h3 className={styles.button_text}>Next Step</h3>
+          </div>
         </div>
       )}
       {currentStep === 1 && (
