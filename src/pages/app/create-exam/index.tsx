@@ -36,6 +36,7 @@ function CreateExam({}: Props) {
               dispatch(setExam({ ...exam, title: e }));
               console.log(exam);
             }}
+            placeholder="Enter Assessment Title"
           />
           <TextInput
             title="Assessment Description"
@@ -45,9 +46,13 @@ function CreateExam({}: Props) {
               console.log(exam);
             }}
             type="textarea"
+            placeholder="Enter Assessment Description"
           />
 
-          <div className={styles.button_container}>
+          <div
+            className={styles.button_container}
+            onClick={() => setCurrentStep(currentStep + 1)}
+          >
             <h3 className={styles.button_text}>Next Step</h3>
           </div>
         </div>
