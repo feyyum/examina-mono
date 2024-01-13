@@ -1,4 +1,4 @@
-import styles from "./Sidebar.module.css";
+import styles from "@/styles/components/Sidebar.module.css";
 import React from "react";
 import Image from "next/image";
 

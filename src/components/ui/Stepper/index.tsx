@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Stepper.module.css";
+import styles from "@/styles/components/Stepper.module.css";
 import Image from "next/image";
 
 import StepperArrow from "@/icons/stepper-arrow.svg";

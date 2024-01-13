@@ -48,7 +48,6 @@
 }
 
 .tagline {
-  font-family: var(--font-monument-light);
   font-size: 0.875rem;
   padding-top: 1rem;
   letter-spacing: 0.082rem;
@@ -56,14 +55,12 @@
 }
 
 .start {
-  font-family: var(--font-monument-light);
   font-size: 1.25rem;
   letter-spacing: 0.1rem;
   z-index: 99;
 }
 
 .code {
-  font-family: var(--font-monument-bold);
 }
 
 .grid {

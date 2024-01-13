@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./TextInput.module.css";
+import styles from "@/styles/components/TextInput.module.css";
 
 type Props = {
   title: string;

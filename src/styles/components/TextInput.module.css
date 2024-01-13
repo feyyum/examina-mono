@@ -19,7 +19,6 @@
   border: none;
   outline: none;
   text-indent: 20px;
-  font-family: "Urbanist", sans-serif;
   font-size: 20px;
   font-weight: 300;
   color: var(--dark-blue-black);
@@ -31,7 +30,6 @@
   padding: 20px 20px;
   border: none;
   outline: none;
-  font-family: "Urbanist", sans-serif;
   font-size: 20px;
   font-weight: 300;
   color: var(--dark-blue-black);

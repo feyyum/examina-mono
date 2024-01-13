@@ -1,4 +1,4 @@
-import styles from "./Header.module.css";
+import styles from "@/styles/components/Header.module.css";
 import React from "react";
 import Image from "next/image";
 

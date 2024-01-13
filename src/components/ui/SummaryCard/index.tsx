@@ -1,6 +1,5 @@
 import React from "react";
-import styles from "./SummaryCard.module.css";
-
+import styles from "@/styles/components/SummaryCard.module.css";
 type Props = {
   title?: string;
   count?: number;
