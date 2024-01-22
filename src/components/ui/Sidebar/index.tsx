@@ -1,62 +1,41 @@
+"use client";
 import styles from "@/styles/components/Sidebar.module.css";
-import React from "react";
 import Image from "next/image";
 
+// Components
+import * as Separator from "@radix-ui/react-separator";
+
 // Icons
-import Home from "../../../icons/home.svg";
-import Edit from "../../../icons/edit.svg";
-import Stats from "../../../icons/stats.svg";
-import Circle from "../../../icons/circle.svg";
-import Settings from "../../../icons/settings.svg";
+import {
+  HomeIcon,
+  Pencil1Icon,
+  BarChartIcon,
+  PersonIcon,
+  GearIcon,
+} from "@radix-ui/react-icons";
+
+// Custom Components
+import { SidebarButton } from "../Buttons";
 
 type Props = {};
 
 function Sidebar({}: Props) {
   return (
     <div className={styles.container}>
-      <div className={styles.general_container}>
-        <h1 className={styles.section_title}>GENERAL</h1>
-        <div className={styles.subtitles}>
-          <div className={styles.section_subtitle_container}>
-            <Image src={Home} alt="icon" />
-            <h3 className={styles.section_subtitle}>Home Page</h3>
-          </div>
-          <div className={styles.section_subtitle_container}>
-            <Image src={Edit} alt="icon" />
-            <h3 className={styles.section_subtitle}>Create Exam</h3>
-          </div>
-          <div className={styles.section_subtitle_container}>
-            <Image src={Stats} alt="icon" />
-            <h3 className={styles.section_subtitle}>Your Assesments</h3>
-          </div>
-        </div>
+      <div className={styles.logo_container}>
+        <h1 className={styles.logo_primary}>
+          exa<span className={styles.logo_secondary}>mina</span>
+        </h1>
       </div>
-      <div className={styles.personal_container}>
-        <h1 className={styles.section_title}>PERSONAL</h1>
-        <div className={styles.subtitles}>
-          <div className={styles.section_subtitle_container}>
-            <Image src={Circle} alt="icon" />
-            <h3 className={styles.section_subtitle}>Your Profile</h3>
-          </div>
-          <div className={styles.section_subtitle_container}>
-            <Image src={Settings} alt="icon" />
-            <h3 className={styles.section_subtitle}>Account Settings</h3>
-          </div>
-        </div>
+      <Separator.Root className={styles.separator} />
+      <div className={styles.sidebar_nav_container}>
+        <SidebarButton label="Home Page" Icon={HomeIcon} />
+        <SidebarButton label="Create Exam" Icon={Pencil1Icon} />
+        <SidebarButton label="Your Exams" Icon={BarChartIcon} />
+        <SidebarButton label="Home Profile" Icon={PersonIcon} />
+        <SidebarButton label="Settings" Icon={GearIcon} active />
       </div>
-      <div className={styles.support_container}>
-        <h1 className={styles.section_title}>SUPPORT</h1>
-        <div className={styles.subtitles}>
-          <div className={styles.section_subtitle_container}>
-            <Image src={Circle} alt="icon" />
-            <h3 className={styles.section_subtitle}>F.A.Q.</h3>
-          </div>
-          <div className={styles.section_subtitle_container}>
-            <Image src={Circle} alt="icon" />
-            <h3 className={styles.section_subtitle}>Help Center</h3>
-          </div>
-        </div>
-      </div>
+      <div></div>
     </div>
   );
 }

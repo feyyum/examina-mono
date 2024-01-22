@@ -24,7 +24,7 @@ function Layout({ children, isWrapped = true }: Props) {
   if (isWrapped) {
     return (
       <div className={styles.container}>
-        <Header />
+        {/* <Header /> */}
         <div className={styles.content_container}>
           <Sidebar />
           <main className={styles.content}>{children}</main>

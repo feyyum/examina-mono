@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  padding-left: 1em;
+  padding-top: 0.625em;
+  padding-right: 1.5em;
+  padding-bottom: 0.625em;
+  background-color: transparent;
+  border-radius: 8px;
+  outline: none;
+  border: none;
+}
+
+.button_active {
+  background-color: var(--sidebar-purple);
+  color: var(--white);
+}
+
+.button_disabled {
+  background-color: "transparent";
+  color: var(--gray-disabled);
+  cursor: not-allowed;
+}
+
+.image {
+  width: 1em;
+  height: 1em;
+  margin-right: 0.625em;
+  color: var(--gray-disabled);
+}
+
+.icon_active {
+  color: white;
+}
+
+.label {
+  font-size: 0.875em;
+  font-weight: 500;
+  color: var(--gray-disabled);
+}
+
+.label_active {
+  color: white;
+}

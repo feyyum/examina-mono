@@ -10,6 +10,8 @@
     "ts-watch": "tsc --noEmit --incremental --watch"
   },
   "dependencies": {
+    "@radix-ui/react-icons": "^1.3.0",
+    "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/themes": "^2.0.3",
     "@reduxjs/toolkit": "^1.9.7",
     "@types/node": "20.10.1",

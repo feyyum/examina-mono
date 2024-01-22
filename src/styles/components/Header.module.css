@@ -6,6 +6,7 @@
   border-bottom: 1px solid var(--neutral-150);
   background-color: var(--white);
   z-index: 999;
+  border: 1px solid red;
 }
 
 .inner_container {
