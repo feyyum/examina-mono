@@ -2,6 +2,7 @@ import styles from "@/styles/components/SidebarButton.module.css";
 
 type Props = {
   containerClassName?: string;
+  innerContainerClassName?: string;
   labelClassName?: string;
   imageClassName?: string;
   active?: boolean;
@@ -9,41 +10,49 @@ type Props = {
   Icon?: React.ComponentClass<any> | React.FC<any>;
   label: string;
   disabled?: boolean;
+  testId?: string;
 };
 
 function SidebarButton({
   containerClassName,
+  innerContainerClassName,
   labelClassName,
   imageClassName,
   active = false,
   onClick = () => {},
   Icon,
   label,
-  disabled = true,
+  disabled = false,
+  testId,
 }: Props) {
   return (
-    <button
-      className={`${styles.container} ${containerClassName} ${
+    <div
+      className={`${styles.container} ${styles.containerClassName} ${
         active ? styles.button_active : ""
-      } ${disabled ? styles.button_disabled : ""}`}
-      onClick={onClick}
-      disabled={disabled}
+      }`}
+      data-testid={testId}
     >
-      {Icon && (
-        <Icon
-          className={`${styles.image} ${imageClassName} ${
-            active ? styles.icon_active : ""
-          }`}
-        />
-      )}
-      <p
-        className={`${styles.label} ${labelClassName} ${
-          active ? styles.label_active : ""
-        }`}
+      <button
+        className={`${styles.innerContainer} ${innerContainerClassName}`}
+        onClick={onClick}
+        disabled={disabled}
       >
-        {label}
-      </p>
-    </button>
+        {Icon && (
+          <Icon
+            className={`${styles.image} ${imageClassName} ${
+              active ? styles.icon_active : ""
+            }`}
+          />
+        )}
+        <p
+          className={`${styles.label} ${labelClassName} ${
+            active ? styles.label_active : ""
+          }`}
+        >
+          {label}
+        </p>
+      </button>
+    </div>
   );
 }
 

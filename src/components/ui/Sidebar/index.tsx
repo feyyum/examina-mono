@@ -1,6 +1,5 @@
 "use client";
 import styles from "@/styles/components/Sidebar.module.css";
-import Image from "next/image";
 
 // Components
 import * as Separator from "@radix-ui/react-separator";
@@ -12,6 +11,7 @@ import {
   BarChartIcon,
   PersonIcon,
   GearIcon,
+  ExitIcon,
 } from "@radix-ui/react-icons";
 
 // Custom Components
@@ -29,13 +29,15 @@ function Sidebar({}: Props) {
       </div>
       <Separator.Root className={styles.separator} />
       <div className={styles.sidebar_nav_container}>
-        <SidebarButton label="Home Page" Icon={HomeIcon} />
-        <SidebarButton label="Create Exam" Icon={Pencil1Icon} />
+        <SidebarButton label="Home Page" Icon={HomeIcon} disabled />
+        <SidebarButton label="Create Exam" Icon={Pencil1Icon} active />
         <SidebarButton label="Your Exams" Icon={BarChartIcon} />
         <SidebarButton label="Home Profile" Icon={PersonIcon} />
-        <SidebarButton label="Settings" Icon={GearIcon} active />
+        <SidebarButton label="Settings" Icon={GearIcon} />
       </div>
-      <div></div>
+      <div className={styles.logout_container}>
+        <SidebarButton label="Logout" Icon={ExitIcon} />
+      </div>
     </div>
   );
 }

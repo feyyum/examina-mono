@@ -32,9 +32,18 @@
 }
 
 .sidebar_nav_container {
-  padding-left: 43px;
+  padding-left: 2.75em;
 }
 
 .sidebar_nav_container > * {
   margin-bottom: 48px;
+}
+
+.logout_container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-left: 2.75em;
+  margin-bottom: 26px;
 }

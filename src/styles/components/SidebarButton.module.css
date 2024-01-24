@@ -1,24 +1,32 @@
 .container {
+  background-color: white;
+  width: clamp(8.25em, 15%, 12em);
+  border-radius: 8px;
+}
+
+.innerContainer {
   display: flex;
   padding-left: 1em;
-  padding-top: 0.625em;
-  padding-right: 1.5em;
-  padding-bottom: 0.625em;
-  background-color: transparent;
-  border-radius: 8px;
+  padding-top: 0.825em;
+  padding-right: 1em;
+  padding-bottom: 0.825em;
   outline: none;
   border: none;
+  width: 100%;
+  background-color: transparent;
+}
+
+.innerContainer:disabled {
+  cursor: not-allowed;
+}
+
+.innerContainer:valid {
+  cursor: pointer;
 }
 
 .button_active {
   background-color: var(--sidebar-purple);
   color: var(--white);
-}
-
-.button_disabled {
-  background-color: "transparent";
-  color: var(--gray-disabled);
-  cursor: not-allowed;
 }
 
 .image {

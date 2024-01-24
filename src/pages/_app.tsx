@@ -8,11 +8,11 @@ import { store } from "../../store";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
-      <Theme>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </Theme>
+      {/* <Theme> */}
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+      {/* </Theme> */}
     </Provider>
   );
 }
