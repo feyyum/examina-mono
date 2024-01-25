@@ -32,7 +32,7 @@ function Sidebar({}: Props) {
         <SidebarButton label="Home Page" Icon={HomeIcon} disabled />
         <SidebarButton label="Create Exam" Icon={Pencil1Icon} active />
         <SidebarButton label="Your Exams" Icon={BarChartIcon} />
-        <SidebarButton label="Home Profile" Icon={PersonIcon} />
+        <SidebarButton label="Your Profile" Icon={PersonIcon} />
         <SidebarButton label="Settings" Icon={GearIcon} />
       </div>
       <div className={styles.logout_container}>

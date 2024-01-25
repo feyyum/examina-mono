@@ -1,62 +1,38 @@
 .container {
-  height: 80px;
-  padding: 0 48px;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid var(--neutral-150);
-  background-color: var(--white);
-  z-index: 999;
-  border: 1px solid red;
-}
-
-.inner_container {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1.5rem 3rem;
 }
 
-.logo {
+.greeting_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.greeting_primary {
+  font-size: 1.5rem;
   font-weight: 500;
-  font-size: 24px;
   color: var(--dark-blue-black);
-  cursor: pointer;
 }
 
-.logo > span {
-  color: var(--orange);
+.greeting_secondary {
+  font-size: 1rem;
+  font-weight: 200;
+  color: var(--gray-disabled);
 }
 
-.controller_container {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.bell_container {
-  display: flex;
-  align-items: center;
-}
-
-.bell_icon {
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-}
-
-.user_container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.profile_picture {
-  width: 32px;
-  height: 32px;
-}
-
-.username {
-  font-weight: 700;
-  font-size: 12px;
-  color: var(--dark-blue-black);
+.input {
+  width: 24rem;
+  height: 3.34rem;
+  border-radius: 0.625rem;
+  border: 1px solid var(--gray-border);
+  background-color: white;
+  color: var(--gray-placeholder);
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  outline: none;
 }
