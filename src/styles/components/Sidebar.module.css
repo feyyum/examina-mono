@@ -1,4 +1,6 @@
 .container {
+  position: sticky;
+  top: 0;
   min-width: 210px;
   max-width: 298px;
   height: 100dvh;

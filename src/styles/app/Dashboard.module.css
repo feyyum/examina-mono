@@ -1,16 +1,15 @@
 .container {
+  flex: 1;
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: calc(100vh - 80px);
-  background-color: var(--neutral-150);
   overflow-y: scroll;
-  padding: 36px;
 }
 
-.row {
+.exams_container {
   display: flex;
-  gap: 32px;
-  flex-wrap: wrap;
-  margin-bottom: 32px;
+  flex-direction: column;
+  width: 100%;
+  overflow-y: scroll;
+  gap: 27px;
 }
