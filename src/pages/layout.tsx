@@ -5,6 +5,7 @@ import React from "react";
 import Loader from "@/components/Loader";
 import Header from "@/components/ui/Header";
 import Sidebar from "@/components/ui/Sidebar";
+import RightSidebar from "@/components/ui/RightSidebar";
 
 // Custom hooks
 import { useContractStatus } from "../hooks/useContractStatus";
@@ -29,6 +30,7 @@ function Layout({ children, isWrapped = true }: Props) {
           <Header />
           <main className={styles.content}>{children}</main>
         </div>
+        <RightSidebar />
       </div>
     );
   }
