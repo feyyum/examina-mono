@@ -1,5 +1,6 @@
 import styles from "../styles/app/Layout.module.css";
 import React from "react";
+import { useRouter } from "next/router";
 
 // Components
 import Loader from "@/components/Loader";
@@ -16,28 +17,30 @@ type Props = {
 };
 
 function Layout({ children, isWrapped = true }: Props) {
+  const router = useRouter();
+
   // const contract = useContractStatus();
 
   // if (contract.status !== "done" || contract.error) {
   //   return <Loader {...contract} />;
   // }
 
-  if (isWrapped) {
+  if (router.pathname === "/") {
     return (
-      <div className={styles.container}>
-        <Sidebar />
-        <div className={styles.content_container}>
-          <Header />
-          <main className={styles.content}>{children}</main>
-        </div>
-        <RightSidebar />
+      <div>
+        <main>{children}</main>
       </div>
     );
   }
 
   return (
-    <div>
-      <main>{children}</main>
+    <div className={styles.container}>
+      <Sidebar />
+      <div className={styles.content_container}>
+        <Header />
+        <main className={styles.content}>{children}</main>
+      </div>
+      <RightSidebar />
     </div>
   );
 }
