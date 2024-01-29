@@ -1,0 +1,77 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 600px;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.landing_header_container {
+  padding: 1rem 3rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+}
+
+.logo_container {
+  padding: 0.825rem;
+}
+
+.logo_primary {
+  font-size: 1.625em;
+  font-weight: "500";
+  color: var(--dark-blue-black);
+}
+
+.logo_secondary {
+  color: var(--mina-orange);
+}
+
+.button_container {
+  display: flex;
+}
+
+.landing_content_container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding-left: 3.825rem;
+  margin-top: -5rem;
+}
+
+.bg_image {
+  position: absolute;
+  z-index: -1;
+  margin-left: 55%;
+}
+
+.subtitle {
+  font-size: 1.5em;
+  font-weight: 400;
+  color: var(--gray-disabled);
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 3.5rem;
+  font-weight: 400;
+  color: var(--dark-blue-black);
+  margin-bottom: 1.5rem;
+  line-height: 96%;
+}
+
+.button {
+  display: inline-block;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  background-color: var(--sidebar-purple);
+  cursor: pointer;
+}
+
+.button_label {
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: white;
+}

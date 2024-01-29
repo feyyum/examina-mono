@@ -27,7 +27,7 @@ function SidebarButton({
 }: Props) {
   return (
     <div
-      className={`${styles.container} ${styles.containerClassName} ${
+      className={`${styles.container} ${containerClassName} ${
         active ? styles.button_active : ""
       }`}
       data-testid={testId}
