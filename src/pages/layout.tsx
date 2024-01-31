@@ -9,7 +9,7 @@ import Sidebar from "@/components/ui/Sidebar";
 import RightSidebar from "@/components/ui/RightSidebar";
 
 // Custom hooks
-import { useContractStatus } from "../hooks/useContractStatus";
+import { useContractStatus } from "../../hooks/useContractStatus";
 
 type Props = {
   children: React.ReactNode;
