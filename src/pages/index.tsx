@@ -35,7 +35,7 @@ export default function Home() {
             Blockchain-Powered Security for Seamless and Verified Examinations
           </h3>
           <h1 className={styles.title}>
-            Mina Protocol: Elevating <br /> Examina's Trust and Reliability
+            Mina Protocol: Elevating <br /> Examina&apos;s Trust and Reliability
           </h1>
           <div>
             <div className={styles.button}>
