@@ -10,6 +10,9 @@ import BG from "@/images/landing-bg.svg";
 export default function Home() {
   return (
     <div className={styles.container}>
+      <div className={styles.bg_image_container}>
+        <Image src={BG} alt="Landing Background" className={styles.bg_image} />
+      </div>
       <div className={styles.landing_header_container}>
         <div className={styles.logo_container}>
           <h1 className={styles.logo_primary}>
@@ -21,7 +24,6 @@ export default function Home() {
         </div>
       </div>
       <div className={styles.landing_content_container}>
-        <Image src={BG} alt="Landing Background" className={styles.bg_image} />
         <div className={styles.content_container}>
           <h3 className={styles.subtitle}>
             Blockchain-Powered Security for Seamless and Verified Examinations

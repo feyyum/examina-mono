@@ -41,10 +41,20 @@
   margin-top: -5rem;
 }
 
+.bg_image_container {
+  position: absolute; /* Image için bir konum referansı belirler */
+  overflow: hidden; /* Taşan içerikleri gizler */
+  width: 100%;
+  height: 100vh;
+  border: 1px solid red;
+  display: flex;
+  justify-content: flex-end;
+  z-index: -1;
+}
+
 .bg_image {
   position: absolute;
-  z-index: -1;
-  margin-left: 55%;
+  margin-left: 400px;
 }
 
 .subtitle {
