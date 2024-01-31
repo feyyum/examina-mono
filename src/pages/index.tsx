@@ -6,6 +6,7 @@ import { SidebarButton } from "@/components/ui/Buttons";
 
 // Images
 import BG from "@/images/landing-bg.svg";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -19,9 +20,14 @@ export default function Home() {
             exa<span className={styles.logo_secondary}>mina</span>
           </h1>
         </div>
-        <div className={styles.button_container}>
+        <Link
+          href="/app"
+          className={styles.button_container}
+          onClick={() => console.log("Selam")}
+          style={{ zIndex: 1000 }}
+        >
           <SidebarButton label="Connect Wallet" active />
-        </div>
+        </Link>
       </div>
       <div className={styles.landing_content_container}>
         <div className={styles.content_container}>

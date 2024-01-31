@@ -1,5 +1,6 @@
 "use client";
 import styles from "@/styles/components/Sidebar.module.css";
+import router from "next/router";
 
 // Components
 import * as Separator from "@radix-ui/react-separator";
@@ -36,7 +37,11 @@ function Sidebar({}: Props) {
         <SidebarButton label="Settings" Icon={GearIcon} />
       </div>
       <div className={styles.logout_container}>
-        <SidebarButton label="Logout" Icon={ExitIcon} />
+        <SidebarButton
+          label="Logout"
+          Icon={ExitIcon}
+          onClick={() => router.replace("/")}
+        />
       </div>
     </div>
   );
