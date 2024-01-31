@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../hooks";
 
 // O1JS imports
-import ZkappWorkerClient from "../src/pages/zkappWorkerClient";
+import ZkappWorkerClient from "../src/workers/zkappWorkerClient";
 import { PublicKey } from "o1js";
 
 // Redux imports

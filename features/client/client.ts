@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../store";
 
-import ZkappWorkerClient from "@/pages/zkappWorkerClient";
+import ZkappWorkerClient from "@/workers/zkappWorkerClient";
 import { PublicKey, Field } from "o1js";
 
 // Define a type for the slice state
