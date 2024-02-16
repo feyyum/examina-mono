@@ -33,6 +33,19 @@ function Layout({ children, isWrapped = true }: Props) {
     );
   }
 
+  if (router.pathname === "/app") {
+    return (
+      <div className={styles.container}>
+        <Sidebar />
+        <div className={styles.content_container}>
+          <Header />
+          <main className={styles.content}>{children}</main>
+        </div>
+        <RightSidebar />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.container}>
       <Sidebar />
@@ -40,7 +53,6 @@ function Layout({ children, isWrapped = true }: Props) {
         <Header />
         <main className={styles.content}>{children}</main>
       </div>
-      <RightSidebar />
     </div>
   );
 }
