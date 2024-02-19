@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "@/styles/app/create-exam/CreateExam.module.css";
 import * as Tabs from "@radix-ui/react-tabs";
+import * as Label from "@radix-ui/react-label";
 
 import { useAppSelector, useAppDispatch } from "../../../../hooks";
 import { setExam } from "../../../../features/client/exam";
@@ -52,7 +53,40 @@ function CreateExam({}: Props) {
             </h3>
           </Tabs.Trigger>
         </Tabs.List>
-        <Tabs.Content value="0">Tab one content</Tabs.Content>
+        <Tabs.Content value="0">
+          <div className={styles.create_exam_form_container}>
+            <div className={styles.form_element_container}>
+              <h3 className={styles.form_element_title}>Exam Title</h3>
+              <input
+                className={styles.form_element_input}
+                type="text"
+                id="title"
+                placeholder="Enter Exam Title"
+              />
+            </div>
+            <div className={styles.create_exam_form_row}>
+              <div className={styles.form_element_container}>
+                <h3 className={styles.form_element_title}>Start Date</h3>
+                {/* TODO: Add Calendar */}
+              </div>
+              <div className={styles.form_element_container}>
+                <h3 className={styles.form_element_title}>Duration</h3>
+                {/* TODO: Add Select */}
+              </div>
+            </div>
+            <div className={styles.form_element_container}>
+              <h3 className={styles.form_element_title}>Exam Description</h3>
+              <textarea
+                className={styles.form_element_textarea}
+                id="description"
+                placeholder="Enter Exam Description"
+              />
+            </div>
+            <div className={styles.form_element_button_container}>
+              <button className={styles.form_element_button}>Next Step</button>
+            </div>
+          </div>
+        </Tabs.Content>
         <Tabs.Content value="1">Tab two content</Tabs.Content>
         <Tabs.Content value="2">Tab three content</Tabs.Content>
       </Tabs.Root>
