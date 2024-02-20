@@ -1,5 +1,6 @@
-import React from "react";
+import { useState } from "react";
 import styles from "@/styles/app/create-exam/CreateExam.module.css";
+import Calendar from "react-calendar";
 
 import * as Tabs from "@radix-ui/react-tabs";
 import * as Dialog from "@radix-ui/react-dialog";
@@ -12,10 +13,17 @@ import { TextInput } from "@/components/ui/FormComponents";
 
 type Props = {};
 
+type ValuePiece = Date | null;
+
+type Value = ValuePiece | [ValuePiece, ValuePiece];
+
 // const STEPS = ["Basics", "Create Questions", "Check", "Done"];
 
 function CreateExam({}: Props) {
   // const [currentStep, setCurrentStep] = React.useState<number>(0);
+  const [startDate, setStartDate] = useState<Value>(new Date());
+
+  console.log(startDate);
 
   const exam = useAppSelector((state) => state.exam);
   const dispatch = useAppDispatch();
@@ -81,26 +89,9 @@ function CreateExam({}: Props) {
                         Make changes to your profile here. Click save when you
                         re done.
                       </Dialog.Description>
-                      <fieldset className="Fieldset">
-                        <label className="Label" htmlFor="name">
-                          Name
-                        </label>
-                        <input
-                          className="Input"
-                          id="name"
-                          defaultValue="Pedro Duarte"
-                        />
-                      </fieldset>
-                      <fieldset className="Fieldset">
-                        <label className="Label" htmlFor="username">
-                          Username
-                        </label>
-                        <input
-                          className="Input"
-                          id="username"
-                          defaultValue="@peduarte"
-                        />
-                      </fieldset>
+                      <div>
+                        <Calendar onChange={setStartDate} value={startDate} />
+                      </div>
                       <div
                         style={{
                           display: "flex",
