@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "@/styles/app/create-exam/CreateExam.module.css";
+import Image from "next/image";
 import Calendar from "react-calendar";
 
 import * as Tabs from "@radix-ui/react-tabs";
@@ -10,6 +11,7 @@ import { setExam } from "../../../../features/client/exam";
 
 // Components
 import { TextInput } from "@/components/ui/FormComponents";
+import Close from "@/icons/close_mina_purple.svg";
 
 type Props = {};
 
@@ -83,11 +85,10 @@ function CreateExam({}: Props) {
                     <Dialog.Overlay className="DialogOverlay" />
                     <Dialog.Content className="DialogContent">
                       <Dialog.Title className="DialogTitle">
-                        Edit profile
+                        Select Date
                       </Dialog.Title>
                       <Dialog.Description className="DialogDescription">
-                        Make changes to your profile here. Click save when you
-                        re done.
+                        Please select date which you want to start exam.
                       </Dialog.Description>
                       <div>
                         <Calendar
@@ -109,7 +110,7 @@ function CreateExam({}: Props) {
                       </div>
                       <Dialog.Close asChild>
                         <button className="IconButton" aria-label="Close">
-                          <h1>Kapat</h1>
+                          <Image src={Close} alt="" />
                         </button>
                       </Dialog.Close>
                     </Dialog.Content>

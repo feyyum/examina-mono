@@ -96,6 +96,8 @@ input {
 .Button.green {
   background-color: var(--green-4);
   color: var(--green-11);
+  padding: 8px;
+  cursor: pointer;
 }
 .Button.green:hover {
   background-color: var(--green-5);
@@ -116,6 +118,7 @@ input {
   position: absolute;
   top: 10px;
   right: 10px;
+  cursor: pointer;
 }
 .IconButton:hover {
   background-color: var(--violet-4);
