@@ -90,7 +90,11 @@ function CreateExam({}: Props) {
                         re done.
                       </Dialog.Description>
                       <div>
-                        <Calendar onChange={setStartDate} value={startDate} />
+                        <Calendar
+                          onChange={setStartDate}
+                          value={startDate}
+                          minDate={new Date()}
+                        />
                       </div>
                       <div
                         style={{
