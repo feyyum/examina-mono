@@ -341,3 +341,102 @@ abbr {
 .react-calendar--selectRange .react-calendar__tile--hover {
   background-color: #e6e6e6;
 }
+
+/* ---Select Styles--- */
+button {
+  all: unset;
+}
+
+.SelectTrigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 14px;
+  font-weight: 300;
+  /* height: 35px; */
+  width: calc(100% - 15px);
+  background-color: white;
+  border: 1px solid var(--gray-border);
+  color: var(--mina-purple);
+}
+.SelectTrigger:hover {
+  /* background-color: var(--mauve-3); */
+}
+.SelectTrigger:focus {
+  /* box-shadow: 0 0 0 1px black; */
+}
+.SelectTrigger[data-placeholder] {
+  color: var(--mina-purple);
+}
+
+.SelectIcon {
+  color: var(--mina-purple);
+}
+
+.SelectContent {
+  overflow: hidden;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0px 10px 40px -20px rgba(22, 23, 24, 0.2),
+    0px 10px 10px -15px rgba(22, 23, 24, 0.2);
+}
+
+.SelectViewport {
+  padding: 16px;
+}
+
+.SelectItem {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--mina-purple);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  height: 25px;
+  padding: 0 32px 0 16px;
+  position: relative;
+  user-select: none;
+}
+.SelectItem[data-disabled] {
+  color: var(--gray-disabled);
+  pointer-events: none;
+}
+.SelectItem[data-highlighted] {
+  outline: none;
+  background-color: var(--mina-purple);
+  color: white;
+}
+
+.SelectLabel {
+  padding: 0 25px;
+  font-size: 12px;
+  line-height: 25px;
+  color: var(--gray-disabled);
+}
+
+.SelectSeparator {
+  height: 1px;
+  background-color: var(--gray-border);
+  margin: 5px;
+}
+
+.SelectItemIndicator {
+  position: absolute;
+  left: 0;
+  width: 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.SelectScrollButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 25px;
+  background-color: white;
+  color: var(--violet-11);
+  cursor: default;
+}

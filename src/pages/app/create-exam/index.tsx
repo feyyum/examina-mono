@@ -1,10 +1,14 @@
-import { useState } from "react";
+import React, { useState, Ref } from "react";
 import styles from "@/styles/app/create-exam/CreateExam.module.css";
 import Image from "next/image";
 import Calendar from "react-calendar";
+import classnames from "classnames";
 
 import * as Tabs from "@radix-ui/react-tabs";
 import * as Dialog from "@radix-ui/react-dialog";
+import * as Select from "@radix-ui/react-select";
+
+import ArrowBottom from "@/icons/arrow_bottom.svg";
 
 import { useAppSelector, useAppDispatch } from "../../../../hooks";
 import { setExam } from "../../../../features/client/exam";
@@ -105,7 +109,7 @@ function CreateExam({}: Props) {
                         }}
                       >
                         <Dialog.Close asChild>
-                          <button className="Button green">Save changes</button>
+                          <button className="Button green">Save</button>
                         </Dialog.Close>
                       </div>
                       <Dialog.Close asChild>
@@ -119,7 +123,27 @@ function CreateExam({}: Props) {
               </div>
               <div className={styles.form_element_container}>
                 <h3 className={styles.form_element_title}>Duration</h3>
-                {/* TODO: Add Select */}
+                <Select.Root>
+                  <Select.Trigger className="SelectTrigger" aria-label="Food">
+                    <Select.Value placeholder="Duration" />
+                    <Select.Icon className="SelectIcon">
+                      {/* <ChevronDownIcon /> */}
+                      <Image src={ArrowBottom} alt="" width={12} />
+                    </Select.Icon>
+                  </Select.Trigger>
+                  <Select.Portal>
+                    <Select.Content className="SelectContent">
+                      <Select.Viewport className="SelectViewport">
+                        <Select.Group>
+                          <SelectItem value={"30"}>30 Minutes</SelectItem>
+                          <SelectItem value="60">60 Minutes</SelectItem>
+                          <SelectItem value="90">90 Minutes</SelectItem>
+                          <SelectItem value="120">120 Minutes</SelectItem>
+                        </Select.Group>
+                      </Select.Viewport>
+                    </Select.Content>
+                  </Select.Portal>
+                </Select.Root>
               </div>
             </div>
             <div className={styles.form_element_container}>
@@ -187,5 +211,41 @@ function CreateExam({}: Props) {
     </div>
   );
 }
+
+const SelectItem = React.forwardRef(
+  (
+    {
+      children,
+      className,
+      value,
+      disabled,
+      ...props
+    }: {
+      children: React.ReactNode;
+      className?: string;
+      value: string;
+      disabled?: boolean;
+      props?: any;
+    },
+    forwardedRef: any
+  ) => {
+    return (
+      <Select.Item
+        value={value} // Add the 'value' property here
+        className={classnames("SelectItem", className)}
+        disabled={disabled}
+        {...props}
+        ref={forwardedRef}
+      >
+        <Select.ItemText>{children}</Select.ItemText>
+        <Select.ItemIndicator className="SelectItemIndicator">
+          {/* <CheckIcon /> */}
+        </Select.ItemIndicator>
+      </Select.Item>
+    );
+  }
+);
+
+SelectItem.displayName = "SelectItem";
 
 export default CreateExam;
