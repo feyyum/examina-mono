@@ -7,7 +7,8 @@ export interface ExamState {
   id: string;
   title: string;
   description: string;
-  duration: number;
+  startDate: Date | null; // ISO 8601
+  duration: string;
   questions: Question[];
 }
 
@@ -29,7 +30,8 @@ const initialState = {
   id: uuid(),
   title: "",
   description: "",
-  duration: 0,
+  startDate: new Date(),
+  duration: "",
   questions: [
     {
       id: uuid(),

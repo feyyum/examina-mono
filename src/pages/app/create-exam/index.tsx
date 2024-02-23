@@ -1,4 +1,4 @@
-import React, { useState, Ref } from "react";
+import React, { useState, Ref, useEffect } from "react";
 import styles from "@/styles/app/create-exam/CreateExam.module.css";
 import Image from "next/image";
 import Calendar from "react-calendar";
@@ -26,13 +26,18 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 // const STEPS = ["Basics", "Create Questions", "Check", "Done"];
 
 function CreateExam({}: Props) {
+  const exam = useAppSelector((state) => state.exam);
+  const dispatch = useAppDispatch();
+
   // const [currentStep, setCurrentStep] = React.useState<number>(0);
   const [startDate, setStartDate] = useState<Value>(new Date());
 
-  console.log(startDate);
+  // Change the exam state when the start date is changed
+  useEffect(() => {
+    dispatch(setExam({ ...exam, startDate: startDate as Date }));
+  }, [startDate]);
 
-  const exam = useAppSelector((state) => state.exam);
-  const dispatch = useAppDispatch();
+  console.log(exam);
 
   return (
     <div className={styles.container}>
@@ -69,6 +74,9 @@ function CreateExam({}: Props) {
                 type="text"
                 id="title"
                 placeholder="Enter Exam Title"
+                onChange={(e) =>
+                  dispatch(setExam({ ...exam, title: e.target.value }))
+                }
               />
             </div>
             <div className={styles.create_exam_form_row}>
@@ -116,7 +124,11 @@ function CreateExam({}: Props) {
               </div>
               <div className={styles.form_element_container}>
                 <h3 className={styles.form_element_title}>Duration</h3>
-                <Select.Root>
+                <Select.Root
+                  onValueChange={(e) =>
+                    dispatch(setExam({ ...exam, duration: e }))
+                  }
+                >
                   <Select.Trigger className="SelectTrigger" aria-label="Food">
                     <Select.Value placeholder="Duration" />
                     <Select.Icon className="SelectIcon">
@@ -127,7 +139,7 @@ function CreateExam({}: Props) {
                     <Select.Content className="SelectContent">
                       <Select.Viewport className="SelectViewport">
                         <Select.Group>
-                          <SelectItem value={"30"}>30 Minutes</SelectItem>
+                          <SelectItem value="30">30 Minutes</SelectItem>
                           <SelectItem value="60">60 Minutes</SelectItem>
                           <SelectItem value="90">90 Minutes</SelectItem>
                           <SelectItem value="120">120 Minutes</SelectItem>
@@ -144,6 +156,9 @@ function CreateExam({}: Props) {
                 className={styles.form_element_textarea}
                 id="description"
                 placeholder="Enter Exam Description"
+                onChange={(e) =>
+                  dispatch(setExam({ ...exam, description: e.target.value }))
+                }
               />
             </div>
             <div className={styles.form_element_button_container}>
