@@ -36,13 +36,6 @@ function CreateExam({}: Props) {
 
   return (
     <div className={styles.container}>
-      {/* <Stepper
-        steps={STEPS}
-        currentStep={currentStep}
-        setCurrentStep={setCurrentStep}
-        className={styles.stepper}
-      /> */}
-
       <Tabs.Root defaultValue="0" className={styles.stepper_container}>
         <Tabs.List
           aria-label="create exam"
@@ -127,7 +120,6 @@ function CreateExam({}: Props) {
                   <Select.Trigger className="SelectTrigger" aria-label="Food">
                     <Select.Value placeholder="Duration" />
                     <Select.Icon className="SelectIcon">
-                      {/* <ChevronDownIcon /> */}
                       <Image src={ArrowBottom} alt="" width={12} />
                     </Select.Icon>
                   </Select.Trigger>
@@ -162,52 +154,6 @@ function CreateExam({}: Props) {
         <Tabs.Content value="1">Tab two content</Tabs.Content>
         <Tabs.Content value="2">Tab three content</Tabs.Content>
       </Tabs.Root>
-
-      {/* {currentStep === 0 && (
-        <div className={styles.exam_details_container}>
-          <TextInput
-            title="Assessment Title"
-            value={exam.title}
-            onChange={(e) => {
-              dispatch(setExam({ ...exam, title: e }));
-              console.log(exam);
-            }}
-            placeholder="Enter Assessment Title"
-          />
-          <TextInput
-            title="Assessment Description"
-            value={exam.description}
-            onChange={(e) => {
-              dispatch(setExam({ ...exam, description: e }));
-              console.log(exam);
-            }}
-            type="textarea"
-            placeholder="Enter Assessment Description"
-          />
-
-          <div
-            className={styles.button_container}
-            // onClick={() => setCurrentStep(currentStep + 1)}
-          >
-            <h3 className={styles.button_text}>Next Step</h3>
-          </div>
-        </div>
-      )}
-      {currentStep === 1 && (
-        <div>
-          <h1>Create Questions</h1>
-        </div>
-      )}
-      {currentStep === 2 && (
-        <div>
-          <h1>Check</h1>
-        </div>
-      )}
-      {currentStep === 3 && (
-        <div>
-          <h1>Done</h1>
-        </div>
-      )} */}
     </div>
   );
 }
