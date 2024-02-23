@@ -68,7 +68,12 @@ function CreateExam({}: Props) {
         <Tabs.Content value="0">
           <div className={styles.create_exam_form_container}>
             <div className={styles.form_element_container}>
-              <h3 className={styles.form_element_title}>Exam Title</h3>
+              <h3 className={styles.form_element_title}>
+                Exam Title{" "}
+                <span className={styles.counter_text}>
+                  {exam.title.length}/120
+                </span>
+              </h3>
               <input
                 className={styles.form_element_input}
                 type="text"
@@ -77,6 +82,7 @@ function CreateExam({}: Props) {
                 onChange={(e) =>
                   dispatch(setExam({ ...exam, title: e.target.value }))
                 }
+                maxLength={120}
               />
             </div>
             <div className={styles.create_exam_form_row}>
@@ -151,7 +157,12 @@ function CreateExam({}: Props) {
               </div>
             </div>
             <div className={styles.form_element_container}>
-              <h3 className={styles.form_element_title}>Exam Description</h3>
+              <h3 className={styles.form_element_title}>
+                Exam Description{" "}
+                <span className={styles.counter_text}>
+                  {exam.description.length}/1200
+                </span>
+              </h3>
               <textarea
                 className={styles.form_element_textarea}
                 id="description"
@@ -159,6 +170,7 @@ function CreateExam({}: Props) {
                 onChange={(e) =>
                   dispatch(setExam({ ...exam, description: e.target.value }))
                 }
+                maxLength={1200}
               />
             </div>
             <div className={styles.form_element_button_container}>
