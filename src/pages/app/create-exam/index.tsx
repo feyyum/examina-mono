@@ -29,7 +29,7 @@ function CreateExam({}: Props) {
   const exam = useAppSelector((state) => state.exam);
   const dispatch = useAppDispatch();
 
-  // const [currentStep, setCurrentStep] = React.useState<number>(0);
+  const [currentStep, setCurrentStep] = React.useState<string>("0");
   const [startDate, setStartDate] = useState<Value>(new Date());
 
   // Change the exam state when the start date is changed
@@ -41,7 +41,11 @@ function CreateExam({}: Props) {
 
   return (
     <div className={styles.container}>
-      <Tabs.Root defaultValue="0" className={styles.stepper_container}>
+      <Tabs.Root
+        value={currentStep}
+        onValueChange={(value) => setCurrentStep(value)}
+        className={styles.stepper_container}
+      >
         <Tabs.List
           aria-label="create exam"
           className={styles.stepper_selector_container}
@@ -174,7 +178,14 @@ function CreateExam({}: Props) {
               />
             </div>
             <div className={styles.form_element_button_container}>
-              <button className={styles.form_element_button}>Next Step</button>
+              <button
+                className={styles.form_element_button}
+                onClick={() => {
+                  setCurrentStep("1");
+                }}
+              >
+                Next Step
+              </button>
             </div>
           </div>
         </Tabs.Content>
