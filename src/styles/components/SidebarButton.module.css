@@ -1,20 +1,16 @@
 .container {
-  background-color: white;
-  width: clamp(8.25em, 15%, 12em);
-  border-radius: 8px;
+  width: 100%;
+  border-radius: 1.25rem;
   cursor: pointer;
 }
 
 .innerContainer {
   display: flex;
-  padding-left: 1em;
-  padding-top: 0.825em;
-  padding-right: 1em;
-  padding-bottom: 0.825em;
+  align-items: center;
+  width: 100%;
+  padding: 1.25rem 1.5rem;
   outline: none;
   border: none;
-  width: 100%;
-  background-color: transparent;
 }
 
 .innerContainer:disabled {
@@ -31,9 +27,9 @@
 }
 
 .image {
-  width: 1em;
-  height: 1em;
-  margin-right: 0.625em;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 1.125rem;
   color: var(--gray-disabled);
 }
 
@@ -42,8 +38,8 @@
 }
 
 .label {
-  font-size: 0.875em;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 400;
   color: var(--gray-disabled);
 }
 

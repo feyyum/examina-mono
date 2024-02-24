@@ -36,13 +36,13 @@ function Sidebar({}: Props) {
         <SidebarButton label="Your Profile" Icon={PersonIcon} />
         <SidebarButton label="Settings" Icon={GearIcon} />
       </div>
-      <div className={styles.logout_container}>
+      {/* <div className={styles.logout_container}>
         <SidebarButton
           label="Logout"
           Icon={ExitIcon}
           onClick={() => router.replace("/")}
         />
-      </div>
+      </div> */}
     </div>
   );
 }
