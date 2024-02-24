@@ -4,6 +4,12 @@
   cursor: pointer;
 }
 
+.container_hover:hover {
+  background-color: rgba(123, 96, 241, 0.08);
+  transition: all;
+  transition-duration: 0.3s;
+}
+
 .innerContainer {
   display: flex;
   align-items: center;

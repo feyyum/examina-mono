@@ -28,8 +28,8 @@ function SidebarButton({
   return (
     <div
       className={`${styles.container} ${containerClassName} ${
-        active ? styles.button_active : ""
-      }`}
+        !active && !disabled && `${styles.container_hover}`
+      } ${active ? styles.button_active : ""}`}
       data-testid={testId}
     >
       <button

@@ -100,7 +100,7 @@ function CreateExam({}: Props) {
                     <Dialog.Overlay className="DialogOverlay" />
                     <Dialog.Content className="DialogContent">
                       <Dialog.Title className="DialogTitle">
-                        Select Date
+                        Select date
                       </Dialog.Title>
                       <Dialog.Description className="DialogDescription">
                         Please select date which you want to start exam.
@@ -115,7 +115,7 @@ function CreateExam({}: Props) {
                       <div
                         style={{
                           display: "flex",
-                          marginTop: 25,
+                          marginTop: "1.25rem",
                           justifyContent: "flex-end",
                         }}
                       >
@@ -125,7 +125,7 @@ function CreateExam({}: Props) {
                       </div>
                       <Dialog.Close asChild>
                         <button className="IconButton" aria-label="Close">
-                          <Image src={Close} alt="" />
+                          <Image src={Close} alt="" width={24} />
                         </button>
                       </Dialog.Close>
                     </Dialog.Content>
