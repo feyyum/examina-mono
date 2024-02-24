@@ -84,14 +84,14 @@ input {
   color: var(--gray-disabled);
   border: 1px solid var(--gray-border);
   font-weight: 300;
-  font-size: 14px;
-  width: calc(100% - 16px);
+  font-size: 1rem;
+  width: calc(100% - 2.25rem);
   cursor: pointer;
-  padding: 8px;
+  padding: 0.75rem 1.125rem;
 }
 
 .Button.violet:focus {
-  border: 1px solid var(--mina-purple);
+  border: 1px solid var(--sidebar-purple);
 }
 .Button.green {
   background-color: var(--green-4);
@@ -190,7 +190,6 @@ abbr {
   max-width: 100%;
   background: white;
   border: 1px solid var(--gray-border);
-  line-height: 1.125em;
 }
 
 .react-calendar--doubleView {
@@ -329,13 +328,13 @@ abbr {
 }
 
 .react-calendar__tile--active {
-  background: var(--mina-purple);
+  background: var(--sidebar-purple);
   color: white;
 }
 
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
-  background: var(--mina-purple);
+  background: var(--sidebar-purple);
 }
 
 .react-calendar--selectRange .react-calendar__tile--hover {
@@ -352,14 +351,14 @@ button {
   align-items: center;
   justify-content: space-between;
   border-radius: 4px;
-  padding: 8px;
-  font-size: 14px;
+  padding: 0.75rem 1.125rem;
+  font-size: 1rem;
   font-weight: 300;
   /* height: 35px; */
-  width: calc(100% - 15px);
+  width: calc(100% - 2.25rem);
   background-color: white;
   border: 1px solid var(--gray-border);
-  color: var(--mina-purple);
+  color: var(--gray-disabled);
 }
 .SelectTrigger:hover {
   /* background-color: var(--mauve-3); */
@@ -368,11 +367,11 @@ button {
   /* box-shadow: 0 0 0 1px black; */
 }
 .SelectTrigger[data-placeholder] {
-  color: var(--mina-purple);
+  color: var(--gray-disabled);
 }
 
 .SelectIcon {
-  color: var(--mina-purple);
+  color: var(--sidebar-purple);
 }
 
 .SelectContent {
@@ -384,18 +383,22 @@ button {
 }
 
 .SelectViewport {
-  padding: 16px;
+  padding: 4px;
+}
+
+.SelectViewport:hover {
+  cursor: pointer;
 }
 
 .SelectItem {
-  font-size: 14px;
+  font-size: 1rem;
   font-weight: 300;
-  color: var(--mina-purple);
+  color: var(--gray-disabled);
   border-radius: 4px;
   display: flex;
   align-items: center;
   height: 25px;
-  padding: 0 32px 0 16px;
+  padding: 18px 24px;
   position: relative;
   user-select: none;
 }
@@ -405,7 +408,7 @@ button {
 }
 .SelectItem[data-highlighted] {
   outline: none;
-  background-color: var(--mina-purple);
+  background-color: var(--sidebar-purple);
   color: white;
 }
 

@@ -82,7 +82,7 @@ function CreateExam({}: Props) {
                 className={styles.form_element_input}
                 type="text"
                 id="title"
-                placeholder="Enter Exam Title"
+                placeholder="Enter exam title"
                 onChange={(e) =>
                   dispatch(setExam({ ...exam, title: e.target.value }))
                 }
@@ -94,7 +94,7 @@ function CreateExam({}: Props) {
                 <h3 className={styles.form_element_title}>Start Date</h3>
                 <Dialog.Root>
                   <Dialog.Trigger asChild>
-                    <button className="Button violet">Start Date</button>
+                    <button className="Button violet">Start date</button>
                   </Dialog.Trigger>
                   <Dialog.Portal>
                     <Dialog.Overlay className="DialogOverlay" />
@@ -139,8 +139,11 @@ function CreateExam({}: Props) {
                     dispatch(setExam({ ...exam, duration: e }))
                   }
                 >
-                  <Select.Trigger className="SelectTrigger" aria-label="Food">
-                    <Select.Value placeholder="Duration" />
+                  <Select.Trigger
+                    className="SelectTrigger"
+                    aria-label="Duration"
+                  >
+                    <Select.Value placeholder="Select duration" />
                     <Select.Icon className="SelectIcon">
                       <Image src={ArrowBottom} alt="" width={12} />
                     </Select.Icon>
@@ -170,7 +173,7 @@ function CreateExam({}: Props) {
               <textarea
                 className={styles.form_element_textarea}
                 id="description"
-                placeholder="Enter Exam Description"
+                placeholder="Enter exam description"
                 onChange={(e) =>
                   dispatch(setExam({ ...exam, description: e.target.value }))
                 }

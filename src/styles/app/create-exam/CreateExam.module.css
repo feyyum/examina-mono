@@ -5,11 +5,11 @@
   height: calc(100vh - 80px);
   background-color: var(--neutral-150);
   overflow-y: scroll;
-  padding: 36px;
+  padding: 0 4.5rem;
 }
 
 .stepper_container {
-  padding: 32px 72px;
+  padding: 2.75rem 11.125rem;
   background-color: white;
   border-radius: 20px;
   box-shadow: 0px 0px 8px -3px rgba(0, 0, 0, 0.1);
@@ -17,11 +17,12 @@
 
 .stepper_selector_container {
   display: flex;
-  margin-bottom: 36px;
+  margin-bottom: 3rem;
 }
 
 .stepper_selector {
   flex: 1;
+  text-align: center;
   background-color: transparent;
   border: none;
   outline: none;
@@ -34,38 +35,34 @@
 }
 
 .stepper_selector_title {
-  font-weight: 500;
-  font-size: 14px;
+  font-weight: 300;
+  font-size: 1rem;
   margin: 10px 16px;
   color: var(--dark-blue-black);
 }
 
 .stepper_selector_title_bold {
   font-weight: 700;
-  font-size: 14px;
-}
-
-.title {
-  margin-bottom: 4px;
+  font-size: 1rem;
 }
 
 .form_element_container {
-  margin-bottom: 36px;
+  margin-bottom: 2.25rem;
 }
 
 .form_element_title {
   font-weight: 500;
-  font-size: 14px;
-  margin-bottom: 4px;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
 }
 
 .form_element_input {
-  width: calc(100% - 16px);
-  padding: 8px;
+  width: calc(100% - 2.25rem);
+  padding: 0.75rem 1.125rem;
   border-radius: 4px;
   border: 1px solid var(--gray-border);
   outline: none;
-  font-size: 14px;
+  font-size: 1rem;
   font-weight: 300;
 }
 
@@ -76,8 +73,8 @@
 .create_exam_form_row {
   display: flex;
   justify-content: space-between;
-  gap: 32px;
-  margin-bottom: 32px;
+  gap: 2rem;
+  margin-bottom: 2.25rem;
 }
 
 .create_exam_form_row > div {
@@ -86,20 +83,20 @@
 }
 
 .counter_text {
-  font-size: 8px;
+  font-size: 0.625rem;
   color: var(--gray-disabled);
-  margin-top: 4px;
+  margin-top: 0.25rem;
 }
 
 .form_element_textarea {
   width: 100%;
-  height: 110px;
+  height: 10rem;
   resize: none;
-  padding: 8px;
+  padding: 0.75rem 1.125rem;
   border-radius: 4px;
   border: 1px solid var(--gray-border);
   outline: none;
-  font-size: 14px;
+  font-size: 1rem;
   font-weight: 300;
 }
 
@@ -109,18 +106,18 @@
 
 .form_element_button_container {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
 }
 
 .form_element_button {
   border: none;
   outline: none;
-  font-weight: 500;
-  font-size: 14px;
+  font-weight: 400;
+  font-size: 1rem;
   color: white;
-  background-color: var(--mina-purple);
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
+  background-color: var(--sidebar-purple);
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer !important;
 }
