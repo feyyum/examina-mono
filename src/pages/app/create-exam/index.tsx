@@ -53,19 +53,19 @@ function CreateExam({}: Props) {
           <Tabs.Trigger className={styles.stepper_selector} value="0">
             <h3 className={styles.stepper_selector_title}>
               <span className={styles.stepper_selector_title_bold}>Step 1</span>{" "}
-              Exam Details
+              Exam details
             </h3>
           </Tabs.Trigger>
           <Tabs.Trigger className={styles.stepper_selector} value="1">
             <h3 className={styles.stepper_selector_title}>
               <span className={styles.stepper_selector_title_bold}>Step 2</span>{" "}
-              Create Questions
+              Create questions
             </h3>
           </Tabs.Trigger>
           <Tabs.Trigger className={styles.stepper_selector} value="2">
             <h3 className={styles.stepper_selector_title}>
               <span className={styles.stepper_selector_title_bold}>Step 3</span>{" "}
-              Preview
+              Finish
             </h3>
           </Tabs.Trigger>
         </Tabs.List>
@@ -73,7 +73,7 @@ function CreateExam({}: Props) {
           <div className={styles.create_exam_form_container}>
             <div className={styles.form_element_container}>
               <h3 className={styles.form_element_title}>
-                Exam Title{" "}
+                Exam title{" "}
                 <span className={styles.counter_text}>
                   {exam.title.length}/120
                 </span>
@@ -91,7 +91,7 @@ function CreateExam({}: Props) {
             </div>
             <div className={styles.create_exam_form_row}>
               <div className={styles.form_element_container}>
-                <h3 className={styles.form_element_title}>Start Date</h3>
+                <h3 className={styles.form_element_title}>Start date</h3>
                 <Dialog.Root>
                   <Dialog.Trigger asChild>
                     <button className="Button violet">Start date</button>
@@ -165,7 +165,7 @@ function CreateExam({}: Props) {
             </div>
             <div className={styles.form_element_container}>
               <h3 className={styles.form_element_title}>
-                Exam Description{" "}
+                Exam description{" "}
                 <span className={styles.counter_text}>
                   {exam.description.length}/1200
                 </span>

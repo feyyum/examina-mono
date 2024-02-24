@@ -37,13 +37,14 @@
 .stepper_selector_title {
   font-weight: 300;
   font-size: 1rem;
-  margin: 10px 16px;
+  margin: 0.75rem 1rem;
   color: var(--dark-blue-black);
 }
 
 .stepper_selector_title_bold {
   font-weight: 700;
   font-size: 1rem;
+  margin-right: 4px;
 }
 
 .form_element_container {
@@ -52,7 +53,7 @@
 
 .form_element_title {
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.875rem;
   margin-bottom: 0.25rem;
 }
 
