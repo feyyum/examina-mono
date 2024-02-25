@@ -14,13 +14,13 @@ function Header({}: Props) {
         <h2 className={styles.greeting_primary}>Welcome,</h2>
         <p className={styles.greeting_secondary}>Have a good day!</p>
       </div>
-      <input
+      {/* <input
         className={styles.input}
         type="text"
         placeholder="Search"
         maxLength={120}
         onChange={(e) => setSearch(e.target.value)}
-      />
+      /> */}
     </div>
   );
 }

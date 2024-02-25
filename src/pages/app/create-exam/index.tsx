@@ -3,15 +3,17 @@ import styles from "@/styles/app/create-exam/CreateExam.module.css";
 import Image from "next/image";
 import Calendar from "react-calendar";
 import classnames from "classnames";
+import { uuid } from "uuidv4";
 
 import * as Tabs from "@radix-ui/react-tabs";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Select from "@radix-ui/react-select";
+import * as RadioGroup from "@radix-ui/react-radio-group";
 
 import ArrowBottom from "@/icons/arrow_bottom.svg";
 
 import { useAppSelector, useAppDispatch } from "../../../../hooks";
-import { setExam } from "../../../../features/client/exam";
+import { Question, setExam } from "../../../../features/client/exam";
 
 // Components
 import { TextInput } from "@/components/ui/FormComponents";
@@ -31,6 +33,18 @@ function CreateExam({}: Props) {
 
   const [currentStep, setCurrentStep] = React.useState<string>("0");
   const [startDate, setStartDate] = useState<Value>(new Date());
+  const [currentQuestion, setCurrentQuestion] = useState<Question>({
+    id: uuid(),
+    question: "",
+    options: {
+      A: "",
+      B: "",
+      C: "",
+      D: "",
+      E: "",
+    },
+    answer: "A",
+  });
 
   // Change the exam state when the start date is changed
   useEffect(() => {
@@ -38,6 +52,8 @@ function CreateExam({}: Props) {
   }, [startDate]);
 
   console.log(exam);
+  console.log(currentQuestion);
+  console.log(currentQuestion.options);
 
   return (
     <div className={styles.container}>
@@ -192,7 +208,88 @@ function CreateExam({}: Props) {
             </div>
           </div>
         </Tabs.Content>
-        <Tabs.Content value="1">Tab two content</Tabs.Content>
+        <Tabs.Content value="1">
+          <div className={styles.create_exam_form_container}>
+            <div className={styles.form_element_container}>
+              <h3 className={styles.form_element_title}>
+                Exam the question{" "}
+                <span className={styles.counter_text}>
+                  {exam.title.length}/120
+                </span>
+              </h3>
+              <input
+                className={styles.form_element_input}
+                type="text"
+                id="title"
+                placeholder="Enter the question"
+                onChange={(e) =>
+                  setCurrentQuestion({
+                    ...currentQuestion,
+                    question: e.target.value,
+                  })
+                }
+                maxLength={120}
+              />
+            </div>
+            <div className={styles.form_element_container}>
+              <h3 className={styles.form_element_title}>
+                Enter the question details{" "}
+                <span className={styles.counter_text}>
+                  {exam.description.length}/1200 (Optional)
+                </span>
+              </h3>
+              <textarea
+                className={styles.form_element_textarea}
+                id="description"
+                placeholder="Enter the question details"
+                onChange={(e) =>
+                  setCurrentQuestion({
+                    ...currentQuestion,
+                    description: e.target.value,
+                  })
+                }
+                maxLength={1200}
+              />
+            </div>
+            <div className={styles.form_element_container}>
+              <h3 className={styles.form_element_title}>
+                Enter the answer options of question and choose correct answer{" "}
+                {/* <span className={styles.counter_text}>
+                  {exam.description.length}/1200 (Optional)
+                </span> */}
+              </h3>
+              <div className={styles.questions_container}>
+                <RadioGroup.Root
+                  className="RadioGroupRoot"
+                  defaultValue="default"
+                  aria-label="View density"
+                >
+                  {Object.values(currentQuestion.options).map((el, i) => {
+                    return (
+                      <div key={i}>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <RadioGroup.Item
+                            className="RadioGroupItem"
+                            value="default"
+                          >
+                            <RadioGroup.Indicator
+                              className="RadioGroupIndicator"
+                              // aria-checked={
+                              //   el === currentQuestion.answer && el !== ""
+                              // }
+                              onChange={(e) => console.log(e)}
+                            />
+                          </RadioGroup.Item>
+                          <input type="text" value={`${el} Selam`} />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </RadioGroup.Root>
+              </div>
+            </div>
+          </div>
+        </Tabs.Content>
         <Tabs.Content value="2">Tab three content</Tabs.Content>
       </Tabs.Root>
     </div>

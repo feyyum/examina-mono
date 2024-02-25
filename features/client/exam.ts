@@ -15,6 +15,7 @@ export interface ExamState {
 export interface Question {
   id: string;
   question: string;
+  description?: string;
   options: {
     A: any;
     B: any;
@@ -36,6 +37,7 @@ const initialState = {
     {
       id: uuid(),
       question: "",
+      description: "",
       options: {
         A: "",
         B: "",
