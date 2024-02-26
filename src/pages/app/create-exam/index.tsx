@@ -264,23 +264,47 @@ function CreateExam({}: Props) {
                   defaultValue="default"
                   aria-label="View density"
                 >
-                  {Object.values(currentQuestion.options).map((el, i) => {
+                  {Object.keys(currentQuestion.options).map((el, i) => {
                     return (
-                      <div key={i}>
+                      <div
+                        key={i}
+                        className={`RadioGruopContainer ${
+                          el === currentQuestion.answer &&
+                          "RadioGroupContainer__active"
+                        }`}
+                      >
                         <div style={{ display: "flex", alignItems: "center" }}>
                           <RadioGroup.Item
                             className="RadioGroupItem"
-                            value="default"
+                            value={el}
+                            checked={el === currentQuestion.answer}
+                            onClick={(e) =>
+                              setCurrentQuestion({
+                                ...currentQuestion,
+                                answer: el as "A" | "B" | "C" | "D" | "E",
+                              })
+                            }
                           >
-                            <RadioGroup.Indicator
-                              className="RadioGroupIndicator"
-                              // aria-checked={
-                              //   el === currentQuestion.answer && el !== ""
-                              // }
-                              onChange={(e) => console.log(e)}
-                            />
+                            <RadioGroup.Indicator className="RadioGroupIndicator" />
                           </RadioGroup.Item>
-                          <input type="text" value={`${el} Selam`} />
+                          <input
+                            className="RadioInput"
+                            type="text"
+                            value={`${
+                              Object.values(currentQuestion.options)[i]
+                            }`}
+                            placeholder={`Enter answer ${i + 1}`}
+                            onChange={(e) =>
+                              setCurrentQuestion({
+                                ...currentQuestion,
+                                options: {
+                                  ...currentQuestion.options,
+                                  [["A", "B", "C", "D", "E"][i]]:
+                                    e.target.value,
+                                },
+                              })
+                            }
+                          />
                         </div>
                       </div>
                     );

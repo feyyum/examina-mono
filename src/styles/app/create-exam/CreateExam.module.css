@@ -2,9 +2,8 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: calc(100vh - 80px);
+  min-height: calc(100vh - 80px);
   background-color: var(--neutral-150);
-  overflow-y: scroll;
   padding: 0 4.5rem;
 }
 
@@ -54,7 +53,7 @@
 .form_element_title {
   font-weight: 500;
   font-size: 0.875rem;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
 .form_element_input {
