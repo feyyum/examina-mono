@@ -121,3 +121,30 @@
   border-radius: 0.5rem;
   cursor: pointer !important;
 }
+
+.questions_container {
+  margin-bottom: 2.25rem;
+}
+
+.preview_table_container {
+  margin: 2.25rem 0;
+}
+
+.preview_table {
+  width: 100%;
+}
+
+.preview_table_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.preview_table_content {
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.preview_table_error {
+  cursor: pointer;
+}

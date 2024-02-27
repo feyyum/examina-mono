@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { uuid } from "uuidv4";
+
+import Question from "@/lib/Question";
 import type { RootState } from "../../store";
 
 // Define a type for the slice state
@@ -12,20 +14,6 @@ export interface ExamState {
   questions: Question[];
 }
 
-export interface Question {
-  id: string;
-  question: string;
-  description?: string;
-  options: {
-    A: any;
-    B: any;
-    C: any;
-    D: any;
-    E: any;
-  };
-  answer: "A" | "B" | "C" | "D" | "E";
-}
-
 // Define the initial state using that type
 const initialState = {
   id: uuid(),
@@ -33,21 +21,7 @@ const initialState = {
   description: "",
   startDate: new Date(),
   duration: "",
-  questions: [
-    {
-      id: uuid(),
-      question: "",
-      description: "",
-      options: {
-        A: "",
-        B: "",
-        C: "",
-        D: "",
-        E: "",
-      },
-      answer: "A",
-    },
-  ],
+  questions: [],
 } as ExamState;
 
 export const examSlice = createSlice({

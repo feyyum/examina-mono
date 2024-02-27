@@ -3,7 +3,6 @@ import styles from "@/styles/app/create-exam/CreateExam.module.css";
 import Image from "next/image";
 import Calendar from "react-calendar";
 import classnames from "classnames";
-import { uuid } from "uuidv4";
 
 import * as Tabs from "@radix-ui/react-tabs";
 import * as Dialog from "@radix-ui/react-dialog";
@@ -13,11 +12,14 @@ import * as RadioGroup from "@radix-ui/react-radio-group";
 import ArrowBottom from "@/icons/arrow_bottom.svg";
 
 import { useAppSelector, useAppDispatch } from "../../../../hooks";
-import { Question, setExam } from "../../../../features/client/exam";
+import { setExam } from "../../../../features/client/exam";
 
 // Components
 import { TextInput } from "@/components/ui/FormComponents";
 import Close from "@/icons/close_mina_purple.svg";
+import Error from "@/icons/error.svg";
+
+import Question from "@/lib/Question";
 
 type Props = {};
 
@@ -33,25 +35,16 @@ function CreateExam({}: Props) {
 
   const [currentStep, setCurrentStep] = React.useState<string>("0");
   const [startDate, setStartDate] = useState<Value>(new Date());
-  const [currentQuestion, setCurrentQuestion] = useState<Question>({
-    id: uuid(),
-    question: "",
-    options: {
-      A: "",
-      B: "",
-      C: "",
-      D: "",
-      E: "",
-    },
-    answer: "A",
-  });
+  const [currentQuestion, setCurrentQuestion] = useState<Question>(
+    new Question()
+  );
 
   // Change the exam state when the start date is changed
   useEffect(() => {
     dispatch(setExam({ ...exam, startDate: startDate as Date }));
   }, [startDate]);
 
-  console.log(exam);
+  console.log("EXAM", exam);
   console.log(currentQuestion);
   console.log(currentQuestion.options);
 
@@ -99,6 +92,7 @@ function CreateExam({}: Props) {
                 type="text"
                 id="title"
                 placeholder="Enter exam title"
+                value={exam.title}
                 onChange={(e) =>
                   dispatch(setExam({ ...exam, title: e.target.value }))
                 }
@@ -190,6 +184,7 @@ function CreateExam({}: Props) {
                 className={styles.form_element_textarea}
                 id="description"
                 placeholder="Enter exam description"
+                value={exam.description}
                 onChange={(e) =>
                   dispatch(setExam({ ...exam, description: e.target.value }))
                 }
@@ -222,6 +217,7 @@ function CreateExam({}: Props) {
                 type="text"
                 id="title"
                 placeholder="Enter the question"
+                value={currentQuestion.question}
                 onChange={(e) =>
                   setCurrentQuestion({
                     ...currentQuestion,
@@ -242,6 +238,7 @@ function CreateExam({}: Props) {
                 className={styles.form_element_textarea}
                 id="description"
                 placeholder="Enter the question details"
+                value={currentQuestion.description}
                 onChange={(e) =>
                   setCurrentQuestion({
                     ...currentQuestion,
@@ -278,7 +275,7 @@ function CreateExam({}: Props) {
                             className="RadioGroupItem"
                             value={el}
                             checked={el === currentQuestion.answer}
-                            onClick={(e) =>
+                            onClick={() =>
                               setCurrentQuestion({
                                 ...currentQuestion,
                                 answer: el as "A" | "B" | "C" | "D" | "E",
@@ -311,6 +308,70 @@ function CreateExam({}: Props) {
                   })}
                 </RadioGroup.Root>
               </div>
+              <div className={styles.form_element_button_container}>
+                <button
+                  className={styles.form_element_button}
+                  onClick={() => {
+                    const list = [...exam.questions];
+                    list.push(currentQuestion);
+                    dispatch(
+                      setExam({
+                        ...exam,
+                        questions: list,
+                      })
+                    );
+                    setCurrentQuestion(new Question());
+                  }}
+                >
+                  Create Question
+                </button>
+              </div>
+              <div className={styles.preview_table_container}>
+                <table className={styles.preview_table}>
+                  <tr>
+                    <th>Questions List</th>
+                  </tr>
+                  {exam.questions.map((el, _i) => {
+                    return (
+                      <tr key={_i}>
+                        <td>
+                          <div className={styles.preview_table_row}>
+                            <p className={styles.preview_table_content}>
+                              Question {_i + 1}
+                            </p>
+                            <Image
+                              src={Error}
+                              alt=""
+                              className={styles.preview_table_error}
+                              onClick={() => {
+                                const list = exam.questions.filter(
+                                  (fel) => fel.id !== el.id
+                                );
+                                dispatch(
+                                  setExam({
+                                    ...exam,
+                                    questions: list,
+                                  })
+                                );
+                              }}
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </table>
+              </div>
+            </div>
+            <div className={styles.form_element_button_container}>
+              <button
+                className={styles.form_element_button}
+                onClick={() => {
+                  setCurrentStep("2");
+                }}
+              >
+                Next Step
+              </button>
             </div>
           </div>
         </Tabs.Content>

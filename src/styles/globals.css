@@ -23,6 +23,21 @@
   font-family: "Urbanist", sans-serif;
 }
 
+table,
+th,
+td {
+  border: 1px solid var(--gray-border);
+  padding: 1rem 2rem;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th {
+  background-color: var(--gray-light);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
 /* ---Dialog Styles--- Radix Base */
 @import "@radix-ui/colors/black-alpha.css";
 @import "@radix-ui/colors/green.css";
