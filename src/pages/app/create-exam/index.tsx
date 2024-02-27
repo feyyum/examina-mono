@@ -1,52 +1,40 @@
-import React, { useState, Ref, useEffect } from "react";
 import styles from "@/styles/app/create-exam/CreateExam.module.css";
+import React, { useState, Ref, useEffect } from "react";
 import Image from "next/image";
 import Calendar from "react-calendar";
 import classnames from "classnames";
 
+// Icons
+import ArrowBottom from "@/icons/arrow_bottom.svg";
+import Close from "@/icons/close_mina_purple.svg";
+import Error from "@/icons/error.svg";
+
+// Classes
+import Question from "@/lib/Question";
+
+// Radix Primitives
 import * as Tabs from "@radix-ui/react-tabs";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Select from "@radix-ui/react-select";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 
-import ArrowBottom from "@/icons/arrow_bottom.svg";
-
+// Redux
 import { useAppSelector, useAppDispatch } from "../../../../hooks";
 import { setExam } from "../../../../features/client/exam";
 
-// Components
-import { TextInput } from "@/components/ui/FormComponents";
-import Close from "@/icons/close_mina_purple.svg";
-import Error from "@/icons/error.svg";
-
-import Question from "@/lib/Question";
-
-type Props = {};
-
 type ValuePiece = Date | null;
-
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-// const STEPS = ["Basics", "Create Questions", "Check", "Done"];
-
-function CreateExam({}: Props) {
+function CreateExam() {
   const exam = useAppSelector((state) => state.exam);
   const dispatch = useAppDispatch();
 
   const [currentStep, setCurrentStep] = React.useState<string>("0");
   const [startDate, setStartDate] = useState<Value>(new Date());
+
   const [currentQuestion, setCurrentQuestion] = useState<Question>(
     new Question()
   );
-
-  // Change the exam state when the start date is changed
-  useEffect(() => {
-    dispatch(setExam({ ...exam, startDate: startDate as Date }));
-  }, [startDate]);
-
-  console.log("EXAM", exam);
-  console.log(currentQuestion);
-  console.log(currentQuestion.options);
 
   return (
     <div className={styles.container}>
@@ -117,7 +105,12 @@ function CreateExam({}: Props) {
                       </Dialog.Description>
                       <div>
                         <Calendar
-                          onChange={setStartDate}
+                          onChange={(e) => {
+                            setStartDate(e);
+                            dispatch(
+                              setExam({ ...exam, startDate: e as Date })
+                            );
+                          }}
                           value={startDate}
                           minDate={new Date()}
                         />
