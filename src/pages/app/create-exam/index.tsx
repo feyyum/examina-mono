@@ -24,6 +24,7 @@ import { setExam } from "../../../../features/client/exam";
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
+type Preview = Question | undefined;
 
 function CreateExam() {
   const exam = useAppSelector((state) => state.exam);
@@ -35,6 +36,17 @@ function CreateExam() {
   const [currentQuestion, setCurrentQuestion] = useState<Question>(
     new Question()
   );
+  const [previewQuestion, setPreviewQuestion] = useState<Preview>(
+    exam.questions[0]
+  );
+
+  useEffect(() => {
+    exam.questions.length > 0
+      ? setPreviewQuestion(exam.questions[0])
+      : setPreviewQuestion(undefined);
+  }, [exam.questions]);
+
+  console.log(previewQuestion);
 
   return (
     <div className={styles.container}>
@@ -59,7 +71,11 @@ function CreateExam() {
               Create questions
             </h3>
           </Tabs.Trigger>
-          <Tabs.Trigger className={styles.stepper_selector} value="2">
+          <Tabs.Trigger
+            className={styles.stepper_selector}
+            value="2"
+            disabled={!previewQuestion}
+          >
             <h3 className={styles.stepper_selector_title}>
               <span className={styles.stepper_selector_title_bold}>Step 3</span>{" "}
               Finish
@@ -362,13 +378,88 @@ function CreateExam() {
                 onClick={() => {
                   setCurrentStep("2");
                 }}
+                disabled={!previewQuestion}
               >
                 Next Step
               </button>
             </div>
           </div>
         </Tabs.Content>
-        <Tabs.Content value="2">Tab three content</Tabs.Content>
+        <Tabs.Content value="2">
+          <div className={styles.preview_container}>
+            <div className={styles.preview_question_container}>
+              <div className={styles.question_container}>
+                <p className={styles.question_describe}>
+                  {previewQuestion?.description}
+                </p>
+                <p className={styles.question_title}>
+                  {previewQuestion?.question}
+                </p>
+              </div>
+              <div className={styles.answers_container}>
+                <RadioGroup.Root
+                  className="RadioGroupRoot"
+                  defaultValue="default"
+                  aria-label="View density"
+                >
+                  {previewQuestion &&
+                    Object.values(previewQuestion.options).map((el, i) => {
+                      return (
+                        <div
+                          key={i}
+                          className={`RadioGruopContainer ${
+                            el === currentQuestion.answer &&
+                            "RadioGroupContainer__active"
+                          } RadioGruopContainerPreview`}
+                        >
+                          <div
+                            style={{ display: "flex", alignItems: "center" }}
+                          >
+                            <RadioGroup.Item
+                              className="RadioGroupItem"
+                              value={el}
+                              checked={
+                                Object.keys(previewQuestion.options)[i] ===
+                                currentQuestion.answer
+                              }
+                            >
+                              <RadioGroup.Indicator className="RadioGroupIndicator" />
+                            </RadioGroup.Item>
+                            <p className="RadioText">{el}</p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                </RadioGroup.Root>
+              </div>
+            </div>
+            <div className={styles.preview_selector_container}>
+              <div className={styles.selector_container}>
+                {exam.questions.map((el, _i) => {
+                  return (
+                    <div
+                      key={_i}
+                      className={`${styles.selector_box} ${
+                        el.id === previewQuestion?.id &&
+                        styles.selector_box_active
+                      }`}
+                      onClick={() => setPreviewQuestion(el)}
+                    >
+                      <p
+                        className={`${styles.selector_box_text} ${
+                          el.id === previewQuestion?.id &&
+                          styles.selector_box_text_active
+                        }`}
+                      >
+                        {_i + 1}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </Tabs.Content>
       </Tabs.Root>
     </div>
   );

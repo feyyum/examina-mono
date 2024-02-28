@@ -8,6 +8,7 @@
   --gray-light: #fafafa;
   --sidebar-purple: #7b60f1;
   --gray-disabled: #8b8d98;
+  --gray-dark: #667085;
   --gray-border: #e2e8f0;
   --gray-bg: #f8fafc;
   --gray-placeholder: #64748b;
@@ -475,6 +476,10 @@ button {
   border-radius: 4px;
 }
 
+.RadioGruopContainerPreview {
+  border-radius: 12px;
+}
+
 .RadioGroupContainer__active {
   border-color: var(--green-light);
   transition: 0.25s all ease-in-out;
@@ -487,6 +492,9 @@ button {
   height: 20px;
   border-radius: 100%;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .RadioGroupItem:hover {
   background-color: var(--green-light);
@@ -503,8 +511,8 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
+  width: 10px;
+  height: 10px;
   position: relative;
 }
 .RadioGroupIndicator::after {
@@ -527,6 +535,13 @@ button {
   width: 100%;
   margin: 0 0.5rem;
   outline: none;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.RadioText {
+  width: 100%;
+  margin: 0 0.5rem;
   font-size: 1rem;
   font-weight: 300;
 }
