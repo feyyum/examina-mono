@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
 import Header from "@/components/ui/Header";
 import Sidebar from "@/components/ui/Sidebar";
-import RightSidebar from "@/components/ui/RightSidebar";
+// import RightSidebar from "@/components/ui/RightSidebar";
 
 // Custom hooks
 import { useContractStatus } from "../../hooks/useContractStatus";
@@ -29,19 +29,6 @@ function Layout({ children, isWrapped = true }: Props) {
     return (
       <div>
         <main>{children}</main>
-      </div>
-    );
-  }
-
-  if (router.pathname === "/app") {
-    return (
-      <div className={styles.container}>
-        <Sidebar />
-        <div className={styles.content_container}>
-          <Header />
-          <main className={styles.content}>{children}</main>
-        </div>
-        <RightSidebar />
       </div>
     );
   }
