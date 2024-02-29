@@ -386,77 +386,90 @@ function CreateExam() {
           </div>
         </Tabs.Content>
         <Tabs.Content value="2">
-          <div className={styles.preview_container}>
-            <div className={styles.preview_question_container}>
-              <div className={styles.question_container}>
-                <p className={styles.question_describe}>
-                  {previewQuestion?.description}
-                </p>
-                <p className={styles.question_title}>
-                  {previewQuestion?.question}
-                </p>
-              </div>
-              <div className={styles.answers_container}>
-                <RadioGroup.Root
-                  className="RadioGroupRoot"
-                  defaultValue="default"
-                  aria-label="View density"
-                >
-                  {previewQuestion &&
-                    Object.values(previewQuestion.options).map((el, i) => {
-                      return (
-                        <div
-                          key={i}
-                          className={`RadioGruopContainer ${
-                            el === currentQuestion.answer &&
-                            "RadioGroupContainer__active"
-                          } RadioGruopContainerPreview`}
-                        >
+          <div className={styles.create_exam_form_container}>
+            <div className={styles.preview_container}>
+              <div className={styles.preview_question_container}>
+                <div className={styles.question_container}>
+                  <p className={styles.question_describe}>
+                    {previewQuestion?.description}
+                  </p>
+                  <p className={styles.question_title}>
+                    {previewQuestion?.question}
+                  </p>
+                </div>
+                <div className={styles.answers_container}>
+                  <RadioGroup.Root
+                    className="RadioGroupRoot"
+                    defaultValue="default"
+                    aria-label="View density"
+                  >
+                    {previewQuestion &&
+                      Object.values(previewQuestion.options).map((el, i) => {
+                        return (
                           <div
-                            style={{ display: "flex", alignItems: "center" }}
+                            key={i}
+                            className={`RadioGruopContainer ${
+                              el === currentQuestion.answer &&
+                              "RadioGroupContainer__active"
+                            } RadioGruopContainerPreview`}
                           >
-                            <RadioGroup.Item
-                              className="RadioGroupItem"
-                              value={el}
-                              checked={
-                                Object.keys(previewQuestion.options)[i] ===
-                                currentQuestion.answer
-                              }
+                            <div
+                              style={{ display: "flex", alignItems: "center" }}
                             >
-                              <RadioGroup.Indicator className="RadioGroupIndicator" />
-                            </RadioGroup.Item>
-                            <p className="RadioText">{el}</p>
+                              <RadioGroup.Item
+                                className="RadioGroupItem"
+                                value={el}
+                                checked={
+                                  Object.keys(previewQuestion.options)[i] ===
+                                  currentQuestion.answer
+                                }
+                              >
+                                <RadioGroup.Indicator className="RadioGroupIndicator" />
+                              </RadioGroup.Item>
+                              <p className="RadioText">{el}</p>
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
-                </RadioGroup.Root>
+                        );
+                      })}
+                  </RadioGroup.Root>
+                </div>
+              </div>
+              <div className={styles.preview_selector_container}>
+                <div className={styles.selector_container}>
+                  {exam.questions.map((el, _i) => {
+                    return (
+                      <div
+                        key={_i}
+                        className={`${styles.selector_box} ${
+                          el.id === previewQuestion?.id &&
+                          styles.selector_box_active
+                        }`}
+                        onClick={() => setPreviewQuestion(el)}
+                      >
+                        <p
+                          className={`${styles.selector_box_text} ${
+                            el.id === previewQuestion?.id &&
+                            styles.selector_box_text_active
+                          }`}
+                        >
+                          {_i + 1}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
-            <div className={styles.preview_selector_container}>
-              <div className={styles.selector_container}>
-                {exam.questions.map((el, _i) => {
-                  return (
-                    <div
-                      key={_i}
-                      className={`${styles.selector_box} ${
-                        el.id === previewQuestion?.id &&
-                        styles.selector_box_active
-                      }`}
-                      onClick={() => setPreviewQuestion(el)}
-                    >
-                      <p
-                        className={`${styles.selector_box_text} ${
-                          el.id === previewQuestion?.id &&
-                          styles.selector_box_text_active
-                        }`}
-                      >
-                        {_i + 1}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
+            <div className={styles.form_element_button_container}>
+              <button
+                className={styles.form_element_button}
+                onClick={() => {
+                  // setCurrentStep("2");
+                }}
+                disabled={!previewQuestion}
+              >
+                Save and Finish
+              </button>
             </div>
           </div>
         </Tabs.Content>
@@ -491,9 +504,7 @@ const SelectItem = React.forwardRef(
         ref={forwardedRef}
       >
         <Select.ItemText>{children}</Select.ItemText>
-        <Select.ItemIndicator className="SelectItemIndicator">
-          {/* <CheckIcon /> */}
-        </Select.ItemIndicator>
+        <Select.ItemIndicator className="SelectItemIndicator" />
       </Select.Item>
     );
   }

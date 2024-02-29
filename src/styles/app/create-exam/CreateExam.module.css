@@ -153,6 +153,7 @@
   display: flex;
   width: 100%;
   gap: 2rem;
+  margin-bottom: 2.25rem;
 }
 
 .preview_question_container {
