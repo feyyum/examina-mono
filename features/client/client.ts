@@ -30,19 +30,8 @@ const initialState = {
 
 export const clientSlice = createSlice({
   name: "client",
-  // `clientSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    // increment: (state) => {
-    //   state.value += 1;
-    // },
-    // decrement: (state) => {
-    //   state.value -= 1;
-    // },
-    // // Use the PayloadAction type to declare the contents of `action.payload`
-    // incrementByAmount: (state, action: PayloadAction<number>) => {
-    //   state.value += action.payload;
-    // },
     setClient: (state, action: PayloadAction<ClientState>) => {
       return {
         ...state,
@@ -54,7 +43,6 @@ export const clientSlice = createSlice({
 
 export const { setClient } = clientSlice.actions;
 
-// Other code such as selectors can use the imported `RootState` type
 export const selectContract = (state: RootState) =>
   state.client.zkappWorkerClient;
 
