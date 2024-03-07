@@ -270,24 +270,24 @@ function CreateExam() {
                   defaultValue="default"
                   aria-label="View density"
                 >
-                  {Object.keys(currentQuestion.options).map((el, i) => {
+                  {currentQuestion.options.map((el, i) => {
                     return (
                       <div
                         key={i}
                         className={`RadioGruopContainer ${
-                          el === currentQuestion.answer &&
+                          el.number === currentQuestion.correctAnswer &&
                           "RadioGroupContainer__active"
                         }`}
                       >
                         <div style={{ display: "flex", alignItems: "center" }}>
                           <RadioGroup.Item
                             className="RadioGroupItem"
-                            value={el}
-                            checked={el === currentQuestion.answer}
+                            value={el.text}
+                            checked={el.number === currentQuestion.correctAnswer}
                             onClick={() =>
                               setCurrentQuestion({
                                 ...currentQuestion,
-                                answer: el as "A" | "B" | "C" | "D" | "E",
+                                correctAnswer: el.number,
                               })
                             }
                           >
@@ -297,17 +297,19 @@ function CreateExam() {
                             className="RadioInput"
                             type="text"
                             value={`${
-                              Object.values(currentQuestion.options)[i]
+                              currentQuestion.options[i].text
                             }`}
                             placeholder={`Enter answer ${i + 1}`}
                             onChange={(e) =>
                               setCurrentQuestion({
                                 ...currentQuestion,
-                                options: {
+                                options: [
                                   ...currentQuestion.options,
-                                  [["A", "B", "C", "D", "E"][i]]:
-                                    e.target.value,
-                                },
+                                  {
+                                    number: i + 1 as 1 | 2 | 3 | 4 | 5,
+                                    text: e.target.value,
+                                  }
+                                ],
                               })
                             }
                           />
@@ -404,12 +406,12 @@ function CreateExam() {
                     aria-label="View density"
                   >
                     {previewQuestion &&
-                      Object.values(previewQuestion.options).map((el, i) => {
+                      previewQuestion.options.map((el, i) => {
                         return (
                           <div
                             key={i}
                             className={`RadioGruopContainer ${
-                              el === currentQuestion.answer &&
+                              el.number === currentQuestion.correctAnswer &&
                               "RadioGroupContainer__active"
                             } RadioGruopContainerPreview`}
                           >
@@ -418,15 +420,15 @@ function CreateExam() {
                             >
                               <RadioGroup.Item
                                 className="RadioGroupItem"
-                                value={el}
+                                value={el.text}
                                 checked={
-                                  Object.keys(previewQuestion.options)[i] ===
-                                  currentQuestion.answer
+                                  previewQuestion.options[i].number ===
+                                  currentQuestion.correctAnswer
                                 }
                               >
                                 <RadioGroup.Indicator className="RadioGroupIndicator" />
                               </RadioGroup.Item>
-                              <p className="RadioText">{el}</p>
+                              <p className="RadioText">{el.text}</p>
                             </div>
                           </div>
                         );
