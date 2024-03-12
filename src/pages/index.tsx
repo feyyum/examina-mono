@@ -2,6 +2,8 @@ import styles from '../styles/Landing.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { connectWallet } from '../../hooks/useContractStatus';
+
 // Fetch
 import { getMessage } from '@/lib/Client/Auth';
 
@@ -134,11 +136,7 @@ export default function Home() {
             <p className={styles.nav_button}>Blog</p>
             <p className={styles.nav_button}>Features</p>
           </div>
-          <Link
-            href="/app"
-            className={styles.button_container}
-            onClick={() => console.log('Selam')}
-          >
+          <Link href="/app" className={styles.button_container} onClick={() => connectWallet()}>
             <SidebarButton label="Connect Wallet" active />
           </Link>
         </div>
