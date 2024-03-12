@@ -10,6 +10,7 @@ class RequestBase {
       headers: {
         'Content-Type': 'application/json',
       },
+      withCredentials: true,
     });
   }
 

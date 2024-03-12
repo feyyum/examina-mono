@@ -18,11 +18,11 @@ type Props = {
 function Layout({ children }: Props) {
   const router = useRouter();
 
-  const contract = useContractStatus();
+  // const contract = useContractStatus();
 
-  if (contract.status !== 'done' || contract.error) {
-    return <Loader {...contract} />;
-  }
+  // if (contract.status !== 'done' || contract.error) {
+  //   return <Loader {...contract} />;
+  // }
 
   if (router.pathname === '/') {
     return (

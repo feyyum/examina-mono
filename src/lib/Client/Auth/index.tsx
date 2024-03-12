@@ -26,7 +26,8 @@ function getMessage(publicKey: string): Promise<string> {
     requestBase
       .get('/register/session/get-message-to-sign/' + publicKey)
       .then((response) => {
-        resolve(response.data.message.split(',')[2]);
+        // resolve(response.data.message.split(',')[2]);
+        resolve(response.data.message);
       })
       .catch((error) => {
         reject(error);
