@@ -64,14 +64,10 @@ export const useContractStatus = (): ContractStatus => {
           const publicKeyBase58: string = (await mina.requestAccounts())[0];
           const publicKey = PublicKey.fromBase58(publicKeyBase58);
 
+          // Authenticate
           const _message = await getMessage(publicKey.toBase58()!);
-          console.log(_message);
-
           const signedData = await signMessage({ message: _message });
-          console.log(signedData);
-
-          const loginResponse = await login(signedData);
-          console.log(loginResponse);
+          await login(signedData);
 
           console.log(`Using key:${publicKey.toBase58()}`);
 
