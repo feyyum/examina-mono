@@ -1,6 +1,7 @@
 import styles from '../styles/Landing.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { connectWallet } from '../../hooks/useContractStatus';
 
@@ -122,6 +123,8 @@ const linkedinArr = [
 ];
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <>
       <div className={styles.landing_header_container}>
@@ -136,9 +139,15 @@ export default function Home() {
             <p className={styles.nav_button}>Blog</p>
             <p className={styles.nav_button}>Features</p>
           </div>
-          <Link href="/app" className={styles.button_container} onClick={() => connectWallet()}>
+          <div
+            className={styles.button_container}
+            onClick={() => {
+              connectWallet();
+              router.push('/app');
+            }}
+          >
             <SidebarButton label="Connect Wallet" active />
-          </Link>
+          </div>
         </div>
       </div>
       <div className={styles.hero_container}>
