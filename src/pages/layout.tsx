@@ -1,15 +1,15 @@
-import styles from "../styles/app/Layout.module.css";
-import React from "react";
-import { useRouter } from "next/router";
+import styles from '../styles/app/Layout.module.css';
+import React from 'react';
+import { useRouter } from 'next/router';
 
 // Components
-import Loader from "@/components/Loader";
-import Header from "@/components/ui/Header";
-import Sidebar from "@/components/ui/Sidebar";
+import Loader from '@/components/Loader';
+import Header from '@/components/ui/Header';
+import Sidebar from '@/components/ui/Sidebar';
 // import RightSidebar from "@/components/ui/RightSidebar";
 
 // Custom hooks
-import { useContractStatus } from "../../hooks/useContractStatus";
+import { useContractStatus } from '../../hooks/useContractStatus';
 
 type Props = {
   children: React.ReactNode;
@@ -20,11 +20,11 @@ function Layout({ children }: Props) {
 
   const contract = useContractStatus();
 
-  if (contract.status !== "done" || contract.error) {
+  if (contract.status !== 'done' || contract.error) {
     return <Loader {...contract} />;
   }
 
-  if (router.pathname === "/") {
+  if (router.pathname === '/') {
     return (
       <div>
         <main>{children}</main>
