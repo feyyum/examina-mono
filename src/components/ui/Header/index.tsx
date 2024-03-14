@@ -1,12 +1,12 @@
-import styles from "@/styles/components/Header.module.css";
-import { useState } from "react";
+import styles from '@/styles/components/Header.module.css';
+import { useState } from 'react';
 
 type Props = {};
 
 function Header({}: Props) {
-  const [search, setSearch] = useState<string>("");
+  const [search, setSearch] = useState<string>('');
 
-  console.log(search);
+  // console.log(search);
 
   return (
     <div className={styles.container}>

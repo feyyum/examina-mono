@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { connectWallet } from '../../hooks/useContractStatus';
+import { useDispatch } from 'react-redux';
 
 // Fetch
 import { getMessage } from '@/lib/Client/Auth';
@@ -32,6 +33,7 @@ import FEATURE6 from '@/images/landing_feature_card/feature_6.svg';
 // Icons
 import RightLong from '@/icons/right_long.svg';
 import RightLongPurple from '@/icons/right_long_purple.svg';
+import { setWallet } from '../../features/client/account';
 
 const stepArr = [
   {
@@ -124,6 +126,7 @@ const linkedinArr = [
 
 export default function Home() {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -141,8 +144,9 @@ export default function Home() {
           </div>
           <div
             className={styles.button_container}
-            onClick={() => {
-              connectWallet();
+            onClick={async () => {
+              const wallet = await connectWallet();
+              wallet && dispatch(setWallet({ wallets: [wallet] }));
               router.push('/app');
             }}
           >

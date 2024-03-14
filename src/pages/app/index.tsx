@@ -1,9 +1,12 @@
-"use client";
-import { useState } from "react";
-import styles from "@/styles/app/Dashboard.module.css";
+'use client';
+import { useState } from 'react';
+import styles from '@/styles/app/Dashboard.module.css';
+
+import { useQuery } from '@tanstack/react-query';
+import { getExamList } from '@/lib/Client/Exam';
 
 // Import Custom Components
-import CarouselComponent from "@/components/ui/DashboardCarousel";
+import CarouselComponent from '@/components/ui/DashboardCarousel';
 
 type Props = {};
 
@@ -18,39 +21,39 @@ type Exam = {
 
 const MOCK_EXAMS: Exam[] = [
   {
-    title: "Exam 1",
-    description: "This is the first exam",
-    date: "2021-07-01",
-    duration: "120",
-    owner: "John Doe",
-    participants: "20",
+    title: 'Exam 1',
+    description: 'This is the first exam',
+    date: '2021-07-01',
+    duration: '120',
+    owner: 'John Doe',
+    participants: '20',
   },
   {
-    title: "Exam 2",
-    description: "This is the second exam",
-    date: "2021-07-02",
-    duration: "60",
-    owner: "John Doe",
-    participants: "12",
+    title: 'Exam 2',
+    description: 'This is the second exam',
+    date: '2021-07-02',
+    duration: '60',
+    owner: 'John Doe',
+    participants: '12',
   },
   {
-    title: "Exam 3",
-    description: "This is the third exam",
-    date: "2021-07-03",
-    duration: "40",
-    owner: "John Doe",
-    participants: "8",
+    title: 'Exam 3',
+    description: 'This is the third exam',
+    date: '2021-07-03',
+    duration: '40',
+    owner: 'John Doe',
+    participants: '8',
   },
 ];
 
 const MOCK_EXAMS2: Exam[] = [
   {
-    title: "Exam 2",
-    description: "This is the second exam",
-    date: "2021-07-02",
-    duration: "60",
-    owner: "John Doe",
-    participants: "12",
+    title: 'Exam 2',
+    description: 'This is the second exam',
+    date: '2021-07-02',
+    duration: '60',
+    owner: 'John Doe',
+    participants: '12',
   },
 ];
 
@@ -58,6 +61,11 @@ function Application({}: Props) {
   const [upcomingStep, setUpcomingStep] = useState(0);
   const [ongoingStep, setOngoingStep] = useState(0);
   const [inreviewStep, setInreviewStep] = useState(0);
+
+  const { data, isLoading, isError } = useQuery({ queryKey: ['exams'], queryFn: getExamList });
+
+  // console.log(isLoading);
+  // console.log(data);
 
   return (
     <div className={styles.container}>
@@ -74,11 +82,7 @@ function Application({}: Props) {
           step={ongoingStep}
           stepper={setOngoingStep}
         />
-        <CarouselComponent
-          type="Inreview"
-          step={inreviewStep}
-          stepper={setInreviewStep}
-        />
+        <CarouselComponent type="Inreview" step={inreviewStep} stepper={setInreviewStep} />
       </div>
     </div>
   );

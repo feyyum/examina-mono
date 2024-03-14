@@ -1,26 +1,26 @@
-import styles from "@/styles/app/create-exam/CreateExam.module.css";
-import React, { useState, Ref, useEffect } from "react";
-import Image from "next/image";
-import Calendar from "react-calendar";
-import classnames from "classnames";
+import styles from '@/styles/app/create-exam/CreateExam.module.css';
+import React, { useState, Ref, useEffect } from 'react';
+import Image from 'next/image';
+import Calendar from 'react-calendar';
+import classnames from 'classnames';
 
 // Icons
-import ArrowBottom from "@/icons/arrow_bottom.svg";
-import Close from "@/icons/close_mina_purple.svg";
-import Error from "@/icons/error.svg";
+import ArrowBottom from '@/icons/arrow_bottom.svg';
+import Close from '@/icons/close_mina_purple.svg';
+import Error from '@/icons/error.svg';
 
 // Classes
-import Question from "@/lib/Question";
+import Question from '@/lib/Question';
 
 // Radix Primitives
-import * as Tabs from "@radix-ui/react-tabs";
-import * as Dialog from "@radix-ui/react-dialog";
-import * as Select from "@radix-ui/react-select";
-import * as RadioGroup from "@radix-ui/react-radio-group";
+import * as Tabs from '@radix-ui/react-tabs';
+import * as Dialog from '@radix-ui/react-dialog';
+import * as Select from '@radix-ui/react-select';
+import * as RadioGroup from '@radix-ui/react-radio-group';
 
 // Redux
-import { useAppSelector, useAppDispatch } from "../../../../hooks";
-import { setExam } from "../../../../features/client/exam";
+import { useAppSelector, useAppDispatch } from '../../../../hooks';
+import { setExam } from '../../../../features/client/exam';
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -30,15 +30,11 @@ function CreateExam() {
   const exam = useAppSelector((state) => state.exam);
   const dispatch = useAppDispatch();
 
-  const [currentStep, setCurrentStep] = React.useState<string>("0");
+  const [currentStep, setCurrentStep] = React.useState<string>('0');
   const [startDate, setStartDate] = useState<Value>(new Date());
 
-  const [currentQuestion, setCurrentQuestion] = useState<Question>(
-    new Question()
-  );
-  const [previewQuestion, setPreviewQuestion] = useState<Preview>(
-    exam.questions[0]
-  );
+  const [currentQuestion, setCurrentQuestion] = useState<Question>(new Question());
+  const [previewQuestion, setPreviewQuestion] = useState<Preview>(exam.questions[0]);
 
   useEffect(() => {
     exam.questions.length > 0
@@ -46,7 +42,7 @@ function CreateExam() {
       : setPreviewQuestion(undefined);
   }, [exam.questions]);
 
-  console.log(previewQuestion);
+  // console.log(previewQuestion);
 
   return (
     <div className={styles.container}>
@@ -55,30 +51,20 @@ function CreateExam() {
         onValueChange={(value) => setCurrentStep(value)}
         className={styles.stepper_container}
       >
-        <Tabs.List
-          aria-label="create exam"
-          className={styles.stepper_selector_container}
-        >
+        <Tabs.List aria-label="create exam" className={styles.stepper_selector_container}>
           <Tabs.Trigger className={styles.stepper_selector} value="0">
             <h3 className={styles.stepper_selector_title}>
-              <span className={styles.stepper_selector_title_bold}>Step 1</span>{" "}
-              Exam details
+              <span className={styles.stepper_selector_title_bold}>Step 1</span> Exam details
             </h3>
           </Tabs.Trigger>
           <Tabs.Trigger className={styles.stepper_selector} value="1">
             <h3 className={styles.stepper_selector_title}>
-              <span className={styles.stepper_selector_title_bold}>Step 2</span>{" "}
-              Create questions
+              <span className={styles.stepper_selector_title_bold}>Step 2</span> Create questions
             </h3>
           </Tabs.Trigger>
-          <Tabs.Trigger
-            className={styles.stepper_selector}
-            value="2"
-            disabled={!previewQuestion}
-          >
+          <Tabs.Trigger className={styles.stepper_selector} value="2" disabled={!previewQuestion}>
             <h3 className={styles.stepper_selector_title}>
-              <span className={styles.stepper_selector_title_bold}>Step 3</span>{" "}
-              Finish
+              <span className={styles.stepper_selector_title_bold}>Step 3</span> Finish
             </h3>
           </Tabs.Trigger>
         </Tabs.List>
@@ -86,10 +72,7 @@ function CreateExam() {
           <div className={styles.create_exam_form_container}>
             <div className={styles.form_element_container}>
               <h3 className={styles.form_element_title}>
-                Exam title{" "}
-                <span className={styles.counter_text}>
-                  {exam.title.length}/120
-                </span>
+                Exam title <span className={styles.counter_text}>{exam.title.length}/120</span>
               </h3>
               <input
                 className={styles.form_element_input}
@@ -97,9 +80,7 @@ function CreateExam() {
                 id="title"
                 placeholder="Enter exam title"
                 value={exam.title}
-                onChange={(e) =>
-                  dispatch(setExam({ ...exam, title: e.target.value }))
-                }
+                onChange={(e) => dispatch(setExam({ ...exam, title: e.target.value }))}
                 maxLength={120}
               />
             </div>
@@ -113,9 +94,7 @@ function CreateExam() {
                   <Dialog.Portal>
                     <Dialog.Overlay className="DialogOverlay" />
                     <Dialog.Content className="DialogContent">
-                      <Dialog.Title className="DialogTitle">
-                        Select date
-                      </Dialog.Title>
+                      <Dialog.Title className="DialogTitle">Select date</Dialog.Title>
                       <Dialog.Description className="DialogDescription">
                         Please select date which you want to start exam.
                       </Dialog.Description>
@@ -123,9 +102,7 @@ function CreateExam() {
                         <Calendar
                           onChange={(e) => {
                             setStartDate(e);
-                            dispatch(
-                              setExam({ ...exam, startDate: e as Date })
-                            );
+                            dispatch(setExam({ ...exam, startDate: e as Date }));
                           }}
                           value={startDate}
                           minDate={new Date()}
@@ -133,9 +110,9 @@ function CreateExam() {
                       </div>
                       <div
                         style={{
-                          display: "flex",
-                          marginTop: "1.25rem",
-                          justifyContent: "flex-end",
+                          display: 'flex',
+                          marginTop: '1.25rem',
+                          justifyContent: 'flex-end',
                         }}
                       >
                         <Dialog.Close asChild>
@@ -153,15 +130,8 @@ function CreateExam() {
               </div>
               <div className={styles.form_element_container}>
                 <h3 className={styles.form_element_title}>Duration</h3>
-                <Select.Root
-                  onValueChange={(e) =>
-                    dispatch(setExam({ ...exam, duration: e }))
-                  }
-                >
-                  <Select.Trigger
-                    className="SelectTrigger"
-                    aria-label="Duration"
-                  >
+                <Select.Root onValueChange={(e) => dispatch(setExam({ ...exam, duration: e }))}>
+                  <Select.Trigger className="SelectTrigger" aria-label="Duration">
                     <Select.Value placeholder="Select duration" />
                     <Select.Icon className="SelectIcon">
                       <Image src={ArrowBottom} alt="" width={12} />
@@ -184,19 +154,15 @@ function CreateExam() {
             </div>
             <div className={styles.form_element_container}>
               <h3 className={styles.form_element_title}>
-                Exam description{" "}
-                <span className={styles.counter_text}>
-                  {exam.description.length}/1200
-                </span>
+                Exam description{' '}
+                <span className={styles.counter_text}>{exam.description.length}/1200</span>
               </h3>
               <textarea
                 className={styles.form_element_textarea}
                 id="description"
                 placeholder="Enter exam description"
                 value={exam.description}
-                onChange={(e) =>
-                  dispatch(setExam({ ...exam, description: e.target.value }))
-                }
+                onChange={(e) => dispatch(setExam({ ...exam, description: e.target.value }))}
                 maxLength={1200}
               />
             </div>
@@ -204,7 +170,7 @@ function CreateExam() {
               <button
                 className={styles.form_element_button}
                 onClick={() => {
-                  setCurrentStep("1");
+                  setCurrentStep('1');
                 }}
               >
                 Next Step
@@ -216,10 +182,8 @@ function CreateExam() {
           <div className={styles.create_exam_form_container}>
             <div className={styles.form_element_container}>
               <h3 className={styles.form_element_title}>
-                Exam the question{" "}
-                <span className={styles.counter_text}>
-                  {exam.title.length}/120
-                </span>
+                Exam the question{' '}
+                <span className={styles.counter_text}>{exam.title.length}/120</span>
               </h3>
               <input
                 className={styles.form_element_input}
@@ -238,7 +202,7 @@ function CreateExam() {
             </div>
             <div className={styles.form_element_container}>
               <h3 className={styles.form_element_title}>
-                Enter the question details{" "}
+                Enter the question details{' '}
                 <span className={styles.counter_text}>
                   {exam.description.length}/1200 (Optional)
                 </span>
@@ -259,7 +223,7 @@ function CreateExam() {
             </div>
             <div className={styles.form_element_container}>
               <h3 className={styles.form_element_title}>
-                Enter the answer options of question and choose correct answer{" "}
+                Enter the answer options of question and choose correct answer{' '}
                 {/* <span className={styles.counter_text}>
                   {exam.description.length}/1200 (Optional)
                 </span> */}
@@ -276,10 +240,10 @@ function CreateExam() {
                         key={i}
                         className={`RadioGruopContainer ${
                           el.number === currentQuestion.correctAnswer &&
-                          "RadioGroupContainer__active"
+                          'RadioGroupContainer__active'
                         }`}
                       >
-                        <div style={{ display: "flex", alignItems: "center" }}>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
                           <RadioGroup.Item
                             className="RadioGroupItem"
                             value={el.text}
@@ -296,9 +260,7 @@ function CreateExam() {
                           <input
                             className="RadioInput"
                             type="text"
-                            value={`${
-                              currentQuestion.options[i].text
-                            }`}
+                            value={`${currentQuestion.options[i].text}`}
                             placeholder={`Enter answer ${i + 1}`}
                             onChange={(e) =>
                               setCurrentQuestion({
@@ -306,9 +268,9 @@ function CreateExam() {
                                 options: [
                                   ...currentQuestion.options,
                                   {
-                                    number: i + 1 as 1 | 2 | 3 | 4 | 5,
+                                    number: (i + 1) as 1 | 2 | 3 | 4 | 5,
                                     text: e.target.value,
-                                  }
+                                  },
                                 ],
                               })
                             }
@@ -347,17 +309,13 @@ function CreateExam() {
                       <tr key={_i}>
                         <td>
                           <div className={styles.preview_table_row}>
-                            <p className={styles.preview_table_content}>
-                              Question {_i + 1}
-                            </p>
+                            <p className={styles.preview_table_content}>Question {_i + 1}</p>
                             <Image
                               src={Error}
                               alt=""
                               className={styles.preview_table_error}
                               onClick={() => {
-                                const list = exam.questions.filter(
-                                  (fel) => fel.id !== el.id
-                                );
+                                const list = exam.questions.filter((fel) => fel.id !== el.id);
                                 dispatch(
                                   setExam({
                                     ...exam,
@@ -378,7 +336,7 @@ function CreateExam() {
               <button
                 className={styles.form_element_button}
                 onClick={() => {
-                  setCurrentStep("2");
+                  setCurrentStep('2');
                 }}
                 disabled={!previewQuestion}
               >
@@ -392,12 +350,8 @@ function CreateExam() {
             <div className={styles.preview_container}>
               <div className={styles.preview_question_container}>
                 <div className={styles.question_container}>
-                  <p className={styles.question_describe}>
-                    {previewQuestion?.description}
-                  </p>
-                  <p className={styles.question_title}>
-                    {previewQuestion?.question}
-                  </p>
+                  <p className={styles.question_describe}>{previewQuestion?.description}</p>
+                  <p className={styles.question_title}>{previewQuestion?.question}</p>
                 </div>
                 <div className={styles.answers_container}>
                   <RadioGroup.Root
@@ -412,12 +366,10 @@ function CreateExam() {
                             key={i}
                             className={`RadioGruopContainer ${
                               el.number === currentQuestion.correctAnswer &&
-                              "RadioGroupContainer__active"
+                              'RadioGroupContainer__active'
                             } RadioGruopContainerPreview`}
                           >
-                            <div
-                              style={{ display: "flex", alignItems: "center" }}
-                            >
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
                               <RadioGroup.Item
                                 className="RadioGroupItem"
                                 value={el.text}
@@ -443,15 +395,13 @@ function CreateExam() {
                       <div
                         key={_i}
                         className={`${styles.selector_box} ${
-                          el.id === previewQuestion?.id &&
-                          styles.selector_box_active
+                          el.id === previewQuestion?.id && styles.selector_box_active
                         }`}
                         onClick={() => setPreviewQuestion(el)}
                       >
                         <p
                           className={`${styles.selector_box_text} ${
-                            el.id === previewQuestion?.id &&
-                            styles.selector_box_text_active
+                            el.id === previewQuestion?.id && styles.selector_box_text_active
                           }`}
                         >
                           {_i + 1}
@@ -500,7 +450,7 @@ const SelectItem = React.forwardRef(
     return (
       <Select.Item
         value={value} // Add the 'value' property here
-        className={classnames("SelectItem", className)}
+        className={classnames('SelectItem', className)}
         disabled={disabled}
         {...props}
         ref={forwardedRef}
@@ -512,6 +462,6 @@ const SelectItem = React.forwardRef(
   }
 );
 
-SelectItem.displayName = "SelectItem";
+SelectItem.displayName = 'SelectItem';
 
 export default CreateExam;

@@ -1,5 +1,5 @@
 const config = {
-  API_ENDPOINT: 'https://api.examina.space/',
+  API_ENDPOINT: 'http://localhost:5000/',
 };
 
 export default config;

@@ -146,6 +146,12 @@ export async function connectWallet() {
     return;
   }
 
+  const accounts: string[] = await mina.getAccounts();
+
+  if (accounts.length > 0) {
+    return accounts[0];
+  }
+
   const publicKeyBase58: string = (await mina.requestAccounts())[0];
   const publicKey = PublicKey.fromBase58(publicKeyBase58);
 
@@ -153,4 +159,6 @@ export async function connectWallet() {
   const _message = await getMessage(publicKey.toBase58()!);
   const signedData = await signMessage({ message: _message });
   await login(signedData);
+
+  return publicKeyBase58;
 }
