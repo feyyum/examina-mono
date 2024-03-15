@@ -101,19 +101,19 @@ const techArr = [
     techTitle: 'Zero Knowledge',
     techDesc:
       'Leveraging Zero Knowledge, Examina empowers the creation of exams without disclosing questions, correct answers, user responses, or personal identity, ensuring utmost confidentiality.',
-    techLink: 'https://minaprotocol.com/',
+    techLink: 'https://examina.medium.com/unveiling-examinas-zero-knowledge-magic-a-journey-into-trust-and-anonymity-cd56c7330998',
   },
   {
     techTitle: 'Mina zkProgram',
     techDesc:
       'Our score verifier uses a Recursive Proof Of Score zkProgram. That enables us to prove exam results without revealing your score and answers',
-    techLink: 'https://minaprotocol.com/',
+    techLink: 'https://examina.medium.com/navigating-the-world-of-zk-programs-examinas-insight-into-secure-exam-scoring-ea974e0b11ed',
   },
   {
     techTitle: 'Web3 Session System',
     techDesc:
       'We generate a session based on your signature. Which enables us to verify your wallet ownership. Without any gas fees or private information!',
-    techLink: 'https://minaprotocol.com/',
+    techLink: 'https://examina.medium.com/web3-sessions-bridging-the-gap-between-security-and-seamless-backend-integration-3eaf3ff8f995',
   },
 ];
 
@@ -138,8 +138,8 @@ export default function Home() {
             </h1>
           </div>
           <div className={styles.navigation_container}>
-            <p className={styles.nav_button}>Docs</p>
-            <p className={styles.nav_button}>Blog</p>
+          <Link rel="noopener noreferrer" target="_blank" className={styles.link_no_decoration} href="https://github.com/Esayf"><p className={styles.nav_button}>Docs</p></Link>
+            <Link rel="noopener noreferrer" target="_blank" className={styles.link_no_decoration} href="https://examina.medium.com/"><p className={styles.nav_button}>Blog</p></Link>
             <p className={styles.nav_button}>Features</p>
           </div>
           <div
@@ -159,7 +159,7 @@ export default function Home() {
           <div className={styles.content_container}>
             <h5 className={styles.hero_summary}>Blockchain Tech Based Online Exam Platform</h5>
             <h1 className={styles.hero_title}>Create, join, test</h1>
-            <h3 className={styles.hero_desc}>Create your exam in few minutes</h3>
+            <h3 className={styles.hero_desc}>Examina: Setting the New Standard for Secure Exam Creation</h3>
             <button className={styles.hero_button}>Create your exam</button>
           </div>
         </div>
@@ -172,8 +172,7 @@ export default function Home() {
             The <span>fastest</span> way to create exam
           </h1>
           <h3 className={styles.section_desc}>
-            Powerful, self-serve product and growth analytics to help you convert, engage, and
-            retain more users. Trusted by over 4,000 startups.
+          With Examina, you can create an exam in 3 stages and share your exam with a single click.
           </h3>
           <div className={styles.card_container}>
             {stepArr.map((step, index) => {
@@ -203,8 +202,7 @@ export default function Home() {
             Meet <span>next generation</span> exam platform
           </h1>
           <h3 className={styles.section_desc}>
-            Powerful, self-serve product and growth analytics to help you convert, engage, and
-            retain more users. Trusted by over 4,000 startups.
+          We offer an experience you've never used before with our unique features.
           </h3>
           <div className={styles.card_container}>
             {featureArr.map((feature, index) => {
@@ -228,8 +226,7 @@ export default function Home() {
             Examina <span>uses</span> these technologies
           </h1>
           <h3 className={styles.section_desc}>
-            Powerful, self-serve product and growth analytics to help you convert, engage, and
-            retain more users. Trusted by over 4,000 startups.
+          We provide a safe, fast and technological experience with the technologies we use.
           </h3>
           <div className={styles.card_container}>
             {techArr.map((tech, index) => {
@@ -240,7 +237,7 @@ export default function Home() {
                     <p className={styles.tech_card_desc}>{tech.techDesc}</p>
                   </div>
                   <div className={styles.tech_card_link_container}>
-                    <Link href={tech.techLink} className={styles.techLink}>
+                    <Link rel="noopener noreferrer" target="_blank" href={tech.techLink} className={styles.techLink}>
                       Learn more <Image src={RightLongPurple} alt="" />
                     </Link>
                   </div>
@@ -269,7 +266,7 @@ export default function Home() {
           <div className={styles.sub_section_text_container}>
             <Image src={Try} alt="" className={styles.sub_section_image} />
             <p className={styles.sub_section_desc}>
-              You must have an auro wallet account before using it. Not there yet? <a>Create now</a>
+              You must have an auro wallet account before using it. Not there yet? <a rel="noopener noreferrer" target="_blank" href='https://www.aurowallet.com/' >Create now</a>
             </p>
           </div>
           <a href="#">
@@ -281,7 +278,7 @@ export default function Home() {
         <div className={styles.container}>
           <div className={styles.supporters_container}>
             <p>supported by</p>
-            <Image src={Mina} alt="" />
+            <Link rel="noopener noreferrer" target="_blank" href="https://minaprotocol.com/"><Image src={Mina} alt=""/></Link>
           </div>
           <div className={styles.footer}>
             <div className={styles.container}>

@@ -314,6 +314,10 @@
   gap: 8px;
 }
 
+.link_no_decoration{
+  text-decoration: none;
+}
+
 .team_image_container {
   width: 100%;
   margin-top: 4rem;
