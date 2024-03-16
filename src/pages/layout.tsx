@@ -10,6 +10,7 @@ import { RootState } from '../../store';
 import Header from '@/components/ui/Header';
 import Sidebar from '@/components/ui/Sidebar';
 import { setWallet } from '../../features/client/account';
+import { onChangeWallet } from '../../hooks/useContractStatus';
 // import RightSidebar from "@/components/ui/RightSidebar";
 
 // Custom hooks
@@ -52,13 +53,18 @@ function Layout({ children }: Props) {
 
   useEffect(() => {
     (window as any).mina?.on('accountsChanged', (accounts: string[]) => {
-      dispatch(setWallet({ wallets: accounts }));
+      if (account.wallets.length === 0) {
+        return;
+      }
+      onChangeWallet(accounts).then(() => {
+        dispatch(setWallet({ wallets: accounts }));
+      });
     });
 
     return () => {
       (window as any).mina?.removeAllListeners('accountsChanged');
     };
-  }, []);
+  }, [account]);
 
   if (router.pathname === '/') {
     return (

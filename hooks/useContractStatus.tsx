@@ -162,3 +162,18 @@ export async function connectWallet() {
 
   return publicKeyBase58;
 }
+
+export async function onChangeWallet(_accounts: string[]) {
+  if (_accounts.length === 0) {
+    return;
+  }
+
+  const publicKey = _accounts[0];
+
+  // Authenticate
+  const _message = await getMessage(publicKey);
+  const signedData = await signMessage({ message: _message });
+  await login(signedData);
+
+  return publicKey;
+}
