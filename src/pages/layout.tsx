@@ -23,12 +23,13 @@ type Props = {
 
 function Layout({ children }: Props) {
   const router = useRouter();
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
   const account = useSelector((state: RootState) => state.account);
 
   const [rendered, setRendered] = useState(false);
 
+  // Get Wallets
   useEffect(() => {
     if ((window as any) && (window as any).mina === undefined) {
       setRendered(true);
@@ -45,12 +46,14 @@ function Layout({ children }: Props) {
     }
   }, []);
 
+  // Redirect to home if no wallets
   useEffect(() => {
     if (rendered && account.wallets.length === 0 && router.pathname !== '/') {
       router.push('/');
     }
   }, [rendered, account.wallets, router.pathname]);
 
+  // Handle Wallet Change
   useEffect(() => {
     (window as any).mina?.on('accountsChanged', (accounts: string[]) => {
       if (account.wallets.length === 0) {
