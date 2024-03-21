@@ -1,4 +1,4 @@
-import { uuid } from "uuidv4";
+// import { uuid } from 'uuidv4';
 
 export type Option = {
   number: 1 | 2 | 3 | 4 | 5;
@@ -6,36 +6,36 @@ export type Option = {
 };
 
 class Question {
-  public id: string;
-  public question: string;
+  public number: number;
+  public text: string;
   public description: string;
   public options: Option[];
   public correctAnswer: 1 | 2 | 3 | 4 | 5; // correctAnswer
 
-  public constructor() {
-    this.id = uuid();
-    this.question = "";
-    this.description = "";
+  public constructor(id?: number) {
+    this.number = id ? id : 0;
+    this.text = '';
+    this.description = '';
     this.options = [
       {
         number: 1,
-        text: "",
+        text: '',
       },
       {
         number: 2,
-        text: "",
+        text: '',
       },
       {
         number: 3,
-        text: "",
+        text: '',
       },
       {
         number: 4,
-        text: "",
+        text: '',
       },
       {
         number: 5,
-        text: "",
+        text: '',
       },
     ];
     this.correctAnswer = 1;

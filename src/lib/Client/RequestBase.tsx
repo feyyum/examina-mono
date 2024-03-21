@@ -20,6 +20,7 @@ class RequestBase {
       },
       function (error: AxiosError) {
         let _error = error;
+        //! It should be 401, but the server returns 403
         if (error.response?.status === 403) {
           _error = {
             ...error,
@@ -46,7 +47,7 @@ class RequestBase {
     });
   }
 
-  post(url: string, data: any): Promise<AxiosResponse> {
+  post(url: string, data?: any): Promise<AxiosResponse> {
     return this.instance.request({
       url,
       method: 'POST',
