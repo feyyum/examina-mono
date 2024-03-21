@@ -1,5 +1,7 @@
 import styles from '@/styles/app/create-exam/CreateExam.module.css';
-import React, { useState, Ref, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useMutation, UseMutationOptions } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Calendar from 'react-calendar';
 import classnames from 'classnames';
@@ -11,6 +13,9 @@ import Error from '@/icons/error.svg';
 
 // Classes
 import Question from '@/lib/Question';
+
+// API
+import { createExam } from '@/lib/Client/Exam';
 
 // Radix Primitives
 import * as Tabs from '@radix-ui/react-tabs';
@@ -29,11 +34,40 @@ type Preview = Question | undefined;
 function CreateExam() {
   const exam = useAppSelector((state) => state.exam);
   const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  const mutationOptions: UseMutationOptions<any, any, any, any> = {
+    mutationFn: createExam,
+    // other options like onSuccess, onError, etc.
+    onSuccess: (data) => {
+      console.log(data);
+      setQuestionID(1);
+      dispatch(
+        setExam({
+          id: '',
+          title: '',
+          description: '',
+          startDate: new Date(),
+          duration: '',
+          questions: [],
+        })
+      );
+      setCurrentQuestion(new Question(questionID));
+      router.replace('/app');
+    },
+    onError: (error) => {
+      console.log('Error', error);
+    },
+  };
+  const { mutate: saveExam, isPending } = useMutation(mutationOptions);
 
   const [currentStep, setCurrentStep] = React.useState<string>('0');
-  const [startDate, setStartDate] = useState<Value>(new Date());
+  const [startDate, setStartDate] = useState<Value>();
 
-  const [currentQuestion, setCurrentQuestion] = useState<Question>(new Question());
+  //! Temporary solution for question ID
+  const [questionID, setQuestionID] = useState<number>(1);
+
+  const [currentQuestion, setCurrentQuestion] = useState<Question>(new Question(questionID));
   const [previewQuestion, setPreviewQuestion] = useState<Preview>(exam.questions[0]);
 
   useEffect(() => {
@@ -42,7 +76,10 @@ function CreateExam() {
       : setPreviewQuestion(undefined);
   }, [exam.questions]);
 
-  // console.log(previewQuestion);
+  const createQuestionRef = useRef<any>(null);
+  console.log('REF', createQuestionRef);
+
+  console.log(exam);
 
   return (
     <div className={styles.container}>
@@ -57,12 +94,28 @@ function CreateExam() {
               <span className={styles.stepper_selector_title_bold}>Step 1</span> Exam details
             </h3>
           </Tabs.Trigger>
-          <Tabs.Trigger className={styles.stepper_selector} value="1">
+          <Tabs.Trigger
+            className={styles.stepper_selector}
+            value="1"
+            ref={createQuestionRef}
+            disabled={
+              exam.title === '' ||
+              exam.description === '' ||
+              exam.startDate === null ||
+              exam.duration === ''
+            }
+          >
             <h3 className={styles.stepper_selector_title}>
               <span className={styles.stepper_selector_title_bold}>Step 2</span> Create questions
             </h3>
           </Tabs.Trigger>
-          <Tabs.Trigger className={styles.stepper_selector} value="2" disabled={!previewQuestion}>
+          <Tabs.Trigger
+            className={styles.stepper_selector}
+            value="2"
+            disabled={
+              !previewQuestion || createQuestionRef?.current?.disabled || exam.questions.length < 10
+            }
+          >
             <h3 className={styles.stepper_selector_title}>
               <span className={styles.stepper_selector_title_bold}>Step 3</span> Finish
             </h3>
@@ -89,7 +142,9 @@ function CreateExam() {
                 <h3 className={styles.form_element_title}>Start date</h3>
                 <Dialog.Root>
                   <Dialog.Trigger asChild>
-                    <button className="Button violet">Start date</button>
+                    <button className="Button violet">
+                      {startDate instanceof Date ? startDate.toLocaleDateString() : 'Select date'}
+                    </button>
                   </Dialog.Trigger>
                   <Dialog.Portal>
                     <Dialog.Overlay className="DialogOverlay" />
@@ -130,7 +185,10 @@ function CreateExam() {
               </div>
               <div className={styles.form_element_container}>
                 <h3 className={styles.form_element_title}>Duration</h3>
-                <Select.Root onValueChange={(e) => dispatch(setExam({ ...exam, duration: e }))}>
+                <Select.Root
+                  onValueChange={(e) => dispatch(setExam({ ...exam, duration: e }))}
+                  value={exam.duration}
+                >
                   <Select.Trigger className="SelectTrigger" aria-label="Duration">
                     <Select.Value placeholder="Select duration" />
                     <Select.Icon className="SelectIcon">
@@ -170,6 +228,14 @@ function CreateExam() {
               <button
                 className={styles.form_element_button}
                 onClick={() => {
+                  if (
+                    exam.title === '' ||
+                    exam.description === '' ||
+                    exam.startDate === null ||
+                    exam.duration === ''
+                  ) {
+                    return;
+                  }
                   setCurrentStep('1');
                 }}
               >
@@ -183,18 +249,18 @@ function CreateExam() {
             <div className={styles.form_element_container}>
               <h3 className={styles.form_element_title}>
                 Exam the question{' '}
-                <span className={styles.counter_text}>{exam.title.length}/120</span>
+                <span className={styles.counter_text}>{currentQuestion.text.length}/120</span>
               </h3>
               <input
                 className={styles.form_element_input}
                 type="text"
                 id="title"
                 placeholder="Enter the question"
-                value={currentQuestion.question}
+                value={currentQuestion.text}
                 onChange={(e) =>
                   setCurrentQuestion({
                     ...currentQuestion,
-                    question: e.target.value,
+                    text: e.target.value,
                   })
                 }
                 maxLength={120}
@@ -204,7 +270,7 @@ function CreateExam() {
               <h3 className={styles.form_element_title}>
                 Enter the question details{' '}
                 <span className={styles.counter_text}>
-                  {exam.description.length}/1200 (Optional)
+                  {currentQuestion.description.length}/1200 (Optional)
                 </span>
               </h3>
               <textarea
@@ -262,18 +328,17 @@ function CreateExam() {
                             type="text"
                             value={`${currentQuestion.options[i].text}`}
                             placeholder={`Enter answer ${i + 1}`}
-                            onChange={(e) =>
+                            onChange={(e) => {
+                              const updatedOptions = [...currentQuestion.options];
+                              updatedOptions[i] = {
+                                number: (i + 1) as 1 | 2 | 3 | 4 | 5,
+                                text: e.target.value,
+                              };
                               setCurrentQuestion({
                                 ...currentQuestion,
-                                options: [
-                                  ...currentQuestion.options,
-                                  {
-                                    number: (i + 1) as 1 | 2 | 3 | 4 | 5,
-                                    text: e.target.value,
-                                  },
-                                ],
-                              })
-                            }
+                                options: updatedOptions,
+                              });
+                            }}
                           />
                         </div>
                       </div>
@@ -285,6 +350,16 @@ function CreateExam() {
                 <button
                   className={styles.form_element_button}
                   onClick={() => {
+                    if (
+                      currentQuestion.text === '' ||
+                      currentQuestion.description === '' ||
+                      currentQuestion.options.filter((el) => el.text === '').length > 0
+                    ) {
+                      return;
+                    }
+                    if (exam.questions.length >= 10) {
+                      return;
+                    }
                     const list = [...exam.questions];
                     list.push(currentQuestion);
                     dispatch(
@@ -293,7 +368,8 @@ function CreateExam() {
                         questions: list,
                       })
                     );
-                    setCurrentQuestion(new Question());
+                    setQuestionID(questionID + 1);
+                    setCurrentQuestion(new Question(questionID + 1));
                   }}
                 >
                   Create Question
@@ -315,7 +391,9 @@ function CreateExam() {
                               alt=""
                               className={styles.preview_table_error}
                               onClick={() => {
-                                const list = exam.questions.filter((fel) => fel.id !== el.id);
+                                const list = exam.questions.filter(
+                                  (fel) => fel.number !== el.number
+                                );
                                 dispatch(
                                   setExam({
                                     ...exam,
@@ -351,7 +429,7 @@ function CreateExam() {
               <div className={styles.preview_question_container}>
                 <div className={styles.question_container}>
                   <p className={styles.question_describe}>{previewQuestion?.description}</p>
-                  <p className={styles.question_title}>{previewQuestion?.question}</p>
+                  <p className={styles.question_title}>{previewQuestion?.text}</p>
                 </div>
                 <div className={styles.answers_container}>
                   <RadioGroup.Root
@@ -395,13 +473,13 @@ function CreateExam() {
                       <div
                         key={_i}
                         className={`${styles.selector_box} ${
-                          el.id === previewQuestion?.id && styles.selector_box_active
+                          el.number === previewQuestion?.number && styles.selector_box_active
                         }`}
                         onClick={() => setPreviewQuestion(el)}
                       >
                         <p
                           className={`${styles.selector_box_text} ${
-                            el.id === previewQuestion?.id && styles.selector_box_text_active
+                            el.number === previewQuestion?.number && styles.selector_box_text_active
                           }`}
                         >
                           {_i + 1}
@@ -417,10 +495,11 @@ function CreateExam() {
                 className={styles.form_element_button}
                 onClick={() => {
                   // setCurrentStep("2");
+                  saveExam(exam);
                 }}
-                disabled={!previewQuestion}
+                disabled={!previewQuestion || isPending}
               >
-                Save and Finish
+                {isPending ? 'Creating Exam...' : 'Save and Finish'}
               </button>
             </div>
           </div>
