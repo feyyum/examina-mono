@@ -65,7 +65,7 @@ function Application({}: Props) {
   const { data, isLoading, isError } = useQuery({ queryKey: ['exams'], queryFn: getExamList });
 
   // console.log(isLoading);
-  // console.log(data);
+  console.log(data);
 
   return (
     <div className={styles.container}>

@@ -77,6 +77,14 @@ function Layout({ children }: Props) {
     );
   }
 
+  if (router.pathname.includes('/app/exams')) {
+    return (
+      <div>
+        <main>{children}</main>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.container}>
       <Sidebar />
