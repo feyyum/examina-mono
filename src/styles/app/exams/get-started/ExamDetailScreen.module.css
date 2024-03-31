@@ -44,6 +44,23 @@
   align-items: center;
 }
 
+.score_title {
+  font-size: 1.75rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 2.25rem; /* 128.571% */
+  letter-spacing: -0.12px;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.score_text {
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5rem; /* 150% */
+}
+
 .invite_container {
   font-size: 0.875rem;
   font-style: normal;
@@ -142,6 +159,99 @@
   font-weight: 700;
   text-decoration: none;
   color: black;
+}
+
+.send_text_content {
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.42rem; /* 142.857% */
+}
+
+.send_text_input_container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.send_icon {
+  margin-top: 0.25rem;
+}
+
+.send_text_input {
+  border: 1px solid red;
+  margin-top: 0.25rem;
+  flex: 1;
+  padding: 0.5rem 0;
+  text-indent: 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--mina-purple);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5rem; /* 150% */
+}
+
+.send_email_button_container {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  margin-top: 2rem;
+  background-color: var(--mina-purple);
+}
+
+.send_email_button_container:hover {
+  cursor: pointer;
+}
+
+.send_email_button_text {
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.5rem; /* 150% */
+  text-align: center;
+  color: white;
+}
+
+.send_email_button_container_secondary {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  margin-top: 0.5rem;
+  background-color: white;
+}
+
+.send_email_button_container_secondary:hover {
+  cursor: pointer;
+}
+
+.send_email_button_text_secondary {
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.5rem; /* 150% */
+  text-align: center;
+  color: var(--mina-purple);
+}
+
+.inform_container {
+  display: flex;
+  gap: 1rem;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5rem; /* 150% */
+  margin-bottom: 2rem;
+}
+
+.social_container {
+  display: flex;
+  justify-content: center;
+}
+
+.social_inner_container {
+  display: flex;
+  gap: 1rem;
 }
 
 .footer_container {

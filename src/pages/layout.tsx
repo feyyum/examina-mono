@@ -77,6 +77,14 @@ function Layout({ children }: Props) {
     );
   }
 
+  if (router.pathname === '/app') {
+    return (
+      <div>
+        <main>{children}</main>
+      </div>
+    );
+  }
+
   if (router.pathname.includes('/app/exams')) {
     return (
       <div>
