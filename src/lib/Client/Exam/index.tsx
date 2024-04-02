@@ -16,6 +16,20 @@ function getExamList() {
   });
 }
 
+function getExamDetails(examID: string) {
+  return new Promise((resolve, reject) => {
+    const requestBase = new RequestBase();
+    requestBase
+      .get(`/exams/${examID}`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
 function createExam(exam: ExamState) {
   return new Promise((resolve, reject) => {
     const requestBase = new RequestBase();
@@ -35,4 +49,4 @@ function createExam(exam: ExamState) {
   });
 }
 
-export { getExamList, createExam };
+export { getExamList, createExam, getExamDetails };

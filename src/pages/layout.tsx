@@ -29,47 +29,63 @@ function Layout({ children }: Props) {
 
   const [rendered, setRendered] = useState(false);
 
-  // Get Wallets
-  useEffect(() => {
-    if ((window as any) && (window as any).mina === undefined) {
-      setRendered(true);
-      return;
-    }
+  // // Get Wallets
+  // useEffect(() => {
+  //   if ((window as any) && (window as any).mina === undefined) {
+  //     setRendered(true);
+  //     return;
+  //   }
 
-    if ((window as any).mina !== undefined) {
-      (window as any).mina.getAccounts().then((accounts: string[]) => {
-        console.log('Accounts:', accounts);
-        dispatch(setWallet({ wallets: accounts }));
-        setRendered(true);
-      });
-      return;
-    }
-  }, []);
+  //   if ((window as any).mina !== undefined) {
+  //     (window as any).mina.getAccounts().then((accounts: string[]) => {
+  //       console.log('Accounts:', accounts);
+  //       dispatch(setWallet({ wallets: accounts }));
+  //       setRendered(true);
+  //     });
+  //     return;
+  //   }
+  // }, []);
 
-  // Redirect to home if no wallets
-  useEffect(() => {
-    if (rendered && account.wallets.length === 0 && router.pathname !== '/') {
-      router.push('/');
-    }
-  }, [rendered, account.wallets, router.pathname]);
+  // // Redirect to home if no wallets
+  // useEffect(() => {
+  //   if (rendered && account.wallets.length === 0 && router.pathname !== '/') {
+  //     router.push('/');
+  //   }
+  // }, [rendered, account.wallets, router.pathname]);
 
-  // Handle Wallet Change
-  useEffect(() => {
-    (window as any).mina?.on('accountsChanged', (accounts: string[]) => {
-      if (account.wallets.length === 0) {
-        return;
-      }
-      onChangeWallet(accounts).then(() => {
-        dispatch(setWallet({ wallets: accounts }));
-      });
-    });
+  // // Handle Wallet Change
+  // useEffect(() => {
+  //   (window as any).mina?.on('accountsChanged', (accounts: string[]) => {
+  //     if (account.wallets.length === 0) {
+  //       return;
+  //     }
+  //     onChangeWallet(accounts).then(() => {
+  //       dispatch(setWallet({ wallets: accounts }));
+  //     });
+  //   });
 
-    return () => {
-      (window as any).mina?.removeAllListeners('accountsChanged');
-    };
-  }, [account]);
+  //   return () => {
+  //     (window as any).mina?.removeAllListeners('accountsChanged');
+  //   };
+  // }, [account]);
 
   if (router.pathname === '/') {
+    return (
+      <div>
+        <main>{children}</main>
+      </div>
+    );
+  }
+
+  if (router.pathname === '/app') {
+    return (
+      <div>
+        <main>{children}</main>
+      </div>
+    );
+  }
+
+  if (router.pathname.includes('/app/exams')) {
     return (
       <div>
         <main>{children}</main>

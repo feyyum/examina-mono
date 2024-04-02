@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 /* @import "@radix-ui/themes/styles.css"; */
 
 :root {
@@ -16,13 +16,14 @@
   --green-dark: rgba(0, 131, 71, 0.84);
   --green-light: rgba(0, 131, 71, 0.74);
   --purple-bg: #f6f6fc;
+  --rose-red: #f3aeaf;
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Urbanist", sans-serif;
+  font-family: 'Urbanist', sans-serif;
 }
 
 table,
@@ -41,10 +42,10 @@ th {
 }
 
 /* ---Dialog Styles--- Radix Base */
-@import "@radix-ui/colors/black-alpha.css";
-@import "@radix-ui/colors/green.css";
-@import "@radix-ui/colors/mauve.css";
-@import "@radix-ui/colors/violet.css";
+@import '@radix-ui/colors/black-alpha.css';
+@import '@radix-ui/colors/green.css';
+@import '@radix-ui/colors/mauve.css';
+@import '@radix-ui/colors/violet.css';
 
 /* reset */
 button,
@@ -63,8 +64,7 @@ input {
 .DialogContent {
   background-color: white;
   border-radius: 0.5rem;
-  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
-    hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -394,8 +394,7 @@ button {
   overflow: hidden;
   background-color: white;
   border-radius: 6px;
-  box-shadow: 0px 10px 40px -20px rgba(22, 23, 24, 0.2),
-    0px 10px 10px -15px rgba(22, 23, 24, 0.2);
+  box-shadow: 0px 10px 40px -20px rgba(22, 23, 24, 0.2), 0px 10px 10px -15px rgba(22, 23, 24, 0.2);
 }
 
 .SelectViewport {
@@ -504,7 +503,7 @@ button {
 .RadioGroupItem:focus {
   /* box-shadow: 0 0 0 2px black; */
 }
-.RadioGroupItem[data-state="checked"] {
+.RadioGroupItem[data-state='checked'] {
   background-color: var(--green-dark);
 }
 
@@ -517,7 +516,7 @@ button {
   position: relative;
 }
 .RadioGroupIndicator::after {
-  content: "";
+  content: '';
   display: block;
   width: 10px;
   height: 10px;
