@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 // Images
 import Choz from '@/icons/choz.svg';
-import Avatar from '@/icons/avatar.svg';
+import Avatar from '@/icons/profile_image.svg';
 
 function DashboardHeader() {
   return (
