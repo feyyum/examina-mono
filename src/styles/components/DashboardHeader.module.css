@@ -1,0 +1,48 @@
+.container {
+  width: 1280px;
+  margin: 0 auto;
+}
+
+.dashboard_header {
+  background-color: white;
+  border-bottom: 1px solid var(--gray-border);
+}
+
+.dashboard_header > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.logo {
+  margin-right: 4rem;
+}
+
+.header_nav_item {
+  color: var(--dark-blue-black);
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.675rem; /* 144.444% */
+  letter-spacing: -0.04px;
+  text-decoration: none;
+}
+
+.header_nav_item_active {
+  font-weight: 700;
+}
+
+.profile_container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.wallet_address {
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 1.675rem; /* 144.444% */
+  letter-spacing: -0.04px;
+}

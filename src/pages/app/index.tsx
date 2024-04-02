@@ -1,88 +1,135 @@
-'use client';
-import { useState } from 'react';
 import styles from '@/styles/app/Dashboard.module.css';
-
+import { useState } from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { getExamList } from '@/lib/Client/Exam';
+import { formatDate } from '../../../utils/formatter';
 
 // Import Custom Components
-import CarouselComponent from '@/components/ui/DashboardCarousel';
+import DashboardHeader from '@/components/ui/DashboardHeader';
 
-type Props = {};
+// Icons and Images
+import Plus from '@/icons/plus.svg';
+import Duplicate from '@/icons/duplicate.svg';
+import Right from '@/icons/right_long.svg';
+import None from '@/images/dashboard/none.svg';
 
-type Exam = {
-  title: string;
-  description: string;
-  date: string;
-  duration: string;
-  owner: string;
-  participants: string;
-};
-
-const MOCK_EXAMS: Exam[] = [
-  {
-    title: 'Exam 1',
-    description: 'This is the first exam',
-    date: '2021-07-01',
-    duration: '120',
-    owner: 'John Doe',
-    participants: '20',
-  },
-  {
-    title: 'Exam 2',
-    description: 'This is the second exam',
-    date: '2021-07-02',
-    duration: '60',
-    owner: 'John Doe',
-    participants: '12',
-  },
-  {
-    title: 'Exam 3',
-    description: 'This is the third exam',
-    date: '2021-07-03',
-    duration: '40',
-    owner: 'John Doe',
-    participants: '8',
-  },
-];
-
-const MOCK_EXAMS2: Exam[] = [
-  {
-    title: 'Exam 2',
-    description: 'This is the second exam',
-    date: '2021-07-02',
-    duration: '60',
-    owner: 'John Doe',
-    participants: '12',
-  },
-];
-
-function Application({}: Props) {
-  const [upcomingStep, setUpcomingStep] = useState(0);
-  const [ongoingStep, setOngoingStep] = useState(0);
-  const [inreviewStep, setInreviewStep] = useState(0);
+function Application() {
+  const [copied, setCopied] = useState<string>();
 
   const { data, isLoading, isError } = useQuery({ queryKey: ['exams'], queryFn: getExamList });
 
-  // console.log(isLoading);
-  console.log(data);
+  const router = useRouter();
+
+  if (isLoading === false && (data as any).length === 0 && isError === false) {
+    return (
+      <div>
+        <DashboardHeader />
+        <div className={`${styles.content_container} ${styles.container}`}>
+          <div className={styles.content_header}>
+            <h3 className={styles.content_headier_title}>Your Assessments</h3>
+          </div>
+          <div className={styles.no_content_container}>
+            <div className={styles.no_content_inner_container}>
+              <Image src={None} alt="" />
+              <div className={styles.no_content_text_container}>
+                <p className={styles.no_content_desc}>You haven't created any exams yet! </p>
+                <h3 className={styles.no_content_title}>Create new assessment.</h3>
+              </div>
+              <div className={styles.no_content_button_container}>
+                <div
+                  className={styles.no_content_button}
+                  onClick={() => router.push('/app/create-exam/')}
+                >
+                  <p className={styles.content_header_button_text}>Create Now</p>
+                  <Image src={Right} alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.exams_container}>
-        <CarouselComponent
-          type="Upcoming"
-          exams={MOCK_EXAMS}
-          step={upcomingStep}
-          stepper={setUpcomingStep}
-        />
-        <CarouselComponent
-          type="Ongoing"
-          exams={MOCK_EXAMS2}
-          step={ongoingStep}
-          stepper={setOngoingStep}
-        />
-        <CarouselComponent type="Inreview" step={inreviewStep} stepper={setInreviewStep} />
+    <div>
+      <DashboardHeader />
+      <div className={`${styles.content_container} ${styles.container}`}>
+        <div className={styles.content_header}>
+          <h3 className={styles.content_headier_title}>Your Assessments</h3>
+          <div
+            className={styles.content_header_button}
+            onClick={() => router.push('/app/create-exam/')}
+          >
+            <Image src={Plus} alt="" />
+            <p className={styles.content_header_button_text}>New Assessment</p>
+          </div>
+        </div>
+        <div className={styles.table_container}>
+          <div className={styles.table_head_container}>
+            <div className={`${styles.table_head_item_container} `}>
+              <p className={styles.table_head_item}>NAME</p>
+            </div>
+            <div className={`${styles.table_head_item_container} `}>
+              <p className={styles.table_head_item}>STATUS</p>
+            </div>
+            <div className={`${styles.table_head_item_container} `}>
+              <p className={styles.table_head_item}>CREATED ON</p>
+            </div>
+            <div className={`${styles.table_head_item_container} `}>
+              <p className={styles.table_head_item}>CREATED BY</p>
+            </div>
+            <div className={`${styles.table_head_item_container} `}>
+              <p className={`${styles.table_head_item} ${styles.table_head_item_secondary}`}>
+                DURATION
+              </p>
+            </div>
+          </div>
+          {(data as any)?.map((exam: any) => {
+            return (
+              <div className={styles.table_rows_container} key={exam._id}>
+                <div className={styles.table_row_container}>
+                  <div className={`${styles.table_row_item_container}`}>
+                    <p className={styles.table_row_item}>{exam.title}</p>
+                  </div>
+                  <div className={`${styles.table_row_item_container}`}>
+                    <p className={styles.table_row_item}>Active</p>
+                  </div>
+                  <div className={`${styles.table_row_item_container}`}>
+                    <p className={styles.table_row_item}>{formatDate(new Date(exam.startDate))}</p>
+                  </div>
+                  <div className={`${styles.table_row_item_container}`}>
+                    <p className={styles.table_row_item}>
+                      {exam.creator.slice(0, 5)}...
+                      {exam.creator.slice(exam.creator.length - 4, exam.creator.length + 1)}
+                    </p>
+                  </div>
+                  <div className={`${styles.table_row_item_container}`}>
+                    <p className={styles.table_row_item}>{exam.duration} min.</p>
+                  </div>
+                  <div className={`${styles.table_row_item_container}`}>
+                    <div
+                      className={styles.table_row_item_edit_container}
+                      onClick={() => {
+                        navigator.clipboard
+                          .writeText(`https://choz.io/app/exams/get-started/${exam._id}`)
+                          .then(() => setCopied(exam._id));
+                      }}
+                    >
+                      {/* <Image src={Copy} alt="" /> */}
+                      <Image src={Duplicate} alt="" />
+                      <p className={styles.table_row_copy_link}>
+                        {copied === exam._id ? 'Copied' : 'Copy Link'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
