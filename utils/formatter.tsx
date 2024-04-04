@@ -1,4 +1,6 @@
-function formatDate(date: Date) {
+import moment from 'moment';
+
+function formatDate(date: Date): string {
   const months = [
     'Jan',
     'Feb',
@@ -22,4 +24,14 @@ function formatDate(date: Date) {
   return `${month} ${day}, ${hours}.${minutes} ${ampm}`;
 }
 
-export { formatDate };
+function humanize(date: Date) {
+  const startDate = date;
+  const now = moment();
+  const startMoment = moment(startDate);
+  const duration = moment.duration(now.diff(startMoment));
+  const humanReadable = duration.humanize(true);
+
+  return humanReadable;
+}
+
+export { formatDate, humanize };

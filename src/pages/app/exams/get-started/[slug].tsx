@@ -2,6 +2,8 @@ import styles from '@/styles/app/exams/get-started/ExamDetailScreen.module.css';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
+import { getExamDetails } from '@/lib/Client/Exam';
+import { humanize } from '../../../../../utils/formatter';
 
 // Custom Layout
 import Layout from '../layout';
@@ -14,6 +16,24 @@ function ExamDetail() {
   const router = useRouter();
   const examID: string = router.query.slug as string;
 
+  console.log('examID', examID);
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['exam'],
+    queryFn: () => getExamDetails(examID),
+    enabled: !!examID, // Only fetch data when examID is available
+  });
+
+  console.log(data);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (data === undefined) {
+    return <div>Not found</div>;
+  }
+
   return (
     <Layout>
       <div className={styles.container}>
@@ -22,15 +42,15 @@ function ExamDetail() {
             <div className={styles.card_inner_container}>
               <div className={styles.meta_container}>
                 <p className={styles.invite_container}>
-                  <span>n4jojRGgUwxwF3fyQCMyUsqqSt5i3NEQR9</span> invited you to join
+                  <span>{(data as any).creator}</span> invited you to join
                 </p>
                 <div className={styles.title_container}>
                   <Image src={ExamIcon} alt="" />
-                  <h3>Mina Challenge</h3>
+                  <h3>{(data as any).title}</h3>
                 </div>
                 <div className={styles.deadline_container}>
                   <Image src={Clock} alt="" />
-                  <p>Last 2 days</p>
+                  <p>{humanize((data as any).startDate)}</p>
                 </div>
               </div>
               <div className={styles.card_content_container}>
@@ -45,18 +65,14 @@ function ExamDetail() {
                   </div>
                   <div className={styles.card_title}>
                     <h3 className={styles.card_title__bold}>Duration</h3>
-                    <p className={styles.card_title__normal}>20 minutes</p>
+                    <p className={styles.card_title__normal}>{(data as any).duration} minutes</p>
                   </div>
                 </div>
                 <div className={styles.card_content_inner_container}>
                   <div className={styles.card_title}>
                     <h3 className={styles.card_title__bold}>Description</h3>
                   </div>
-                  <p className={styles.card_content}>
-                    How well do you know Mina Protocol? This challenge consists of 10 questions
-                    about the Mina Protocol and the Mina Navigators program. Join this fun
-                    challenge, pass the test, and win rewards!
-                  </p>
+                  <p className={styles.card_content}>{(data as any).description}</p>
                 </div>
               </div>
               <div className={styles.connect_container}>
