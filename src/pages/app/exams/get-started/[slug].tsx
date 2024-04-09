@@ -22,13 +22,15 @@ function ExamDetail() {
 
   const account = useSelector((state: RootState) => state.account);
 
-  const { data, isLoading, isError, refetch } = useQuery({
+  const { data, isLoading, isPending, isError, refetch } = useQuery({
     queryKey: ['exam'],
     queryFn: () => getExamDetails(examID),
     enabled: !!examID, // Only fetch data when examID is available
   });
 
-  if (isLoading) {
+  console.log(data);
+
+  if (isLoading || isPending) {
     return (
       <Layout>
         <div className={styles.container}>
@@ -66,7 +68,7 @@ function ExamDetail() {
     );
   }
 
-  if (data === undefined && isError) {
+  if (!data && !isLoading && isError) {
     return (
       <Layout>
         <div className={styles.container}>
@@ -193,7 +195,7 @@ function ExamDetail() {
                 Docs
               </a>
             </div>
-            <p className={styles.footer_copyright}>© 2024 Examina</p>
+            <p className={styles.footer_copyright}>© 2024 Choz</p>
           </div>
         </div>
       </div>

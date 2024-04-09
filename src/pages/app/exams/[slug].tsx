@@ -18,7 +18,8 @@ import Clock from '@/icons/clock_red.svg';
 import * as RadioGroup from '@radix-ui/react-radio-group';
 
 // API
-import { getExamDetails } from '@/lib/Client/Exam';
+import { getExamQuestions } from '@/lib/Client/Exam';
+import Link from 'next/link';
 
 const exam: ExamState = {
   id: 'id',
@@ -321,21 +322,47 @@ function ExamDetails() {
   const [currentQuestion, setCurrentQuestion] = useState<CurrentQuestion>(exam.questions[0]);
   const [choices, setChoices] = useState<Choices>([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, isError, error } = useQuery({
     queryKey: ['exams'],
     queryFn: () => {
-      console.log(examID);
-      getExamDetails(examID);
+      getExamQuestions(examID);
     },
     refetchOnWindowFocus: false,
+    enabled: !!examID,
   });
 
-  console.log(examID);
-  console.log('Data', data);
+  console.log('DATA', data);
+  console.log('ISLOADING', isLoading);
+  console.log('ISERROR', isError);
 
-  data && console.log((data as any).filter((el: any) => el._id === examID)[0]);
-
-  console.log(choices);
+  if (!isLoading || isError) {
+    return (
+      <Layout>
+        <div className={styles.container}>
+          <div className={styles.exam_header_container}>
+            <div className={styles.exam_header_container}>
+              <h1 className={styles.exam_header_title}>
+                An error occured when fetching questions &#128534;
+              </h1>
+            </div>
+          </div>
+          <p className={styles.error_description}>
+            Sorry, we couldn't process your request at the moment. This may be due to several
+            reasons: the exam session may have ended, you may not have the necessary authorization
+            to access the exam, or you may not have logged into the application. Please check your
+            credentials and try again later. If the issue persists, please contact support for
+            assistance. We apologize for any inconvenience this may have caused.
+          </p>
+          <div className={styles.error_func_container}>
+            <p onClick={() => router.reload()}>Try again</p>
+            <Link href="/" prefetch={false} replace>
+              Go to homepage
+            </Link>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
