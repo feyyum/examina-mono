@@ -1,6 +1,7 @@
 import styles from '../styles/app/Layout.module.css';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { isMobile } from 'react-device-detect';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
@@ -50,7 +51,7 @@ function Layout({ children }: Props) {
 
   // Redirect to home if no wallets
   useEffect(() => {
-    if (rendered && account.wallets.length === 0 && router.pathname !== '/') {
+    if ((rendered && account.wallets.length === 0 && router.pathname !== '/') || isMobile) {
       router.push('/');
     }
   }, [rendered, account.wallets, router.pathname]);
@@ -71,37 +72,9 @@ function Layout({ children }: Props) {
     };
   }, [account]);
 
-  if (router.pathname === '/') {
-    return (
-      <div>
-        <main>{children}</main>
-      </div>
-    );
-  }
-
-  if (router.pathname === '/app') {
-    return (
-      <div>
-        <main>{children}</main>
-      </div>
-    );
-  }
-
-  if (router.pathname.includes('/app/exams')) {
-    return (
-      <div>
-        <main>{children}</main>
-      </div>
-    );
-  }
-
   return (
-    <div className={styles.container}>
-      <Sidebar />
-      <div className={styles.content_container}>
-        <Header />
-        <main className={styles.content}>{children}</main>
-      </div>
+    <div>
+      <main>{children}</main>
     </div>
   );
 }

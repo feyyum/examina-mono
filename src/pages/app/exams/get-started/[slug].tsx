@@ -152,11 +152,14 @@ function ExamDetail() {
                 </div>
               </div>
               <div className={styles.connect_container}>
-                <div className={styles.connect_button_container}>
+                <a
+                  href={`https://choz.io/app/exams/${(data as any)._id}`}
+                  className={styles.connect_button_container}
+                >
                   <p className={styles.connect_button_text}>
                     {account.wallets[0] ? 'Start Exam' : 'Connect Wallet'}
                   </p>
-                </div>
+                </a>
                 {account.wallets[0] ? (
                   <p className={styles.connect_container_desc_connected}>
                     You are using this wallet address:{' '}

@@ -9,9 +9,10 @@
 
 .stepper_container {
   padding: 2.75rem 11.125rem;
+  margin: 2.75rem 0;
   background-color: white;
   border-radius: 20px;
-  box-shadow: 0px 0px 8px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 6px -3px var(--mina-purple);
 }
 
 .stepper_selector_container {
@@ -29,7 +30,7 @@
   border-bottom: 1px solid var(--gray-border);
 }
 
-.stepper_selector[data-state="active"] {
+.stepper_selector[data-state='active'] {
   border-bottom: 2px solid var(--mina-purple);
 }
 

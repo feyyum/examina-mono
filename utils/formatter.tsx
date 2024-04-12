@@ -28,7 +28,7 @@ function humanize(date: Date) {
   const startDate = date;
   const now = moment();
   const startMoment = moment(startDate);
-  const duration = moment.duration(now.diff(startMoment));
+  const duration = moment.duration(startMoment.diff(now));
   const humanReadable = duration.humanize(true);
 
   return humanReadable;

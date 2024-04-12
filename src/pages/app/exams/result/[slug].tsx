@@ -49,7 +49,12 @@ function ExamResult() {
                     <Image src={Send} alt="" className={styles.send_icon} />
                   </div>
                   <div className={styles.send_email_button_container_secondary}>
-                    <p className={styles.send_email_button_text_secondary}>Skip and Continue</p>
+                    <a
+                      href="https://choz.io/app"
+                      className={styles.send_email_button_text_secondary}
+                    >
+                      Skip and Continue
+                    </a>
                   </div>
                 </div>
               </div>
@@ -63,9 +68,15 @@ function ExamResult() {
                 </div>
                 <div className={styles.social_container}>
                   <div className={styles.social_inner_container}>
-                    <Image src={Twitter} alt="" />
-                    <Image src={Telegram} alt="" />
-                    <Image src={Discord} alt="" />
+                    <a href="https://twitter.com/chozapp" target="_blank">
+                      <Image src={Twitter} alt="" />
+                    </a>
+                    <a href="https://discord.gg/TkpVyfNqwQ" target="_blank">
+                      <Image src={Discord} alt="" />
+                    </a>
+                    <a href="https://t.me/chozio" target="_blank">
+                      <Image src={Telegram} alt="" />
+                    </a>
                   </div>
                 </div>
               </div>

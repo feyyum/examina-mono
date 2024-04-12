@@ -1,12 +1,12 @@
 import styles from '@/styles/app/exams/ExamScreen.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
 
 // Types
 import Question from '@/lib/Question';
-import { ExamState } from '../../../../features/client/exam';
 
 // Custom Layout
 import Layout from './layout';
@@ -18,298 +18,7 @@ import Clock from '@/icons/clock_red.svg';
 import * as RadioGroup from '@radix-ui/react-radio-group';
 
 // API
-import { getExamQuestions } from '@/lib/Client/Exam';
-import Link from 'next/link';
-
-const exam: ExamState = {
-  id: 'id',
-  title: 'Exam Title Example',
-  description: 'Description',
-  startDate: new Date(),
-  duration: '120',
-  questions: [
-    {
-      number: 1,
-      text: 'Soru',
-      description: 'Açıklama',
-      correctAnswer: 1,
-      options: [
-        {
-          number: 1,
-          text: 'Cevap 1',
-        },
-        {
-          number: 2,
-          text: 'Cevap 2',
-        },
-        {
-          number: 3,
-          text: 'Cevap 3',
-        },
-        {
-          number: 4,
-          text: 'Cevap 4',
-        },
-        {
-          number: 5,
-          text: 'Cevap 5',
-        },
-      ],
-    },
-    {
-      number: 2,
-      text: 'Soru',
-      description: 'Açıklama',
-      correctAnswer: 1,
-      options: [
-        {
-          number: 1,
-          text: 'Cevap 1',
-        },
-        {
-          number: 2,
-          text: 'Cevap 2',
-        },
-        {
-          number: 3,
-          text: 'Cevap 3',
-        },
-        {
-          number: 4,
-          text: 'Cevap 4',
-        },
-        {
-          number: 5,
-          text: 'Cevap 5',
-        },
-      ],
-    },
-    {
-      number: 3,
-      text: 'Soru',
-      description: 'Açıklama',
-      correctAnswer: 1,
-      options: [
-        {
-          number: 1,
-          text: 'Cevap 1',
-        },
-        {
-          number: 2,
-          text: 'Cevap 2',
-        },
-        {
-          number: 3,
-          text: 'Cevap 3',
-        },
-        {
-          number: 4,
-          text: 'Cevap 4',
-        },
-        {
-          number: 5,
-          text: 'Cevap 5',
-        },
-      ],
-    },
-    {
-      number: 4,
-      text: 'Soru',
-      description: 'Açıklama',
-      correctAnswer: 1,
-      options: [
-        {
-          number: 1,
-          text: 'Cevap 1',
-        },
-        {
-          number: 2,
-          text: 'Cevap 2',
-        },
-        {
-          number: 3,
-          text: 'Cevap 3',
-        },
-        {
-          number: 4,
-          text: 'Cevap 4',
-        },
-        {
-          number: 5,
-          text: 'Cevap 5',
-        },
-      ],
-    },
-    {
-      number: 5,
-      text: 'Soru',
-      description: 'Açıklama',
-      correctAnswer: 1,
-      options: [
-        {
-          number: 1,
-          text: 'Cevap 1',
-        },
-        {
-          number: 2,
-          text: 'Cevap 2',
-        },
-        {
-          number: 3,
-          text: 'Cevap 3',
-        },
-        {
-          number: 4,
-          text: 'Cevap 4',
-        },
-        {
-          number: 5,
-          text: 'Cevap 5',
-        },
-      ],
-    },
-    {
-      number: 6,
-      text: 'Soru',
-      description: 'Açıklama',
-      correctAnswer: 1,
-      options: [
-        {
-          number: 1,
-          text: 'Cevap 1',
-        },
-        {
-          number: 2,
-          text: 'Cevap 2',
-        },
-        {
-          number: 3,
-          text: 'Cevap 3',
-        },
-        {
-          number: 4,
-          text: 'Cevap 4',
-        },
-        {
-          number: 5,
-          text: 'Cevap 5',
-        },
-      ],
-    },
-    {
-      number: 7,
-      text: 'Soru',
-      description: 'Açıklama',
-      correctAnswer: 1,
-      options: [
-        {
-          number: 1,
-          text: 'Cevap 1',
-        },
-        {
-          number: 2,
-          text: 'Cevap 2',
-        },
-        {
-          number: 3,
-          text: 'Cevap 3',
-        },
-        {
-          number: 4,
-          text: 'Cevap 4',
-        },
-        {
-          number: 5,
-          text: 'Cevap 5',
-        },
-      ],
-    },
-    {
-      number: 8,
-      text: 'Soru',
-      description: 'Açıklama',
-      correctAnswer: 1,
-      options: [
-        {
-          number: 1,
-          text: 'Cevap 1',
-        },
-        {
-          number: 2,
-          text: 'Cevap 2',
-        },
-        {
-          number: 3,
-          text: 'Cevap 3',
-        },
-        {
-          number: 4,
-          text: 'Cevap 4',
-        },
-        {
-          number: 5,
-          text: 'Cevap 5',
-        },
-      ],
-    },
-    {
-      number: 9,
-      text: 'Soru',
-      description: 'Açıklama',
-      correctAnswer: 1,
-      options: [
-        {
-          number: 1,
-          text: 'Cevap 1',
-        },
-        {
-          number: 2,
-          text: 'Cevap 2',
-        },
-        {
-          number: 3,
-          text: 'Cevap 3',
-        },
-        {
-          number: 4,
-          text: 'Cevap 4',
-        },
-        {
-          number: 5,
-          text: 'Cevap 5',
-        },
-      ],
-    },
-    {
-      number: 10,
-      text: 'Soru',
-      description: 'Açıklama',
-      correctAnswer: 1,
-      options: [
-        {
-          number: 1,
-          text: 'Cevap 1',
-        },
-        {
-          number: 2,
-          text: 'Cevap 2',
-        },
-        {
-          number: 3,
-          text: 'Cevap 3',
-        },
-        {
-          number: 4,
-          text: 'Cevap 4',
-        },
-        {
-          number: 5,
-          text: 'Cevap 5',
-        },
-      ],
-    },
-  ],
-};
+import { getExamQuestions, getExamDetails } from '@/lib/Client/Exam';
 
 type CurrentQuestion = Question | undefined;
 type Answer = 0 | 1 | 2 | 3 | 4 | 5;
@@ -319,23 +28,90 @@ function ExamDetails() {
   const router = useRouter();
   const examID: string = router.query.slug as string;
 
-  const [currentQuestion, setCurrentQuestion] = useState<CurrentQuestion>(exam.questions[0]);
+  const [currentQuestion, setCurrentQuestion] = useState<CurrentQuestion | null>(null);
   const [choices, setChoices] = useState<Choices>([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  const [remainingTimeMiliseconds, setRemainingTimeMiliseconds] = useState<number | null>(null);
+  const [startTimer, setStartTimer] = useState<boolean>(false);
 
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['exams'],
-    queryFn: () => {
-      getExamQuestions(examID);
-    },
-    refetchOnWindowFocus: false,
+  const {
+    data: examData,
+    isLoading: isloadingData,
+    isError: isErrorExam,
+  } = useQuery({
+    queryKey: ['exam'],
+    queryFn: () => getExamDetails(examID),
     enabled: !!examID,
   });
 
-  console.log('DATA', data);
-  console.log('ISLOADING', isLoading);
-  console.log('ISERROR', isError);
+  const {
+    data: questions,
+    isLoading: isLoadingQuestions,
+    isError: isErrorQuestions,
+  } = useQuery({
+    queryKey: ['exams'],
+    queryFn: async () => await getExamQuestions(examID),
+    enabled: !!examID,
+  });
 
-  if (!isLoading || isError) {
+  useEffect(() => {
+    if (questions && examData) {
+      setCurrentQuestion((questions as any)[0]);
+      setRemainingTimeMiliseconds((prev) => {
+        if (prev === null) {
+          setStartTimer(true);
+          return Math.floor(
+            (new Date((examData as any).startDate).getTime() +
+              (examData as any).duration * 60000 -
+              new Date().getTime()) /
+              1000
+          );
+        }
+        return prev - 1;
+      });
+    }
+  }, [questions, examData]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (startTimer) {
+        setRemainingTimeMiliseconds((el) => el - 1);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [startTimer]);
+
+  console.log(questions);
+  console.log(examData);
+
+  if (isLoadingQuestions || isloadingData) {
+    return (
+      <Layout>
+        <div className={styles.container}>
+          <div className={styles.exam_header_container}>
+            <div className={styles.exam_header_container}>
+              <h1 className={styles.exam_header_title}>
+                I guess it will take some times &#128534;
+              </h1>
+            </div>
+          </div>
+          <p className={styles.error_description}>
+            We are fetching the questions for you. Please wait a moment. If this takes too long,
+            please try again later. We apologize for any inconvenience this may have caused.
+          </p>
+          <div className={styles.error_func_container}>
+            <p onClick={() => router.reload()}>Try again</p>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (
+    (!isLoadingQuestions && isErrorQuestions) ||
+    (!isloadingData && isErrorExam) ||
+    (remainingTimeMiliseconds !== null && remainingTimeMiliseconds <= 0)
+  ) {
     return (
       <Layout>
         <div className={styles.container}>
@@ -368,10 +144,16 @@ function ExamDetails() {
     <Layout>
       <div className={styles.container}>
         <div className={styles.exam_header_container}>
-          <h1 className={styles.exam_header_title}>Exam Title</h1>
+          <h1 className={styles.exam_header_title}>{examData && (examData as any).title}</h1>
           <div className={styles.timer_container}>
             <Image src={Clock} alt="" />
-            <p className={styles.timer_content}>22:05</p>
+            <p className={styles.timer_content}>
+              {remainingTimeMiliseconds
+                ? `${Math.floor(remainingTimeMiliseconds / 60)}:${(remainingTimeMiliseconds % 60)
+                    .toString()
+                    .padStart(2, '0')}`
+                : '-'}
+            </p>
           </div>
         </div>
         <div className={styles.content_container}>
@@ -423,25 +205,26 @@ function ExamDetails() {
             </div>
             <div className={styles.preview_selector_container}>
               <div className={styles.selector_container}>
-                {exam.questions.map((el, _i) => {
-                  return (
-                    <div
-                      key={_i}
-                      className={`${styles.selector_box} ${
-                        el.number === currentQuestion?.number && styles.selector_box_active
-                      }`}
-                      onClick={() => setCurrentQuestion(el)}
-                    >
-                      <p
-                        className={`${styles.selector_box_text} ${
-                          el.number === currentQuestion?.number && styles.selector_box_text_active
+                {questions &&
+                  (questions as any).map((el: any, _i: string) => {
+                    return (
+                      <div
+                        key={_i}
+                        className={`${styles.selector_box} ${
+                          el.number === currentQuestion?.number && styles.selector_box_active
                         }`}
+                        onClick={() => setCurrentQuestion(el)}
                       >
-                        {_i + 1}
-                      </p>
-                    </div>
-                  );
-                })}
+                        <p
+                          className={`${styles.selector_box_text} ${
+                            el.number === currentQuestion?.number && styles.selector_box_text_active
+                          }`}
+                        >
+                          {_i + 1}
+                        </p>
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </div>
@@ -449,11 +232,16 @@ function ExamDetails() {
             <button
               className={styles.form_element_button}
               onClick={() => {
-                // setCurrentStep("2");
-                // saveExam(exam);
+                if (currentQuestion?.number === 10) {
+                  return;
+                }
+
+                setCurrentQuestion(
+                  (questions as any)[currentQuestion ? currentQuestion?.number : 0]
+                );
               }}
             >
-              {'Save and Finish'}
+              {currentQuestion?.number === 10 ? 'Save and Finish' : 'Next Question'}
             </button>
           </div>
         </div>

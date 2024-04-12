@@ -3,7 +3,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import Calendar from 'react-calendar';
+import DateTimePicker from 'react-datetime-picker';
+import 'react-clock/dist/Clock.css';
 import classnames from 'classnames';
 
 // Icons
@@ -26,6 +27,7 @@ import * as RadioGroup from '@radix-ui/react-radio-group';
 // Redux
 import { useAppSelector, useAppDispatch } from '../../../../hooks';
 import { setExam } from '../../../../features/client/exam';
+import DashboardHeader from '@/components/ui/DashboardHeader';
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -83,6 +85,7 @@ function CreateExam() {
 
   return (
     <div className={styles.container}>
+      <DashboardHeader withoutNav />
       <Tabs.Root
         value={currentStep}
         onValueChange={(value) => setCurrentStep(value)}
@@ -154,7 +157,15 @@ function CreateExam() {
                         Please select date which you want to start exam.
                       </Dialog.Description>
                       <div>
-                        <Calendar
+                        {/* <Calendar
+                          onChange={(e) => {
+                            setStartDate(e);
+                            dispatch(setExam({ ...exam, startDate: e as Date }));
+                          }}
+                          value={startDate}
+                          minDate={new Date()}
+                        /> */}
+                        <DateTimePicker
                           onChange={(e) => {
                             setStartDate(e);
                             dispatch(setExam({ ...exam, startDate: e as Date }));

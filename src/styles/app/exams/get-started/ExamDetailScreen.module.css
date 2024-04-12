@@ -148,6 +148,10 @@
   line-height: 1.525rem;
 }
 
+.connect_container > a {
+  text-decoration: none;
+}
+
 .connect_container_desc {
   font-size: 1rem;
   font-style: normal;
@@ -228,15 +232,14 @@
 }
 
 .send_email_button_container_secondary {
+  display: flex;
+  justify-content: center;
   width: 100%;
   padding: 0.5rem;
   border-radius: 0.25rem;
   margin-top: 0.5rem;
   background-color: white;
-}
-
-.send_email_button_container_secondary:hover {
-  cursor: pointer;
+  text-decoration: none;
 }
 
 .send_email_button_text_secondary {
@@ -246,6 +249,7 @@
   line-height: 1.5rem; /* 150% */
   text-align: center;
   color: var(--mina-purple);
+  text-decoration: none;
 }
 
 .inform_container {
