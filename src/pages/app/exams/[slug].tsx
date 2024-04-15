@@ -106,8 +106,8 @@ function ExamDetails() {
     return () => clearInterval(timer);
   }, [startTimer]);
 
-  console.log(questions);
-  console.log(examData);
+  // console.log(questions);
+  // console.log(examData);
 
   if (isLoadingQuestions || isloadingData) {
     return (

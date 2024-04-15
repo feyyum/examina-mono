@@ -42,7 +42,7 @@ function CreateExam() {
     mutationFn: createExam,
     // other options like onSuccess, onError, etc.
     onSuccess: (data) => {
-      console.log(data);
+      //console.log(data);
       setQuestionID(1);
       dispatch(
         setExam({
@@ -79,9 +79,9 @@ function CreateExam() {
   }, [exam.questions]);
 
   const createQuestionRef = useRef<any>(null);
-  console.log('REF', createQuestionRef);
+  //console.log('REF', createQuestionRef);
 
-  console.log(exam);
+  //console.log(exam);
 
   return (
     <div className={styles.container}>

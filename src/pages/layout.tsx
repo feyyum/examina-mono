@@ -26,7 +26,7 @@ function Layout({ children }: Props) {
   const dispatch = useDispatch();
   const account = useSelector((state: RootState) => state.account);
 
-  console.log('ACCOUNT', account);
+  //console.log('ACCOUNT', account);
 
   const [rendered, setRendered] = useState(false);
 
@@ -39,7 +39,7 @@ function Layout({ children }: Props) {
 
     if ((window as any).mina !== undefined) {
       (window as any).mina.getAccounts().then((accounts: string[]) => {
-        console.log('Accounts:', accounts);
+        //console.log('Accounts:', accounts);
         dispatch(setWallet({ wallets: accounts }));
         setRendered(true);
       });
