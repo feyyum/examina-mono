@@ -1,7 +1,7 @@
 import styles from '@/styles/app/exams/get-started/ExamDetailScreen.module.css';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useQuery } from '@tanstack/react-query';
+// import { useQuery } from '@tanstack/react-query';
 
 // Custom Layout
 import Layout from '../layout';
@@ -9,24 +9,24 @@ import Layout from '../layout';
 // Icons
 import ResultImage from '@/images/exam/result.svg';
 import MinaBell from '@/icons/mina-bell.svg';
-import Send from '@/icons/exam_send.svg';
+// import Send from '@/icons/exam_send.svg';
 import Discord from '@/icons/discord.svg';
 import Telegram from '@/icons/telegram.svg';
 import Twitter from '@/icons/twitter.svg';
 import Choz from '@/icons/choz.svg';
 
 // API
-import { getScore } from '@/lib/Client/Exam';
+// import { getScore } from '@/lib/Client/Exam';
 
 function ExamResult() {
   const router = useRouter();
   const examID: string = router.query.slug as string;
 
-  const { data, isLoading, isPending, isError } = useQuery({
-    queryKey: ['exam'],
-    queryFn: () => getScore(examID),
-    enabled: !!examID, // Only fetch data when examID is available
-  });
+  // const { data, isLoading, isPending, isError } = useQuery({
+  //   queryKey: ['exam'],
+  //   queryFn: () => getScore(examID),
+  //   enabled: !!examID, // Only fetch data when examID is available
+  // });
 
   return (
     <Layout>
@@ -38,9 +38,9 @@ function ExamResult() {
                 <Image src={ResultImage} alt="" />
               </div>
               <div className={styles.score_container}>
-                <h2 className={styles.score_title}>
+                {/* <h2 className={styles.score_title}>
                   YOUR SCORE: {data ? (data as any).score : '-'}
-                </h2>
+                </h2> */}
                 <p className={styles.score_text}>
                   Congratulations, you've proven yourself! Now it's time for your reward! 🎁 Your
                   exam results will be automatically transmitted to us, and your prize will be
