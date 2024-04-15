@@ -38,7 +38,7 @@ function ExamDetail() {
   // const isPending = true;
   // const isError = false;
 
-  console.log(data);
+  //console.log(data);
 
   if (isLoading || isPending) {
     return (
