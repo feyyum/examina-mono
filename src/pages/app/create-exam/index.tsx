@@ -454,7 +454,7 @@ function CreateExam() {
                           <div
                             key={i}
                             className={`RadioGruopContainer ${
-                              el.number === currentQuestion.correctAnswer &&
+                              el.number === previewQuestion.correctAnswer &&
                               'RadioGroupContainer__active'
                             } RadioGruopContainerPreview`}
                           >
@@ -464,7 +464,7 @@ function CreateExam() {
                                 value={el.text}
                                 checked={
                                   previewQuestion.options[i].number ===
-                                  currentQuestion.correctAnswer
+                                  previewQuestion.correctAnswer
                                 }
                               >
                                 <RadioGroup.Indicator className="RadioGroupIndicator" />

@@ -63,4 +63,30 @@ function createExam(exam: ExamState) {
   });
 }
 
-export { getExamList, createExam, getExamDetails, getExamQuestions };
+async function submitAnswers(examID: string, answers: number[], questions: string[]) {
+  for (let i = 0; i < answers.length; i++) {
+    const requestBase = new RequestBase();
+    await requestBase.post(`/exams/${examID}/answer/submit`, {
+      answer: {
+        selectedOption: answers[i],
+        questionId: questions[i],
+      },
+    });
+  }
+}
+
+function getScore(examID: string) {
+  return new Promise((resolve, reject) => {
+    const requestBase = new RequestBase();
+    requestBase
+      .get(`/exams/scores/get_user_score/${examID}`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export { getExamList, createExam, getExamDetails, getExamQuestions, submitAnswers, getScore };

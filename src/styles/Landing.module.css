@@ -17,7 +17,7 @@
 
 .logo_primary {
   font-size: 1.625rem;
-  font-weight: "500";
+  font-weight: '500';
   color: var(--dark-blue-black);
 }
 
@@ -314,7 +314,7 @@
   gap: 8px;
 }
 
-.link_no_decoration{
+.link_no_decoration {
   text-decoration: none;
 }
 
@@ -376,6 +376,7 @@
 
 .sub_section_desc > a {
   text-decoration: none;
+  color: white;
   font-size: 1.125rem;
   font-style: normal;
   font-weight: 700;

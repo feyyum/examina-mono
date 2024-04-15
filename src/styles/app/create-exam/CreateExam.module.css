@@ -1,10 +1,8 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+  width: 1280px;
+  margin: 0 auto;
   min-height: calc(100vh - 80px);
   background-color: var(--neutral-150);
-  padding: 0 4.5rem;
 }
 
 .stepper_container {
@@ -213,4 +211,53 @@
 
 .selector_box_text_active {
   color: white;
+}
+
+@media screen and (max-width: 1280px) {
+  .container {
+    width: 768px;
+  }
+
+  .stepper_container {
+    padding: 2.75rem 2.75rem;
+  }
+
+  .preview_container {
+    flex-direction: column-reverse;
+  }
+
+  .preview_question_container {
+    width: 100%;
+  }
+
+  .selector_container {
+    gap: 2px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 100%;
+  }
+
+  .stepper_container {
+    padding: 2.75rem 1.25rem;
+  }
+
+  .stepper_selector_title > span {
+    display: none;
+  }
+
+  .create_exam_form_row {
+    flex-direction: column;
+  }
+
+  .selector_box {
+    width: 32px;
+    height: 32px;
+  }
+
+  .selector_box_text {
+    font-size: 18px;
+  }
 }

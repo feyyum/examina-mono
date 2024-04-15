@@ -46,3 +46,25 @@
   line-height: 1.675rem; /* 144.444% */
   letter-spacing: -0.04px;
 }
+
+@media screen and (max-width: 1280px) {
+  .container {
+    width: 768px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 100%;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .logo {
+    margin-right: -1rem;
+  }
+
+  .wallet_address {
+    display: none;
+  }
+}

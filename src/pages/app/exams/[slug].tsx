@@ -2,7 +2,7 @@ import styles from '@/styles/app/exams/ExamScreen.module.css';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 
 // Types
@@ -18,7 +18,7 @@ import Clock from '@/icons/clock_red.svg';
 import * as RadioGroup from '@radix-ui/react-radio-group';
 
 // API
-import { getExamQuestions, getExamDetails } from '@/lib/Client/Exam';
+import { getExamQuestions, getExamDetails, submitAnswers } from '@/lib/Client/Exam';
 
 type CurrentQuestion = Question | undefined;
 type Answer = 0 | 1 | 2 | 3 | 4 | 5;
@@ -53,6 +53,27 @@ function ExamDetails() {
     enabled: !!examID,
   });
 
+  // const examData = undefined;
+  // const isloadingData = false;
+  // const isErrorExam = true;
+
+  // const questions = undefined;
+  // const isLoadingQuestions = false;
+  // const isErrorQuestions = true;
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: async () => {
+      await submitAnswers(
+        (examData as any)._id,
+        choices,
+        (questions as any).filter((el: any) => el._id)
+      );
+    },
+    onSuccess: () => {
+      router.push(`/app/exams/result/${examID}`);
+    },
+  });
+
   useEffect(() => {
     if (questions && examData) {
       setCurrentQuestion((questions as any)[0]);
@@ -74,7 +95,11 @@ function ExamDetails() {
   useEffect(() => {
     const timer = setInterval(() => {
       if (startTimer) {
-        setRemainingTimeMiliseconds((el) => el - 1);
+        setRemainingTimeMiliseconds((el) => (el !== null ? el - 1 : null));
+      }
+      if (startTimer && remainingTimeMiliseconds && remainingTimeMiliseconds <= 0) {
+        mutate();
+        clearInterval(timer);
       }
     }, 1000);
 
@@ -124,10 +149,24 @@ function ExamDetails() {
           </div>
           <p className={styles.error_description}>
             Sorry, we couldn't process your request at the moment. This may be due to several
-            reasons: the exam session may have ended, you may not have the necessary authorization
-            to access the exam, or you may not have logged into the application. Please check your
-            credentials and try again later. If the issue persists, please contact support for
-            assistance. We apologize for any inconvenience this may have caused.
+            reasons:
+          </p>
+          <ul className={styles.error_description}>
+            <li> - the exam session may have ended or not started,</li>
+            <li> - you may not have the necessary authorization to access the exam,</li>
+            <li>
+              {' '}
+              - our servers have burned down, and they may be raising the average temperature of the
+              world with the carbon dioxide they emit,
+            </li>
+            <li> - or you may not have logged into the application.</li>
+          </ul>
+          <p className={styles.error_description}>
+            Please check your credentials and try again later. If the issue persists, please contact
+            support for assistance. We apologize for any inconvenience this may have caused.
+          </p>
+          <p className={styles.error_description}>
+            <a href="">Mail us</a>. Or send a DM on X (@chozapp).
           </p>
           <div className={styles.error_func_container}>
             <p onClick={() => router.reload()}>Try again</p>
@@ -233,15 +272,20 @@ function ExamDetails() {
               className={styles.form_element_button}
               onClick={() => {
                 if (currentQuestion?.number === 10) {
+                  mutate();
                   return;
                 }
-
                 setCurrentQuestion(
                   (questions as any)[currentQuestion ? currentQuestion?.number : 0]
                 );
               }}
+              disabled={isPending}
             >
-              {currentQuestion?.number === 10 ? 'Save and Finish' : 'Next Question'}
+              {currentQuestion?.number === 10
+                ? isPending
+                  ? 'Redirecting'
+                  : 'Save and Finish'
+                : 'Next Question'}
             </button>
           </div>
         </div>

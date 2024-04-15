@@ -180,3 +180,52 @@
   box-shadow: 0px 3.063px 0px 0px #262525;
   transition: ease-in-out 0.2s;
 }
+
+@media screen and (max-width: 1280px) {
+  .container {
+    width: 768px;
+  }
+
+  .table_container {
+    overflow-x: auto;
+  }
+
+  .table_inner_container {
+    min-width: 1280px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 100%;
+  }
+
+  .content_header {
+    padding: 0 1rem;
+  }
+
+  .content_header_button {
+    padding: 0.25rem 0.625rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .content_header_button_text {
+    font-size: 0.875rem;
+  }
+
+  .plus_icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .table_container {
+    overflow-x: auto;
+  }
+
+  .table_inner_container {
+    min-width: 1280px;
+  }
+}

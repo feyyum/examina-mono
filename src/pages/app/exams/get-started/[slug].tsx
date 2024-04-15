@@ -28,6 +28,11 @@ function ExamDetail() {
     enabled: !!examID, // Only fetch data when examID is available
   });
 
+  // const data = undefined;
+  // const isLoading = false;
+  // const isPending = true;
+  // const isError = false;
+
   console.log(data);
 
   if (isLoading || isPending) {
@@ -198,7 +203,7 @@ function ExamDetail() {
                 Docs
               </a>
             </div>
-            <p className={styles.footer_copyright}>© 2024 Choz</p>
+            <p className={styles.footer_copyright}>©2024 Choz</p>
           </div>
         </div>
       </div>

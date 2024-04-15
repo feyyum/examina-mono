@@ -6,9 +6,7 @@ import { useRouter } from 'next/router';
 import { connectWallet } from '../../hooks/useContractStatus';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
-
-// Fetch
-import { getMessage } from '@/lib/Client/Auth';
+import { setWallet } from '../../features/client/account';
 
 // Components
 import { SidebarButton } from '@/components/ui/Buttons';
@@ -34,7 +32,7 @@ import FEATURE6 from '@/images/landing_feature_card/feature_6.svg';
 // Icons
 import RightLong from '@/icons/right_long.svg';
 import RightLongPurple from '@/icons/right_long_purple.svg';
-import { setWallet } from '../../features/client/account';
+import Choz from '@/icons/choz.svg';
 
 const stepArr = [
   {
@@ -92,7 +90,7 @@ const featureArr = [
   {
     featureTitle: 'Smart',
     featureDesc:
-      'Utilize the intelligence of our Examina Smart Contract, seamlessly integrating external exams for a more efficient and technologically advanced system.',
+      'Utilize the intelligence of our Choz Smart Contract, seamlessly integrating external exams for a more efficient and technologically advanced system.',
     featureImage: FEATURE6,
   },
 ];
@@ -101,7 +99,7 @@ const techArr = [
   {
     techTitle: 'Zero Knowledge',
     techDesc:
-      'Leveraging Zero Knowledge, Examina empowers the creation of exams without disclosing questions, correct answers, user responses, or personal identity, ensuring utmost confidentiality.',
+      'Leveraging Zero Knowledge, Choz empowers the creation of exams without disclosing questions, correct answers, user responses, or personal identity, ensuring utmost confidentiality.',
     techLink:
       'https://examina.medium.com/unveiling-examinas-zero-knowledge-magic-a-journey-into-trust-and-anonymity-cd56c7330998',
   },
@@ -139,9 +137,7 @@ export default function Home() {
       <div className={styles.landing_header_container}>
         <div className={styles.container}>
           <div className={styles.logo_container}>
-            <h1 className={styles.logo_primary}>
-              exa<span className={styles.logo_secondary}>mina</span>
-            </h1>
+            <Image src={Choz} alt="" />
           </div>
           <div className={styles.navigation_container}>
             <Link
@@ -183,7 +179,7 @@ export default function Home() {
             <h5 className={styles.hero_summary}>Blockchain Tech Based Online Exam Platform</h5>
             <h1 className={styles.hero_title}>Create, join, test</h1>
             <h3 className={styles.hero_desc}>
-              Examina: Setting the New Standard for Secure Exam Creation
+              Choz: Setting the New Standard for Secure Exam Creation
             </h3>
             <button className={styles.hero_button}>Create your exam</button>
           </div>
@@ -197,8 +193,7 @@ export default function Home() {
             The <span>fastest</span> way to create exam
           </h1>
           <h3 className={styles.section_desc}>
-            With Examina, you can create an exam in 3 stages and share your exam with a single
-            click.
+            With Choz, you can create an exam in 3 stages and share your exam with a single click.
           </h3>
           <div className={styles.card_container}>
             {stepArr.map((step, index) => {
@@ -249,7 +244,7 @@ export default function Home() {
         <div className={styles.container}>
           <h5 className={styles.section_title}>OUR TECHNOLOGIES</h5>
           <h1 className={styles.section_summary}>
-            Examina <span>uses</span> these technologies
+            Choz <span>uses</span> these technologies
           </h1>
           <h3 className={styles.section_desc}>
             We provide a safe, fast and technological experience with the technologies we use.
@@ -319,11 +314,9 @@ export default function Home() {
           <div className={styles.footer}>
             <div className={styles.container}>
               <div className={styles.logo_container}>
-                <h1 className={styles.logo_primary}>
-                  exa<span className={styles.logo_secondary}>mina</span>
-                </h1>
+                <Image src={Choz} alt="" />
               </div>
-              <p className={styles.copyright}>© 2024 Examina</p>
+              <p className={styles.copyright}>© 2024 Choz</p>
             </div>
           </div>
         </div>

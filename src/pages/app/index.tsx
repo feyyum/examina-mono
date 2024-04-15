@@ -63,72 +63,76 @@ function Application() {
             className={styles.content_header_button}
             onClick={() => router.push('/app/create-exam/')}
           >
-            <Image src={Plus} alt="" />
+            <Image src={Plus} alt="" className={styles.plus_icon} />
             <p className={styles.content_header_button_text}>New Assessment</p>
           </div>
         </div>
         <div className={styles.table_container}>
-          <div className={styles.table_head_container}>
-            <div className={`${styles.table_head_item_container} `}>
-              <p className={styles.table_head_item}>NAME</p>
+          <div className={styles.table_inner_container}>
+            <div className={styles.table_head_container}>
+              <div className={`${styles.table_head_item_container} `}>
+                <p className={styles.table_head_item}>NAME</p>
+              </div>
+              <div className={`${styles.table_head_item_container} `}>
+                <p className={styles.table_head_item}>STATUS</p>
+              </div>
+              <div className={`${styles.table_head_item_container} `}>
+                <p className={styles.table_head_item}>CREATED ON</p>
+              </div>
+              <div className={`${styles.table_head_item_container} `}>
+                <p className={styles.table_head_item}>CREATED BY</p>
+              </div>
+              <div className={`${styles.table_head_item_container} `}>
+                <p className={`${styles.table_head_item} ${styles.table_head_item_secondary}`}>
+                  DURATION
+                </p>
+              </div>
             </div>
-            <div className={`${styles.table_head_item_container} `}>
-              <p className={styles.table_head_item}>STATUS</p>
-            </div>
-            <div className={`${styles.table_head_item_container} `}>
-              <p className={styles.table_head_item}>CREATED ON</p>
-            </div>
-            <div className={`${styles.table_head_item_container} `}>
-              <p className={styles.table_head_item}>CREATED BY</p>
-            </div>
-            <div className={`${styles.table_head_item_container} `}>
-              <p className={`${styles.table_head_item} ${styles.table_head_item_secondary}`}>
-                DURATION
-              </p>
-            </div>
-          </div>
-          {(data as any)?.map((exam: any) => {
-            return (
-              <div className={styles.table_rows_container} key={exam._id}>
-                <div className={styles.table_row_container}>
-                  <div className={`${styles.table_row_item_container}`}>
-                    <p className={styles.table_row_item}>{exam.title}</p>
-                  </div>
-                  <div className={`${styles.table_row_item_container}`}>
-                    <p className={styles.table_row_item}>Active</p>
-                  </div>
-                  <div className={`${styles.table_row_item_container}`}>
-                    <p className={styles.table_row_item}>{formatDate(new Date(exam.startDate))}</p>
-                  </div>
-                  <div className={`${styles.table_row_item_container}`}>
-                    <p className={styles.table_row_item}>
-                      {exam.creator.slice(0, 5)}...
-                      {exam.creator.slice(exam.creator.length - 4, exam.creator.length + 1)}
-                    </p>
-                  </div>
-                  <div className={`${styles.table_row_item_container}`}>
-                    <p className={styles.table_row_item}>{exam.duration} min.</p>
-                  </div>
-                  <div className={`${styles.table_row_item_container}`}>
-                    <div
-                      className={styles.table_row_item_edit_container}
-                      onClick={() => {
-                        navigator.clipboard
-                          .writeText(`https://choz.io/app/exams/get-started/${exam._id}`)
-                          .then(() => setCopied(exam._id));
-                      }}
-                    >
-                      {/* <Image src={Copy} alt="" /> */}
-                      <Image src={Duplicate} alt="" />
-                      <p className={styles.table_row_copy_link}>
-                        {copied === exam._id ? 'Copied' : 'Copy Link'}
+            {(data as any)?.map((exam: any) => {
+              return (
+                <div className={styles.table_rows_container} key={exam._id}>
+                  <div className={styles.table_row_container}>
+                    <div className={`${styles.table_row_item_container}`}>
+                      <p className={styles.table_row_item}>{exam.title}</p>
+                    </div>
+                    <div className={`${styles.table_row_item_container}`}>
+                      <p className={styles.table_row_item}>Active</p>
+                    </div>
+                    <div className={`${styles.table_row_item_container}`}>
+                      <p className={styles.table_row_item}>
+                        {formatDate(new Date(exam.startDate))}
                       </p>
+                    </div>
+                    <div className={`${styles.table_row_item_container}`}>
+                      <p className={styles.table_row_item}>
+                        {exam.creator.slice(0, 5)}...
+                        {exam.creator.slice(exam.creator.length - 4, exam.creator.length + 1)}
+                      </p>
+                    </div>
+                    <div className={`${styles.table_row_item_container}`}>
+                      <p className={styles.table_row_item}>{exam.duration} min.</p>
+                    </div>
+                    <div className={`${styles.table_row_item_container}`}>
+                      <div
+                        className={styles.table_row_item_edit_container}
+                        onClick={() => {
+                          navigator.clipboard
+                            .writeText(`https://choz.io/app/exams/get-started/${exam._id}`)
+                            .then(() => setCopied(exam._id));
+                        }}
+                      >
+                        {/* <Image src={Copy} alt="" /> */}
+                        <Image src={Duplicate} alt="" />
+                        <p className={styles.table_row_copy_link}>
+                          {copied === exam._id ? 'Copied' : 'Copy Link'}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

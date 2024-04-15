@@ -136,6 +136,12 @@
   font-weight: 300;
   line-height: 1.5rem;
   letter-spacing: -0.144px;
+  list-style: none;
+}
+
+.error_description > a {
+  text-decoration: none;
+  color: var(--mina-purple);
 }
 
 .error_func_container {
@@ -163,4 +169,52 @@
   line-height: 1.5rem;
   letter-spacing: -0.144px;
   text-decoration: none;
+}
+
+@media screen and (max-width: 1280px) {
+  .container {
+    width: 768px;
+  }
+
+  .preview_container {
+    flex-direction: column-reverse;
+  }
+
+  .preview_selector_container {
+    width: 100%;
+  }
+
+  .selector_container {
+    gap: 64px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 100%;
+  }
+
+  .content_container {
+    border-radius: 0;
+    padding: 48px 24px;
+  }
+
+  .selector_container {
+    gap: 18px;
+  }
+
+  .exam_header_container {
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0 24px;
+    text-align: center;
+  }
+
+  .error_description {
+    padding: 0 24px;
+  }
+
+  .error_func_container {
+    padding: 0 24px;
+  }
 }
