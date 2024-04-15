@@ -364,7 +364,6 @@ function CreateExam() {
                   onClick={() => {
                     if (
                       currentQuestion.text === '' ||
-                      currentQuestion.description === '' ||
                       currentQuestion.options.filter((el) => el.text === '').length > 0
                     ) {
                       return;
