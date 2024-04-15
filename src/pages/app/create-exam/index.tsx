@@ -210,6 +210,7 @@ function CreateExam() {
                     <Select.Content className="SelectContent">
                       <Select.Viewport className="SelectViewport">
                         <Select.Group>
+                          <SelectItem value="10">10 Minutes</SelectItem>
                           <SelectItem value="30">30 Minutes</SelectItem>
                           <SelectItem value="60">60 Minutes</SelectItem>
                           <SelectItem value="90">90 Minutes</SelectItem>
