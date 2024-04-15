@@ -8,8 +8,6 @@ import { RootState } from '../../store';
 
 // Components
 // import Loader from '@/components/Loader';
-import Header from '@/components/ui/Header';
-import Sidebar from '@/components/ui/Sidebar';
 import { setWallet } from '../../features/client/account';
 import { onChangeWallet } from '../../hooks/useContractStatus';
 // import RightSidebar from "@/components/ui/RightSidebar";
@@ -52,6 +50,9 @@ function Layout({ children }: Props) {
   // Redirect to home if no wallets
   useEffect(() => {
     if ((rendered && account.wallets.length === 0 && router.pathname !== '/') || isMobile) {
+      if (router.pathname.includes('get-started')) {
+        return;
+      }
       router.push('/');
     }
   }, [rendered, account.wallets, router.pathname]);

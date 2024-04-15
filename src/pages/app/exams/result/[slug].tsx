@@ -38,9 +38,9 @@ function ExamResult() {
                 <Image src={ResultImage} alt="" />
               </div>
               <div className={styles.score_container}>
-                {/* <h2 className={styles.score_title}>
+                <h2 className={styles.score_title}>
                   YOUR SCORE: {data ? (data as any).score : '-'}
-                </h2> */}
+                </h2>
                 <p className={styles.score_text}>
                   Congratulations, you've proven yourself! Now it's time for your reward! 🎁 Your
                   exam results will be automatically transmitted to us, and your prize will be

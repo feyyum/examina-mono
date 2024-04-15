@@ -5,8 +5,11 @@ import { useQuery } from '@tanstack/react-query';
 import { getExamDetails } from '@/lib/Client/Exam';
 import { humanize } from '../../../../../utils/formatter';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../../../store';
+
+import { connectWallet } from '../../../../../hooks/useContractStatus';
+import { setWallet } from '../../../../../features/client/account';
 
 // Custom Layout
 import Layout from '../layout';
@@ -15,9 +18,11 @@ import Layout from '../layout';
 import ExamIcon from '@/icons/globe.svg';
 import Clock from '@/icons/clock.svg';
 import Choz from '@/icons/choz.svg';
+import { isMobile } from 'react-device-detect';
 
 function ExamDetail() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const examID: string = router.query.slug as string;
 
   const account = useSelector((state: RootState) => state.account);
@@ -157,14 +162,21 @@ function ExamDetail() {
                 </div>
               </div>
               <div className={styles.connect_container}>
-                <a
-                  href={`https://choz.io/app/exams/${(data as any)._id}`}
+                <div
                   className={styles.connect_button_container}
+                  onClick={async () => {
+                    if (account.wallets[0] && !isMobile) {
+                      router.push(`/app/exams/${(data as any)._id}`);
+                      return;
+                    }
+                    const wallet = await connectWallet();
+                    wallet && dispatch(setWallet({ wallets: [wallet] }));
+                  }}
                 >
                   <p className={styles.connect_button_text}>
                     {account.wallets[0] ? 'Start Exam' : 'Connect Wallet'}
                   </p>
-                </a>
+                </div>
                 {account.wallets[0] ? (
                   <p className={styles.connect_container_desc_connected}>
                     You are using this wallet address:{' '}
@@ -178,6 +190,10 @@ function ExamDetail() {
                         account.wallets[0].length
                       )}
                     </a>
+                  </p>
+                ) : isMobile ? (
+                  <p className={styles.connect_container_desc}>
+                    You have to use desktop browser to join exam.{' '}
                   </p>
                 ) : (
                   <p className={styles.connect_container_desc}>

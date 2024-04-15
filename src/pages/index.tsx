@@ -298,7 +298,7 @@ export default function Home() {
               </a>
             </p>
           </div>
-          <a href="#">
+          <a href="#" className={styles.sub_section_try_button_container}>
             <Image src={TryButton} alt="" className={styles.sub_section_try_button} />
           </a>
         </div>
