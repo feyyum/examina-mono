@@ -161,9 +161,15 @@ export default function Home() {
           <div
             className={styles.button_container}
             onClick={async () => {
-              const wallet = await connectWallet();
-              wallet && dispatch(setWallet({ wallets: [wallet] }));
-              router.push('/app');
+              if (wallets.length > 0) {
+                router.push('/app');
+                return;
+              }
+              try {
+                await connectWallet(dispatch, setWallet);
+              } catch (error) {
+                console.log(error);
+              }
             }}
           >
             <SidebarButton

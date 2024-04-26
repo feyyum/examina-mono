@@ -139,28 +139,45 @@ export const useContractStatus = (): ContractStatus => {
   return returned;
 };
 
-export async function connectWallet() {
+export async function connectWallet(dispatch: (data: any) => {}, setWallet: (data: any) => {}) {
   const mina = (window as any).mina;
 
   if (mina == null) {
     return;
   }
 
-  const accounts: string[] = await mina.getAccounts();
+  try {
+    const accounts: string[] = await mina.getAccounts();
 
-  if (accounts.length > 0) {
-    return accounts[0];
+    if (accounts.length > 0) {
+      return accounts[0];
+    }
+
+    const publicKeyBase58: string = (await mina.requestAccounts())[0];
+    const publicKey = PublicKey.fromBase58(publicKeyBase58);
+
+    const chainRes = await mina.switchChain({
+      chainId: 'berkeley',
+    });
+
+    if (chainRes.chainId !== 'berkeley') {
+      return;
+    }
+
+    // Authenticate
+    const _message = await getMessage(publicKey.toBase58()!);
+    const signedData = await signMessage({ message: _message });
+    const loginRes = await login(signedData);
+
+    if ((loginRes as any).succsess !== true) {
+      throw new Error('Login failed');
+    }
+
+    dispatch(setWallet({ wallets: [publicKeyBase58] }));
+  } catch (e) {
+    console.error(e);
+    dispatch(setWallet({ wallets: [] }));
   }
-
-  const publicKeyBase58: string = (await mina.requestAccounts())[0];
-  const publicKey = PublicKey.fromBase58(publicKeyBase58);
-
-  // Authenticate
-  const _message = await getMessage(publicKey.toBase58()!);
-  const signedData = await signMessage({ message: _message });
-  await login(signedData);
-
-  return publicKeyBase58;
 }
 
 export async function onChangeWallet(_accounts: string[]) {
@@ -174,6 +191,4 @@ export async function onChangeWallet(_accounts: string[]) {
   const _message = await getMessage(publicKey);
   const signedData = await signMessage({ message: _message });
   await login(signedData);
-
-  return publicKey;
 }

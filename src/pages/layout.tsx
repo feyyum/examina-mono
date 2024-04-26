@@ -60,7 +60,7 @@ function Layout({ children }: Props) {
   // Handle Wallet Change
   useEffect(() => {
     (window as any).mina?.on('accountsChanged', (accounts: string[]) => {
-      if (account.wallets.length === 0) {
+      if (account.wallets.length === 0 || router.pathname === '/') {
         return;
       }
       onChangeWallet(accounts).then(() => {
