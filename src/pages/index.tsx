@@ -165,11 +165,8 @@ export default function Home() {
                 router.push('/app');
                 return;
               }
-              try {
-                await connectWallet(dispatch, setWallet);
-              } catch (error) {
-                console.log(error);
-              }
+              await connectWallet(dispatch, setWallet);
+              router.push('/app');
             }}
           >
             <SidebarButton

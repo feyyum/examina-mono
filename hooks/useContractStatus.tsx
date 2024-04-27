@@ -19,125 +19,125 @@ export interface ContractStatus {
   };
 }
 
-export const useContractStatus = (): ContractStatus => {
-  // Redux
-  const dispatch = useAppDispatch();
-  const state = useAppSelector((state) => state.client);
+// export const useContractStatus = (): ContractStatus => {
+//   // Redux
+//   const dispatch = useAppDispatch();
+//   const state = useAppSelector((state) => state.client);
 
-  // Return state
-  const [returned, setReturned] = useState<ContractStatus>({
-    status: 'worker',
-    error: undefined,
-  });
+//   // Return state
+//   const [returned, setReturned] = useState<ContractStatus>({
+//     status: 'worker',
+//     error: undefined,
+//   });
 
-  useEffect(() => {
-    async function timeout(seconds: number): Promise<void> {
-      return new Promise<void>((resolve) => {
-        setTimeout(() => {
-          resolve();
-        }, seconds * 1000);
-      });
-    }
+//   useEffect(() => {
+//     async function timeout(seconds: number): Promise<void> {
+//       return new Promise<void>((resolve) => {
+//         setTimeout(() => {
+//           resolve();
+//         }, seconds * 1000);
+//       });
+//     }
 
-    console.log('CLIENT:', state.zkappWorkerClient);
+//     console.log('CLIENT:', state.zkappWorkerClient);
 
-    if (state.zkappWorkerClient === null) {
-      (async () => {
-        if (!state.hasBeenSetup) {
-          console.log('Loading web worker...');
-          // const zkappWorkerClient = new ZkappWorkerClient();
-          // await timeout(5);
+//     if (state.zkappWorkerClient === null) {
+//       (async () => {
+//         if (!state.hasBeenSetup) {
+//           console.log('Loading web worker...');
+//           // const zkappWorkerClient = new ZkappWorkerClient();
+//           // await timeout(5);
 
-          // console.log('Done loading web worker');
+//           // console.log('Done loading web worker');
 
-          // setReturned({ ...returned, status: 'account' });
+//           // setReturned({ ...returned, status: 'account' });
 
-          // await zkappWorkerClient.setActiveInstanceToBerkeley();
+//           // await zkappWorkerClient.setActiveInstanceToBerkeley();
 
-          const mina = (window as any).mina;
+//           const mina = (window as any).mina;
 
-          if (mina == null) {
-            dispatch(setClient({ ...state, hasWallet: false }));
-            return;
-          }
+//           if (mina == null) {
+//             dispatch(setClient({ ...state, hasWallet: false }));
+//             return;
+//           }
 
-          const publicKeyBase58: string = (await mina.requestAccounts())[0];
-          const publicKey = PublicKey.fromBase58(publicKeyBase58);
+//           const publicKeyBase58: string = (await mina.requestAccounts())[0];
+//           const publicKey = PublicKey.fromBase58(publicKeyBase58);
 
-          // Authenticate
-          const _message = await getMessage(publicKey.toBase58()!);
-          const signedData = await signMessage({ message: _message });
-          await login(signedData);
+//           // Authenticate
+//           const _message = await getMessage(publicKey.toBase58()!);
+//           const signedData = await signMessage({ message: _message });
+//           await login(signedData);
 
-          // console.log(`Using key:${publicKey.toBase58()}`);
+//           // console.log(`Using key:${publicKey.toBase58()}`);
 
-          // console.log('Checking if fee payer account exists...');
+//           // console.log('Checking if fee payer account exists...');
 
-          // const res = await zkappWorkerClient.fetchAccount({
-          //   publicKey: publicKey!,
-          // });
+//           // const res = await zkappWorkerClient.fetchAccount({
+//           //   publicKey: publicKey!,
+//           // });
 
-          // const accountExists = res.error == null;
+//           // const accountExists = res.error == null;
 
-          // setReturned({ ...returned, status: 'compile' });
+//           // setReturned({ ...returned, status: 'compile' });
 
-          // await zkappWorkerClient.loadContract();
+//           // await zkappWorkerClient.loadContract();
 
-          // console.log('Compiling zkApp...');
+//           // console.log('Compiling zkApp...');
 
-          // await zkappWorkerClient.compileContract();
-          // console.log('zkApp compiled');
+//           // await zkappWorkerClient.compileContract();
+//           // console.log('zkApp compiled');
 
-          // const zkappPublicKey = PublicKey.fromBase58(
-          //   'B62qo2Be4Udo5EG1ux9yMJVkXe9Gz945cocN7Bn4W9DSYyeHZr1C3Ea'
-          // );
+//           // const zkappPublicKey = PublicKey.fromBase58(
+//           //   'B62qo2Be4Udo5EG1ux9yMJVkXe9Gz945cocN7Bn4W9DSYyeHZr1C3Ea'
+//           // );
 
-          // await zkappWorkerClient.initZkappInstance(zkappPublicKey);
+//           // await zkappWorkerClient.initZkappInstance(zkappPublicKey);
 
-          // console.log('Getting zkApp state...');
-          // await zkappWorkerClient.fetchAccount({ publicKey: zkappPublicKey });
-          // //   const currentNum = await zkappWorkerClient.getNum();
-          // //   console.log(`Current state in zkApp: ${currentNum.toString()}`);
+//           // console.log('Getting zkApp state...');
+//           // await zkappWorkerClient.fetchAccount({ publicKey: zkappPublicKey });
+//           // //   const currentNum = await zkappWorkerClient.getNum();
+//           // //   console.log(`Current state in zkApp: ${currentNum.toString()}`);
 
-          // dispatch(
-          //   setClient({
-          //     ...state,
-          //     zkappWorkerClient,
-          //     hasWallet: true,
-          //     hasBeenSetup: true,
-          //     publicKey,
-          //     zkappPublicKey,
-          //     accountExists,
-          //   })
-          // );
+//           // dispatch(
+//           //   setClient({
+//           //     ...state,
+//           //     zkappWorkerClient,
+//           //     hasWallet: true,
+//           //     hasBeenSetup: true,
+//           //     publicKey,
+//           //     zkappPublicKey,
+//           //     accountExists,
+//           //   })
+//           // );
 
-          // setReturned({ ...returned, status: 'done' });
-        }
-      })();
-    }
-  }, []);
+//           // setReturned({ ...returned, status: 'done' });
+//         }
+//       })();
+//     }
+//   }, []);
 
-  useEffect(() => {
-    (async () => {
-      if (state.hasBeenSetup && !state.accountExists) {
-        for (;;) {
-          console.log('Checking if fee payer account exists...');
-          const res = await state.zkappWorkerClient!.fetchAccount({
-            publicKey: state.publicKey!,
-          });
-          const accountExists = res.error == null;
-          if (accountExists) {
-            break;
-          }
-          await new Promise((resolve) => setTimeout(resolve, 5000));
-        }
-        dispatch(setClient({ ...state, accountExists: true }));
-      }
-    })();
-  }, [state.hasBeenSetup]);
+//   useEffect(() => {
+//     (async () => {
+//       if (state.hasBeenSetup && !state.accountExists) {
+//         for (;;) {
+//           console.log('Checking if fee payer account exists...');
+//           const res = await state.zkappWorkerClient!.fetchAccount({
+//             publicKey: state.publicKey!,
+//           });
+//           const accountExists = res.error == null;
+//           if (accountExists) {
+//             break;
+//           }
+//           await new Promise((resolve) => setTimeout(resolve, 5000));
+//         }
+//         dispatch(setClient({ ...state, accountExists: true }));
+//       }
+//     })();
+//   }, [state.hasBeenSetup]);
 
-  return returned;
-};
+//   return returned;
+// };
 
 export async function connectWallet(dispatch: (data: any) => {}, setWallet: (data: any) => {}) {
   const mina = (window as any).mina;
@@ -159,6 +159,7 @@ export async function connectWallet(dispatch: (data: any) => {}, setWallet: (dat
     const chainRes = await mina.switchChain({
       chainId: 'berkeley',
     });
+    console.log(chainRes);
 
     if (chainRes.chainId !== 'berkeley') {
       return;
@@ -168,15 +169,16 @@ export async function connectWallet(dispatch: (data: any) => {}, setWallet: (dat
     const _message = await getMessage(publicKey.toBase58()!);
     const signedData = await signMessage({ message: _message });
     const loginRes = await login(signedData);
+    console.log(loginRes);
 
-    if ((loginRes as any).succsess !== true) {
-      throw new Error('Login failed');
+    if ((loginRes as any).success !== true) {
+      dispatch(setWallet({ wallets: [] }));
+      return;
     }
 
     dispatch(setWallet({ wallets: [publicKeyBase58] }));
-  } catch (e) {
-    console.error(e);
-    dispatch(setWallet({ wallets: [] }));
+  } catch (error) {
+    console.error(error);
   }
 }
 

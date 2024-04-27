@@ -60,4 +60,18 @@ function login(data: SignedData | ProviderError): Promise<string> {
   });
 }
 
-export { getMessage, signMessage, login };
+function getSession() {
+  return new Promise((resolve, reject) => {
+    const requestBase = new RequestBase();
+    requestBase
+      .get('/register/session')
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export { getMessage, signMessage, login, getSession };

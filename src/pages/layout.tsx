@@ -10,6 +10,8 @@ import { RootState } from '../../store';
 // import Loader from '@/components/Loader';
 import { setWallet } from '../../features/client/account';
 import { onChangeWallet } from '../../hooks/useContractStatus';
+import { useQuery } from '@tanstack/react-query';
+import { getSession } from '@/lib/Client/Auth';
 // import RightSidebar from "@/components/ui/RightSidebar";
 
 // Custom hooks
@@ -25,6 +27,12 @@ function Layout({ children }: Props) {
 
   const dispatch = useDispatch();
   const account = useSelector((state: RootState) => state.account);
+
+  const { data, refetch } = useQuery({ queryKey: ['getSession'], queryFn: getSession });
+
+  useEffect(() => {
+    refetch().then((res) => console.log('SESSION', res));
+  }, [account, router.pathname]);
 
   //console.log('ACCOUNT', account);
 
@@ -61,6 +69,7 @@ function Layout({ children }: Props) {
   useEffect(() => {
     (window as any).mina?.on('accountsChanged', (accounts: string[]) => {
       if (account.wallets.length === 0 || router.pathname === '/') {
+        dispatch(setWallet({ wallets: accounts }));
         return;
       }
       onChangeWallet(accounts).then(() => {
@@ -71,7 +80,7 @@ function Layout({ children }: Props) {
     return () => {
       (window as any).mina?.removeAllListeners('accountsChanged');
     };
-  }, [account]);
+  }, [account, router.pathname]);
 
   return (
     <div>
