@@ -2,11 +2,10 @@ import styles from '../styles/Landing.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import toast from 'react-hot-toast';
 
-import { connectWallet } from '../../hooks/useContractStatus';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { setWallet } from '../../features/client/account';
 
 // Components
 import { SidebarButton } from '@/components/ui/Buttons';
@@ -33,6 +32,8 @@ import FEATURE6 from '@/images/landing_feature_card/feature_6.svg';
 import RightLong from '@/icons/right_long.svg';
 import RightLongPurple from '@/icons/right_long_purple.svg';
 import Choz from '@/icons/choz.svg';
+import { authenticate } from '../../hooks/auth';
+import { setSession } from '../../features/client/session';
 
 const stepArr = [
   {
@@ -130,7 +131,7 @@ export default function Home() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const wallets = useSelector((state: RootState) => state.account.wallets);
+  const session = useSelector((state: RootState) => state.session);
 
   return (
     <>
@@ -161,18 +162,17 @@ export default function Home() {
           <div
             className={styles.button_container}
             onClick={async () => {
-              if (wallets.length > 0) {
-                router.push('/app');
+              const res = await authenticate(session as any);
+              if (!res) {
+                toast.error('Failed to authenticate wallet!');
                 return;
               }
-              await connectWallet(dispatch, setWallet);
+              toast.success('Welcome back!');
+              dispatch(setSession((res as any).session));
               router.push('/app');
             }}
           >
-            <SidebarButton
-              label={wallets.length > 0 ? 'Go to Dashboard' : 'Connect Wallet'}
-              active
-            />
+            <SidebarButton label="Go to Dashboard" active />
           </div>
         </div>
       </div>

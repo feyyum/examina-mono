@@ -60,6 +60,20 @@ function login(data: SignedData | ProviderError): Promise<string> {
   });
 }
 
+function logout() {
+  return new Promise((resolve, reject) => {
+    const requestBase = new RequestBase();
+    requestBase
+      .get('/register/logout')
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
 function getSession() {
   return new Promise((resolve, reject) => {
     const requestBase = new RequestBase();
@@ -74,4 +88,4 @@ function getSession() {
   });
 }
 
-export { getMessage, signMessage, login, getSession };
+export { getMessage, signMessage, login, getSession, logout };

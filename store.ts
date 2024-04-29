@@ -1,14 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import clientReducer from './features/client/client';
 import examReducer from './features/client/exam';
-import accountReducer from './features/client/account';
+import sessionReducer from './features/client/session';
 // ...
 
 export const store = configureStore({
   reducer: {
-    client: clientReducer,
     exam: examReducer,
-    account: accountReducer,
+    session: sessionReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

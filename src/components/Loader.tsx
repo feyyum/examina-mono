@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
 // Types
-import { ContractStatus } from "../../hooks/useContractStatus";
+import { ContractStatus } from '../../hooks/auth';
 
 const Loader = (contract: ContractStatus) => {
   if (contract.error) {

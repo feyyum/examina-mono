@@ -22,7 +22,7 @@ function Application() {
 
   const router = useRouter();
 
-  if (isLoading === false && (data as any).length === 0 && isError === false) {
+  if (isLoading === false && (data as any)?.length === 0 && isError === false) {
     return (
       <div>
         <DashboardHeader />
@@ -88,50 +88,51 @@ function Application() {
                 </p>
               </div>
             </div>
-            {(data as any)?.map((exam: any) => {
-              return (
-                <div className={styles.table_rows_container} key={exam._id}>
-                  <div className={styles.table_row_container}>
-                    <div className={`${styles.table_row_item_container}`}>
-                      <p className={styles.table_row_item}>{exam.title}</p>
-                    </div>
-                    <div className={`${styles.table_row_item_container}`}>
-                      <p className={styles.table_row_item}>Active</p>
-                    </div>
-                    <div className={`${styles.table_row_item_container}`}>
-                      <p className={styles.table_row_item}>
-                        {formatDate(new Date(exam.startDate))}
-                      </p>
-                    </div>
-                    <div className={`${styles.table_row_item_container}`}>
-                      <p className={styles.table_row_item}>
-                        {exam.creator.slice(0, 5)}...
-                        {exam.creator.slice(exam.creator.length - 4, exam.creator.length + 1)}
-                      </p>
-                    </div>
-                    <div className={`${styles.table_row_item_container}`}>
-                      <p className={styles.table_row_item}>{exam.duration} min.</p>
-                    </div>
-                    <div className={`${styles.table_row_item_container}`}>
-                      <div
-                        className={styles.table_row_item_edit_container}
-                        onClick={() => {
-                          navigator.clipboard
-                            .writeText(`https://examina.space/app/exams/get-started/${exam._id}`)
-                            .then(() => setCopied(exam._id));
-                        }}
-                      >
-                        {/* <Image src={Copy} alt="" /> */}
-                        <Image src={Duplicate} alt="" />
-                        <p className={styles.table_row_copy_link}>
-                          {copied === exam._id ? 'Copied' : 'Copy Link'}
+            {data &&
+              (data as any)?.map((exam: any) => {
+                return (
+                  <div className={styles.table_rows_container} key={exam._id}>
+                    <div className={styles.table_row_container}>
+                      <div className={`${styles.table_row_item_container}`}>
+                        <p className={styles.table_row_item}>{exam.title}</p>
+                      </div>
+                      <div className={`${styles.table_row_item_container}`}>
+                        <p className={styles.table_row_item}>Active</p>
+                      </div>
+                      <div className={`${styles.table_row_item_container}`}>
+                        <p className={styles.table_row_item}>
+                          {formatDate(new Date(exam.startDate))}
                         </p>
+                      </div>
+                      <div className={`${styles.table_row_item_container}`}>
+                        <p className={styles.table_row_item}>
+                          {exam.creator.slice(0, 5)}...
+                          {exam.creator.slice(exam.creator.length - 4, exam.creator.length + 1)}
+                        </p>
+                      </div>
+                      <div className={`${styles.table_row_item_container}`}>
+                        <p className={styles.table_row_item}>{exam.duration} min.</p>
+                      </div>
+                      <div className={`${styles.table_row_item_container}`}>
+                        <div
+                          className={styles.table_row_item_edit_container}
+                          onClick={() => {
+                            navigator.clipboard
+                              .writeText(`https://examina.space/app/exams/get-started/${exam._id}`)
+                              .then(() => setCopied(exam._id));
+                          }}
+                        >
+                          {/* <Image src={Copy} alt="" /> */}
+                          <Image src={Duplicate} alt="" />
+                          <p className={styles.table_row_copy_link}>
+                            {copied === exam._id ? 'Copied' : 'Copy Link'}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         </div>
       </div>

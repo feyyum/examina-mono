@@ -8,8 +8,9 @@ import { humanize } from '../../../../../utils/formatter';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../../../store';
 
-import { connectWallet } from '../../../../../hooks/useContractStatus';
-import { setWallet } from '../../../../../features/client/account';
+import { connectWallet } from '../../../../../hooks/auth';
+
+//! Account düzelt
 
 // Custom Layout
 import Layout from '../layout';
@@ -170,7 +171,7 @@ function ExamDetail() {
                       return;
                     }
                     const wallet = await connectWallet();
-                    wallet && dispatch(setWallet({ wallets: [wallet] }));
+                    // wallet && dispatch(setWallet({ wallets: [wallet] }));
                   }}
                 >
                   <p className={styles.connect_button_text}>

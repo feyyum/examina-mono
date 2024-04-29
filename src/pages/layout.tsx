@@ -2,16 +2,17 @@ import styles from '../styles/app/Layout.module.css';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { isMobile } from 'react-device-detect';
+import toast, { Toaster } from 'react-hot-toast';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
 
 // Components
 // import Loader from '@/components/Loader';
-import { setWallet } from '../../features/client/account';
-import { onChangeWallet } from '../../hooks/useContractStatus';
 import { useQuery } from '@tanstack/react-query';
-import { getSession } from '@/lib/Client/Auth';
+import { getSession, logout } from '@/lib/Client/Auth';
+import { setSession } from '../../features/client/session';
+import { log } from 'console';
 // import RightSidebar from "@/components/ui/RightSidebar";
 
 // Custom hooks
@@ -24,67 +25,90 @@ type Props = {
 
 function Layout({ children }: Props) {
   const router = useRouter();
-
   const dispatch = useDispatch();
-  const account = useSelector((state: RootState) => state.account);
 
-  const { data, refetch } = useQuery({ queryKey: ['getSession'], queryFn: getSession });
+  const session = useSelector((state: RootState) => state.session);
 
-  useEffect(() => {
-    refetch().then((res) => console.log('SESSION', res));
-  }, [account, router.pathname]);
-
-  //console.log('ACCOUNT', account);
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ['session'],
+    queryFn: getSession,
+    // @ts-ignore
+    cacheTime: 0,
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
 
   const [rendered, setRendered] = useState(false);
 
-  // Get Wallets
   useEffect(() => {
-    if ((window as any) && (window as any).mina === undefined) {
-      setRendered(true);
-      return;
-    }
-
-    if ((window as any).mina !== undefined) {
-      (window as any).mina.getAccounts().then((accounts: string[]) => {
-        //console.log('Accounts:', accounts);
-        dispatch(setWallet({ wallets: accounts }));
-        setRendered(true);
-      });
-      return;
-    }
+    setRendered(true);
   }, []);
 
-  // Redirect to home if no wallets
   useEffect(() => {
-    if ((rendered && account.wallets.length === 0 && router.pathname !== '/') || isMobile) {
-      if (router.pathname.includes('get-started')) {
-        return;
-      }
-      router.push('/');
-    }
-  }, [rendered, account.wallets, router.pathname]);
+    refetch();
+  }, [router.pathname]);
 
-  // Handle Wallet Change
   useEffect(() => {
-    (window as any).mina?.on('accountsChanged', (accounts: string[]) => {
-      if (account.wallets.length === 0 || router.pathname === '/') {
-        dispatch(setWallet({ wallets: accounts }));
-        return;
-      }
-      onChangeWallet(accounts).then(() => {
-        dispatch(setWallet({ wallets: accounts }));
+    if (rendered && !isLoading && router.pathname !== '/') {
+      (window as any)?.mina.getAccounts().then((accounts: string[]) => {
+        if (data && accounts.length === 0) {
+          logout().then(() => {
+            dispatch(setSession(new Object() as any));
+            toast.error('Please connect wallet to continue.');
+            router.push('/');
+          });
+          return;
+        }
+
+        if (!data && accounts.length === 0) {
+          dispatch(setSession(new Object() as any));
+          toast.error('Please login to continue.');
+          router.push('/');
+          return;
+        }
+
+        if (data && accounts.length > 0) {
+          if (accounts[0] !== (data as any).session.walletAddress) {
+            logout().then(() => {
+              dispatch(setSession(new Object() as any));
+              toast.error('Please login to continue.');
+              router.push('/');
+            });
+            return;
+          }
+          dispatch(setSession((data as any).session));
+          return;
+        }
+
+        if (!data && accounts.length > 0) {
+          dispatch(setSession(new Object() as any));
+          toast.error('Please sign message while authentication to continue.');
+          router.push('/');
+          return;
+        }
       });
-    });
+    }
 
-    return () => {
-      (window as any).mina?.removeAllListeners('accountsChanged');
-    };
-  }, [account, router.pathname]);
+    if (rendered && !isLoading && router.pathname == '/') {
+      (window as any)?.mina.getAccounts().then((accounts: string[]) => {
+        if (data && accounts.length > 0) {
+          if (accounts[0] !== (data as any).session.walletAddress) {
+            logout().then(() => {
+              dispatch(setSession(new Object() as any));
+            });
+            return;
+          }
+          dispatch(setSession((data as any).session));
+          return;
+        }
+      });
+    }
+  }, [rendered, isLoading, router.pathname]);
 
   return (
     <div>
       <main>{children}</main>
+      <Toaster position="top-left" />
     </div>
   );
 }
