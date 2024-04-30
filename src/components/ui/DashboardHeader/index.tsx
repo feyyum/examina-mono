@@ -19,14 +19,18 @@ function DashboardHeader({ withoutNav = false }) {
         </a>
         {withoutNav === false && (
           <div className={styles.header_nav_container}>
-            <a href="#" className={`${styles.header_nav_item} ${styles.header_nav_item_active}`}>
+            <p className={`${styles.header_nav_item} ${styles.header_nav_item_active}`}>
               Assesments
-            </a>
+            </p>
           </div>
         )}
         <div className={styles.profile_container}>
           <div>
-            <a href="#" className={styles.wallet_address}>
+            <a
+              href={`https://minascan.io/mainnet/account/${session?.walletAddress}/`}
+              target="_blank"
+              className={styles.wallet_address}
+            >
               {session.walletAddress &&
                 `${(session.walletAddress as string).slice(0, 5)}...${(
                   session.walletAddress as string

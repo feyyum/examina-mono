@@ -8,7 +8,7 @@ import { humanize } from '../../../../../utils/formatter';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../../../store';
 
-import { connectWallet } from '../../../../../hooks/auth';
+import { authenticate, connectWallet } from '../../../../../hooks/auth';
 
 //! Account düzelt
 
@@ -20,13 +20,17 @@ import ExamIcon from '@/icons/globe.svg';
 import Clock from '@/icons/clock.svg';
 import Choz from '@/icons/choz.svg';
 import { isMobile } from 'react-device-detect';
+import toast from 'react-hot-toast';
+import { setSession } from '../../../../../features/client/session';
 
 function ExamDetail() {
   const router = useRouter();
   const dispatch = useDispatch();
   const examID: string = router.query.slug as string;
 
-  const account = useSelector((state: RootState) => state.account);
+  const session = useSelector(
+    (state: { session: { userId: string; walletAddress: string } }) => state.session
+  );
 
   const { data, isLoading, isPending, isError, refetch } = useQuery({
     queryKey: ['exam'],
@@ -166,30 +170,36 @@ function ExamDetail() {
                 <div
                   className={styles.connect_button_container}
                   onClick={async () => {
-                    if (account.wallets[0] && !isMobile) {
+                    if (session?.walletAddress && !isMobile) {
                       router.push(`/app/exams/${(data as any)._id}`);
+                      toast.success('You are ready to start the exam. Good luck!');
                       return;
                     }
-                    const wallet = await connectWallet();
-                    // wallet && dispatch(setWallet({ wallets: [wallet] }));
+                    const res = await authenticate(session as any);
+                    if (!res) {
+                      toast.error('Failed to authenticate wallet!');
+                      return;
+                    }
+                    toast.success('Successfully authenticated wallet!');
+                    dispatch(setSession((res as any).session));
+                    router.reload();
                   }}
                 >
                   <p className={styles.connect_button_text}>
-                    {account.wallets[0] ? 'Start Exam' : 'Connect Wallet'}
+                    {session?.walletAddress ? 'Start Exam' : 'Connect Wallet'}
                   </p>
                 </div>
-                {account.wallets[0] ? (
+                {session?.walletAddress ? (
                   <p className={styles.connect_container_desc_connected}>
                     You are using this wallet address:{' '}
                     <a
-                      href={`https://minascan.io/mainnet/account/${account.wallets[0]}/`}
+                      href={`https://minascan.io/mainnet/account/${session?.walletAddress}/`}
                       target="_blank"
                     >
-                      {account.wallets[0].slice(0, 4)}...
-                      {account.wallets[0].slice(
-                        account.wallets[0].length - 4,
-                        account.wallets[0].length
-                      )}
+                      {session?.walletAddress &&
+                        `${(session?.walletAddress).slice(0, 5)}...${(session?.walletAddress).slice(
+                          -5
+                        )}`}
                     </a>
                   </p>
                 ) : isMobile ? (
