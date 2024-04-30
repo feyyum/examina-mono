@@ -8,12 +8,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
 
 // Components
-// import Loader from '@/components/Loader';
 import { useQuery } from '@tanstack/react-query';
 import { getSession, logout } from '@/lib/Client/Auth';
 import { setSession } from '../../features/client/session';
-import { log } from 'console';
-// import RightSidebar from "@/components/ui/RightSidebar";
 
 // Custom hooks
 // ! - This is a custom hook that is not yet implemented
