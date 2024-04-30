@@ -89,7 +89,7 @@ function Layout({ children }: Props) {
     if (rendered && !isLoading && router.pathname == '/') {
       (window as any)?.mina.getAccounts().then((accounts: string[]) => {
         if (data && accounts.length > 0) {
-          if (accounts[0] !== (data as any).session.walletAddress) {
+          if (accounts[0] !== (data as any)?.session?.walletAddress) {
             logout().then(() => {
               dispatch(setSession(new Object() as any));
             });
