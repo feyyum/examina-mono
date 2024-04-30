@@ -42,9 +42,21 @@
 .wallet_address {
   font-size: 1rem;
   font-style: normal;
-  font-weight: 300;
-  line-height: 1.675rem; /* 144.444% */
+  font-weight: 500;
+  line-height: 1.25rem; /* 144.444% */
   letter-spacing: -0.04px;
+  text-decoration: none;
+  color: var(--dark-blue-black);
+}
+
+.logout {
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.25rem; /* 144.444% */
+  letter-spacing: -0.04px;
+  color: var(--dark-red);
+  cursor: pointer;
 }
 
 @media screen and (max-width: 1280px) {

@@ -17,6 +17,7 @@
   --green-light: rgba(0, 131, 71, 0.74);
   --purple-bg: #f6f6fc;
   --rose-red: #f3aeaf;
+  --dark-red: rgba(140, 0, 0, 0.8);
 }
 
 * {

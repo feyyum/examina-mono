@@ -168,8 +168,9 @@ export default function Home() {
                 return;
               }
               toast.success('Welcome back!');
+              console.log('redirect res', (res as any).session);
               dispatch(setSession((res as any).session));
-              router.push('/app');
+              window.location.href = '/app'; // You are terrible at this
             }}
           >
             <SidebarButton label="Go to Dashboard" active />
