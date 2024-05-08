@@ -14,7 +14,7 @@ function DashboardHeader({ withoutNav = false }) {
   return (
     <div className={styles.dashboard_header}>
       <div className={styles.container}>
-        <a href="https://examina.space/">
+        <a href="https://choz.io/">
           <Image src={Choz} alt="" className={styles.logo} />
         </a>
         {withoutNav === false && (

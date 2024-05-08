@@ -118,7 +118,7 @@ function Application() {
                           className={styles.table_row_item_edit_container}
                           onClick={() => {
                             navigator.clipboard
-                              .writeText(`https://examina.space/app/exams/get-started/${exam._id}`)
+                              .writeText(`https://choz.io/app/exams/get-started/${exam._id}`)
                               .then(() => setCopied(exam._id));
                           }}
                         >

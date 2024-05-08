@@ -62,7 +62,7 @@ function ExamResult() {
                   </div> */}
                   <div className={styles.send_email_button_container_secondary}>
                     <a
-                      href="https://examina.space/app"
+                      href="https://choz.io/app"
                       className={styles.send_email_button_text_secondary}
                     >
                       Skip and Continue
