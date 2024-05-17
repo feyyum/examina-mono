@@ -44,8 +44,8 @@ function Layout({ children }: Props) {
       console.log('accountsChanged', accounts);
       if (accounts.length > 0) {
         logout().then(async () => {
-          dispatch(resetSession());
-          const res = await authenticate(session);
+          const resetted_session = dispatch(resetSession());
+          const res = await authenticate(resetted_session);
           dispatch(setSession((res as any).session));
         });
       } else {
@@ -87,14 +87,6 @@ function Layout({ children }: Props) {
         }
 
         if (data && accounts.length > 0) {
-          if (accounts[0] !== (data as any).session.walletAddress) {
-            logout().then(() => {
-              dispatch(resetSession());
-              toast.error('Please login to continue.');
-              router.push('/');
-            });
-            return;
-          }
           dispatch(setSession((data as any).session));
           return;
         }
