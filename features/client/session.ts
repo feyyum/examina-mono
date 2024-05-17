@@ -10,10 +10,9 @@ export interface SessionSlice {
 }
 
 // Define the initial state using that type
-const initialState = {
+export const initialState = {
   session: {},
 } as SessionSlice;
-
 export const sessionSlice = createSlice({
   name: 'session',
   initialState,
@@ -23,10 +22,13 @@ export const sessionSlice = createSlice({
         ...action.payload,
       };
     },
+    resetSession: (state) => {
+      state.session = initialState.session;
+    }
   },
 });
 
-export const { setSession } = sessionSlice.actions;
+export const { setSession, resetSession } = sessionSlice.actions;
 
 export const selectSession = (state: RootState) => state.session;
 

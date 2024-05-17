@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { RootState } from '../../store';
-
+import { initialState } from '../../features/client/session';
 // Components
 import { SidebarButton } from '@/components/ui/Buttons';
 
@@ -34,7 +34,7 @@ import RightLongPurple from '@/icons/right_long_purple.svg';
 import Choz from '@/icons/choz.svg';
 import { authenticate } from '../../hooks/auth';
 import { setSession } from '../../features/client/session';
-
+import { getSession } from '@/lib/Client/Auth';
 const stepArr = [
   {
     stepText: 'STEP 1',
@@ -130,9 +130,8 @@ const linkedinArr = [
 export default function Home() {
   const router = useRouter();
   const dispatch = useDispatch();
-
+  const store = useStore();
   const session = useSelector((state: RootState) => state.session);
-
   return (
     <>
       <div className={styles.landing_header_container}>
@@ -173,7 +172,11 @@ export default function Home() {
               window.location.href = '/app'; // You are terrible at this
             }}
           >
-            <SidebarButton label="Go to Dashboard" active />
+            {store.getState().session.session === initialState.session ? (
+              <SidebarButton label="Connect Wallet" active />
+            ) : (
+              <SidebarButton label="Go to Dashboard" active />
+            )}
           </div>
         </div>
       </div>
