@@ -9,8 +9,9 @@ import { RootState } from '../../store';
 
 // Components
 import { useQuery } from '@tanstack/react-query';
-import { getSession, logout } from '@/lib/Client/Auth';
-import { setSession } from '../../features/client/session';
+import { getSession, login, logout } from '@/lib/Client/Auth';
+import { resetSession, setSession } from '../../features/client/session';
+import { authenticate } from '../../hooks/auth';
 
 // Custom hooks
 // ! - This is a custom hook that is not yet implemented
@@ -25,7 +26,6 @@ function Layout({ children }: Props) {
   const dispatch = useDispatch();
 
   const session = useSelector((state: RootState) => state.session);
-
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['session'],
     queryFn: getSession,
@@ -39,6 +39,28 @@ function Layout({ children }: Props) {
 
   useEffect(() => {
     setRendered(true);
+    /** account change listener */
+    (window as any)?.mina?.on('accountsChanged', async (accounts: string[]) => {
+      console.log('accountsChanged', accounts);
+      if (accounts.length > 0) {
+        logout().then(async () => {
+          dispatch(resetSession());
+          const res = await authenticate(session);
+          dispatch(setSession((res as any).session));
+        });
+      } else {
+        logout().then(async () => {
+          dispatch(resetSession());
+          console.log(router.pathname);
+          const accs = await (window as any)?.mina?.requestAccounts();
+          if (accs.length > 0) {
+            const res = await authenticate(session);
+            dispatch(setSession((res as any).session));
+          }
+        });
+        console.log('disconnect'); // handled disconnect here
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -58,7 +80,7 @@ function Layout({ children }: Props) {
         }
 
         if (!data && accounts.length === 0) {
-          dispatch(setSession(new Object() as any));
+          dispatch(resetSession());
           toast.error('Please login to continue.');
           router.push('/');
           return;
@@ -67,7 +89,7 @@ function Layout({ children }: Props) {
         if (data && accounts.length > 0) {
           if (accounts[0] !== (data as any).session.walletAddress) {
             logout().then(() => {
-              dispatch(setSession(new Object() as any));
+              dispatch(resetSession());
               toast.error('Please login to continue.');
               router.push('/');
             });
@@ -78,7 +100,7 @@ function Layout({ children }: Props) {
         }
 
         if (!data && accounts.length > 0) {
-          dispatch(setSession(new Object() as any));
+          dispatch(resetSession());
           toast.error('Please sign message while authentication to continue.');
           router.push('/');
           return;
@@ -91,7 +113,7 @@ function Layout({ children }: Props) {
         if (data && accounts.length > 0) {
           if (accounts[0] !== (data as any)?.session?.walletAddress) {
             logout().then(() => {
-              dispatch(setSession(new Object() as any));
+              dispatch(resetSession());
             });
             return;
           }
