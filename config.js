@@ -1,6 +1,6 @@
 const config = {
-  API_ENDPOINT: 'https://api.choz.io/',
-  //API_ENDPOINT: 'http://localhost:3000',
+  API_ENDPOINT:
+    process.env.NODE_ENV == 'development' ? 'http://localhost:3005' : 'https://api.choz.io/',
 };
 
 export default config;
