@@ -72,7 +72,7 @@ function Layout({ children }: Props) {
       (window as any)?.mina?.getAccounts().then((accounts: string[]) => {
         if (data && accounts.length === 0) {
           logout().then(() => {
-            dispatch(setSession(new Object() as any));
+            dispatch(resetSession());
             toast.error('Please connect wallet to continue.');
             router.push('/');
           });
