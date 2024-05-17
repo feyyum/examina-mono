@@ -47,7 +47,7 @@ function Layout({ children }: Props) {
 
   useEffect(() => {
     if (rendered && !isLoading && router.pathname !== '/') {
-      (window as any)?.mina.getAccounts().then((accounts: string[]) => {
+      (window as any)?.mina?.getAccounts().then((accounts: string[]) => {
         if (data && accounts.length === 0) {
           logout().then(() => {
             dispatch(setSession(new Object() as any));
@@ -87,7 +87,7 @@ function Layout({ children }: Props) {
     }
 
     if (rendered && !isLoading && router.pathname == '/') {
-      (window as any)?.mina.getAccounts().then((accounts: string[]) => {
+      (window as any)?.mina?.getAccounts().then((accounts: string[]) => {
         if (data && accounts.length > 0) {
           if (accounts[0] !== (data as any)?.session?.walletAddress) {
             logout().then(() => {
