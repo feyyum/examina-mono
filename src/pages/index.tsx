@@ -1,3 +1,4 @@
+'use client';
 import styles from '../styles/Landing.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -173,7 +174,14 @@ export default function Home() {
               window.location.href = '/app'; // You are terrible at this
             }}
           >
-            <SidebarButton label="Go to Dashboard" active />
+            <SidebarButton
+              label={
+                typeof window !== 'undefined' && (window as any)?.mina?.getAccounts().length > 0
+                  ? 'Go to Dashboard'
+                  : 'Connect Wallet'
+              }
+              active
+            />
           </div>
         </div>
       </div>
