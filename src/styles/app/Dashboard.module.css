@@ -32,11 +32,11 @@
   transition: ease-in-out 0.2s; */
 }
 
-/* .content_header_button:hover {
+.content_header_button:hover {
   cursor: pointer;
-  box-shadow: 0px 3.063px 0px 0px #262525;
-  transition: ease-in-out 0.2s;
-} */
+  /* box-shadow: 0px 3.063px 0px 0px #262525;
+  transition: ease-in-out 0.2s; */
+}
 
 .content_header_button_text {
   color: white;
@@ -86,6 +86,7 @@
 .table_row_container {
   display: flex;
   transition: all ease-in-out 0.2s;
+  font-weight: 500;
 }
 
 .table_row_container:hover {
@@ -104,7 +105,6 @@
   color: inherit;
   font-size: 1rem;
   font-style: normal;
-  font-weight: 500;
   line-height: 1.5rem; /* 150% */
 }
 
