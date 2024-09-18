@@ -2,7 +2,7 @@ import styles from '@/styles/app/exams/get-started/ExamDetailScreen.module.css';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
-import { getExamDetails } from '@/lib/Client/Exam';
+import { getExamDetails, startExam } from '@/lib/Client/Exam';
 import { humanize } from '../../../../../utils/formatter';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -171,8 +171,16 @@ function ExamDetail() {
                   className={styles.connect_button_container}
                   onClick={async () => {
                     if (session?.walletAddress && !isMobile) {
-                      router.push(`/app/exams/${(data as any)._id}`);
-                      toast.success('You are ready to start the exam. Good luck!');
+                      toast.loading('Starting exam...');
+                      startExam(examID)
+                        .then(() => {
+                          router.push(`/app/exams/${(data as any)._id}`);
+                          toast.success('You are ready to start the exam. Good luck!');
+                        })
+                        .catch(() => {
+                          toast.remove();
+                          toast.error('Failed to start exam!');
+                        });
                       return;
                     }
                     const res = await authenticate(session as any);

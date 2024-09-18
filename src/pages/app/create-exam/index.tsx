@@ -346,6 +346,7 @@ function CreateExam() {
                       setCurrentQuestion({
                         ...currentQuestion,
                         description: e.target.value,
+                        text: e.target.value,
                       })
                     }
                     maxLength={1200}

@@ -30,6 +30,23 @@ function getExamDetails(examID: string) {
   });
 }
 
+function startExam(examID: string) {
+  return new Promise((resolve, reject) => {
+    const requestBase = new RequestBase();
+    console.log(examID);
+    requestBase
+      .post(`/exams/startExam`, {
+        examId: examID,
+      })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
 function getExamQuestions(examID: string) {
   return new Promise((resolve, reject) => {
     const requestBase = new RequestBase();
@@ -89,4 +106,12 @@ function getScore(examID: string) {
   });
 }
 
-export { getExamList, createExam, getExamDetails, getExamQuestions, submitAnswers, getScore };
+export {
+  getExamList,
+  createExam,
+  getExamDetails,
+  getExamQuestions,
+  submitAnswers,
+  getScore,
+  startExam,
+};
