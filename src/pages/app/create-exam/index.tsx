@@ -14,6 +14,8 @@ import Error from '@/icons/error.svg';
 import RArrow from '@/icons/arrow-right-circle.svg';
 import Duplicate from '@/icons/document-duplicate.svg';
 import Trash from '@/icons/trash.svg';
+import QMark from '@/icons/question-mark-circle.svg';
+import PCircle from '@/icons/plus-circle.svg';
 
 // Classes
 import Question from '@/lib/Question';
@@ -275,32 +277,65 @@ function CreateExam() {
           <div className={styles.stepper_container_secondary}>
             <div className={styles.create_exam_form_container}>
               <div className={styles.create_exam_form_inner_container}>
-                <div className={styles.form_element_container}>
+                <div className={styles.form_element_container_question_first}>
                   <h3 className={styles.form_element_title}>
-                    Exam the question{' '}
-                    <span className={styles.counter_text}>{currentQuestion.text.length}/120</span>
+                    <Image src={QMark} alt="" /> Question Type
                   </h3>
-                  <input
-                    className={styles.form_element_input}
-                    type="text"
-                    id="title"
-                    placeholder="Enter the question"
-                    value={currentQuestion.text}
-                    onChange={(e) =>
+                  <Select.Root
+                    onValueChange={(e) => {
                       setCurrentQuestion({
                         ...currentQuestion,
-                        text: e.target.value,
-                      })
-                    }
-                    maxLength={120}
-                  />
+                        type: e as 'mc' | 'tf',
+                        options:
+                          e === 'mc'
+                            ? [
+                                {
+                                  number: 1,
+                                  text: '',
+                                },
+                                {
+                                  number: 2,
+                                  text: '',
+                                },
+                              ]
+                            : [
+                                {
+                                  number: 1,
+                                  text: 'True',
+                                },
+                                {
+                                  number: 2,
+                                  text: 'False',
+                                },
+                              ],
+                      });
+                    }}
+                    value={currentQuestion.type}
+                  >
+                    <Select.Trigger className="SelectTrigger" aria-label="Type">
+                      <Select.Value placeholder="Select question type" />
+                      <Select.Icon className="SelectIcon">
+                        <Image src={ArrowBottom} alt="" width={12} />
+                      </Select.Icon>
+                    </Select.Trigger>
+                    <Select.Portal>
+                      <Select.Content className="SelectContent">
+                        <Select.Viewport className="SelectViewport">
+                          <Select.Group>
+                            <SelectItem value="mc">Multiple Choices</SelectItem>
+                            <SelectItem value="tf">True - False</SelectItem>
+                          </Select.Group>
+                        </Select.Viewport>
+                      </Select.Content>
+                    </Select.Portal>
+                  </Select.Root>
                 </div>
                 <div className={styles.form_element_container}>
                   <h3 className={styles.form_element_title}>
-                    Enter the question details{' '}
-                    <span className={styles.counter_text}>
+                    Enter the question{' '}
+                    {/* <span className={styles.counter_text}>
                       {currentQuestion.description.length}/1200 (Optional)
-                    </span>
+                    </span> */}
                   </h3>
                   <textarea
                     className={styles.form_element_textarea}
@@ -357,6 +392,7 @@ function CreateExam() {
                                 type="text"
                                 value={`${currentQuestion.options[i].text}`}
                                 placeholder={`Enter answer ${i + 1}`}
+                                disabled={currentQuestion.type === 'tf'}
                                 onChange={(e) => {
                                   const updatedOptions = [...currentQuestion.options];
                                   updatedOptions[i] = {
@@ -373,11 +409,88 @@ function CreateExam() {
                           </div>
                         );
                       })}
+
+                      {currentQuestion.type === 'mc' && currentQuestion.options.length !== 5 && (
+                        <div className={`RadioGruopContainerSecondary`}>
+                          <div
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              opacity: 0.25,
+                            }}
+                          >
+                            <RadioGroup.Item
+                              className="RadioGroupItem"
+                              value={'Answer'}
+                              checked={false}
+                              disabled
+                            >
+                              <RadioGroup.Indicator className="RadioGroupIndicator" />
+                            </RadioGroup.Item>
+                            <input
+                              className="RadioInput"
+                              type="text"
+                              value={`Answer`}
+                              placeholder={`Enter answer`}
+                              disabled
+                            />
+                          </div>
+                          <Image
+                            src={PCircle}
+                            alt=""
+                            className={styles.add_option_image}
+                            onClick={() => {
+                              setCurrentQuestion({
+                                ...currentQuestion,
+                                options: [
+                                  ...currentQuestion.options,
+                                  {
+                                    number: (currentQuestion.options.length + 1) as
+                                      | 1
+                                      | 2
+                                      | 3
+                                      | 4
+                                      | 5,
+                                    text: '',
+                                  },
+                                ],
+                              });
+                            }}
+                          />
+                        </div>
+                      )}
                     </RadioGroup.Root>
                   </div>
                   <div className={styles.form_element_button_container}>
                     <button
-                      className={styles.form_element_button}
+                      className={styles.form_element_button_back}
+                      onClick={() => {
+                        // if (
+                        //   currentQuestion.text === '' ||
+                        //   currentQuestion.options.filter((el) => el.text === '').length > 0
+                        // ) {
+                        //   return;
+                        // }
+                        // if (exam.questions.length >= 10) {
+                        //   return;
+                        // }
+                        // const list = [...exam.questions];
+                        // list.push(currentQuestion);
+                        // dispatch(
+                        //   setExam({
+                        //     ...exam,
+                        //     questions: list,
+                        //   })
+                        // );
+                        // setQuestionID(questionID + 1);
+                        // setCurrentQuestion(new Question(questionID + 1));
+                        setCurrentStep('0');
+                      }}
+                    >
+                      Back
+                    </button>
+                    <button
+                      className={styles.form_element_button_create}
                       onClick={() => {
                         // if (
                         //   currentQuestion.text === '' ||
@@ -402,7 +515,7 @@ function CreateExam() {
                         setCurrentQuestion(new Question(questionID + 1));
                       }}
                     >
-                      Create Question
+                      Create
                     </button>
                   </div>
                 </div>
@@ -416,7 +529,11 @@ function CreateExam() {
                 {exam.questions.map((el, _i) => {
                   return (
                     <div
-                      className={styles.question_sidebar_question_item}
+                      className={
+                        pointer === _i
+                          ? styles.question_sidebar_question_item_active
+                          : styles.question_sidebar_question_item
+                      }
                       key={_i}
                       onClick={() => setPointer(_i)}
                     >
@@ -469,8 +586,15 @@ function CreateExam() {
                 })}
               </div>
             </div>
-            <div className={styles.create_button_container}>
-              <p className={styles.create_button_text}>Create Quiz</p>
+            <div
+              className={styles.create_button_container}
+              onClick={() => {
+                if (isPending) return;
+                // setCurrentStep("2");
+                saveExam(exam);
+              }}
+            >
+              <p className={styles.create_button_text}>{isPending ? 'Loading' : 'Create Quiz'}</p>
             </div>
           </div>
         </div>
