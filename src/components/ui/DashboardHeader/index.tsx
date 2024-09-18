@@ -19,9 +19,7 @@ function DashboardHeader({ withoutNav = false }) {
         </a>
         {withoutNav === false && (
           <div className={styles.header_nav_container}>
-            <p className={`${styles.header_nav_item} ${styles.header_nav_item_active}`}>
-              Assesments
-            </p>
+            <p className={`${styles.header_nav_item} ${styles.header_nav_item_active}`}>Quizzes</p>
           </div>
         )}
         <div className={styles.profile_container}>

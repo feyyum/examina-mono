@@ -45,62 +45,62 @@ function Layout({ children }: Props) {
     refetch();
   }, [router.pathname]);
 
-  useEffect(() => {
-    if (rendered && !isLoading && router.pathname !== '/') {
-      (window as any)?.mina?.getAccounts().then((accounts: string[]) => {
-        if (data && accounts.length === 0) {
-          logout().then(() => {
-            dispatch(setSession(new Object() as any));
-            toast.error('Please connect wallet to continue.');
-            router.push('/');
-          });
-          return;
-        }
+  // useEffect(() => {
+  //   if (rendered && !isLoading && router.pathname !== '/') {
+  //     (window as any)?.mina?.getAccounts().then((accounts: string[]) => {
+  //       if (data && accounts.length === 0) {
+  //         logout().then(() => {
+  //           dispatch(setSession(new Object() as any));
+  //           toast.error('Please connect wallet to continue.');
+  //           router.push('/');
+  //         });
+  //         return;
+  //       }
 
-        if (!data && accounts.length === 0) {
-          dispatch(setSession(new Object() as any));
-          toast.error('Please login to continue.');
-          router.push('/');
-          return;
-        }
+  //       if (!data && accounts.length === 0) {
+  //         dispatch(setSession(new Object() as any));
+  //         toast.error('Please login to continue.');
+  //         router.push('/');
+  //         return;
+  //       }
 
-        if (data && accounts.length > 0) {
-          if (accounts[0] !== (data as any).session.walletAddress) {
-            logout().then(() => {
-              dispatch(setSession(new Object() as any));
-              toast.error('Please login to continue.');
-              router.push('/');
-            });
-            return;
-          }
-          dispatch(setSession((data as any).session));
-          return;
-        }
+  //       if (data && accounts.length > 0) {
+  //         if (accounts[0] !== (data as any).session.walletAddress) {
+  //           logout().then(() => {
+  //             dispatch(setSession(new Object() as any));
+  //             toast.error('Please login to continue.');
+  //             router.push('/');
+  //           });
+  //           return;
+  //         }
+  //         dispatch(setSession((data as any).session));
+  //         return;
+  //       }
 
-        if (!data && accounts.length > 0) {
-          dispatch(setSession(new Object() as any));
-          toast.error('Please sign message while authentication to continue.');
-          router.push('/');
-          return;
-        }
-      });
-    }
+  //       if (!data && accounts.length > 0) {
+  //         dispatch(setSession(new Object() as any));
+  //         toast.error('Please sign message while authentication to continue.');
+  //         router.push('/');
+  //         return;
+  //       }
+  //     });
+  //   }
 
-    if (rendered && !isLoading && router.pathname == '/') {
-      (window as any)?.mina?.getAccounts().then((accounts: string[]) => {
-        if (data && accounts.length > 0) {
-          if (accounts[0] !== (data as any)?.session?.walletAddress) {
-            logout().then(() => {
-              dispatch(setSession(new Object() as any));
-            });
-            return;
-          }
-          dispatch(setSession((data as any).session));
-          return;
-        }
-      });
-    }
-  }, [rendered, isLoading, router.pathname]);
+  //   if (rendered && !isLoading && router.pathname == '/') {
+  //     (window as any)?.mina?.getAccounts().then((accounts: string[]) => {
+  //       if (data && accounts.length > 0) {
+  //         if (accounts[0] !== (data as any)?.session?.walletAddress) {
+  //           logout().then(() => {
+  //             dispatch(setSession(new Object() as any));
+  //           });
+  //           return;
+  //         }
+  //         dispatch(setSession((data as any).session));
+  //         return;
+  //       }
+  //     });
+  //   }
+  // }, [rendered, isLoading, router.pathname]);
 
   return (
     <div>

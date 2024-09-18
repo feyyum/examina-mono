@@ -1,12 +1,12 @@
 .container {
-  /* background-image: url('../../../../images/exam/bg.png');
+  background-image: url('../../../../images/exam/bg.png');
   background-repeat: no-repeat;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  background-position: center; */
-  background-color: #f6f4f9;
+  background-position: center;
+  /* background-color: #f6f4f9; */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
