@@ -6,6 +6,19 @@ import Image from 'next/image';
 import DateTimePicker from 'react-datetime-picker';
 import 'react-clock/dist/Clock.css';
 import classnames from 'classnames';
+import { CodeToggle, MDXEditor } from '@mdxeditor/editor';
+import {
+  headingsPlugin,
+  listsPlugin,
+  quotePlugin,
+  thematicBreakPlugin,
+  markdownShortcutPlugin,
+  toolbarPlugin,
+  UndoRedo,
+  BoldItalicUnderlineToggles,
+} from '@mdxeditor/editor';
+
+import '@mdxeditor/editor/style.css';
 
 // Icons
 import ArrowBottom from '@/icons/arrow_bottom.svg';
@@ -42,6 +55,8 @@ function CreateExam() {
   const exam = useAppSelector((state) => state.exam);
   const dispatch = useAppDispatch();
   const router = useRouter();
+
+  const mdRef = useRef<any>(null);
 
   const mutationOptions: UseMutationOptions<any, any, any, any> = {
     mutationFn: createExam,
@@ -98,6 +113,7 @@ function CreateExam() {
     const temp = [...exam.questions];
     temp[pointer] = currentQuestion;
     dispatch(setExam({ ...exam, questions: temp }));
+    mdRef.current?.setMarkdown(currentQuestion.description);
   }, [currentQuestion]);
 
   useEffect(() => {
@@ -337,7 +353,7 @@ function CreateExam() {
                       {currentQuestion.description.length}/1200 (Optional)
                     </span> */}
                   </h3>
-                  <textarea
+                  {/* <textarea
                     className={styles.form_element_textarea}
                     id="description"
                     placeholder="Enter the question details"
@@ -350,6 +366,30 @@ function CreateExam() {
                       })
                     }
                     maxLength={1200}
+                  /> */}
+                  <MDXEditor
+                    ref={mdRef}
+                    markdown={currentQuestion.description}
+                    onChange={(e) =>
+                      setCurrentQuestion({ ...currentQuestion, description: e, text: e })
+                    }
+                    plugins={[
+                      headingsPlugin(),
+                      listsPlugin(),
+                      quotePlugin(),
+                      thematicBreakPlugin(),
+                      markdownShortcutPlugin(),
+                      toolbarPlugin({
+                        toolbarContents: () => (
+                          <>
+                            {' '}
+                            <UndoRedo />
+                            <BoldItalicUnderlineToggles />
+                            <CodeToggle />
+                          </>
+                        ),
+                      }),
+                    ]}
                   />
                 </div>
                 <div className={styles.form_element_container}>
@@ -513,7 +553,7 @@ function CreateExam() {
                         // setQuestionID(questionID + 1);
                         // setCurrentQuestion(new Question(questionID + 1));
                         setPointer(exam.questions.length);
-                        setCurrentQuestion(new Question(questionID + 1));
+                        setCurrentQuestion(new Question(exam.questions.length + 1));
                       }}
                     >
                       Create

@@ -1,9 +1,19 @@
 import styles from '@/styles/app/exams/ExamScreen.module.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
+import { MDXEditor } from '@mdxeditor/editor';
+import {
+  headingsPlugin,
+  listsPlugin,
+  quotePlugin,
+  thematicBreakPlugin,
+  markdownShortcutPlugin,
+} from '@mdxeditor/editor';
+
+import '@mdxeditor/editor/style.css';
 
 // Types
 import Question from '@/lib/Question';
@@ -18,7 +28,8 @@ import Clock from '@/icons/clock_red.svg';
 import * as RadioGroup from '@radix-ui/react-radio-group';
 
 // API
-import { getExamQuestions, getExamDetails, submitAnswers } from '@/lib/Client/Exam';
+import { getExamQuestions, getExamDetails, submitAnswers, submitQuiz } from '@/lib/Client/Exam';
+import toast from 'react-hot-toast';
 
 type CurrentQuestion = Question | undefined;
 type Answer = 0 | 1 | 2 | 3 | 4 | 5;
@@ -27,11 +38,14 @@ type Choices = Answer[];
 function ExamDetails() {
   const router = useRouter();
   const examID: string = router.query.slug as string;
+  const mdRef = useRef<any>(null);
 
   const [currentQuestion, setCurrentQuestion] = useState<CurrentQuestion | null>(null);
-  const [choices, setChoices] = useState<Choices>([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  const [choices, setChoices] = useState<Choices>([]);
   const [remainingTimeMiliseconds, setRemainingTimeMiliseconds] = useState<number | null>(null);
   const [startTimer, setStartTimer] = useState<boolean>(false);
+
+  console.log(currentQuestion);
 
   const {
     data: examData,
@@ -61,9 +75,16 @@ function ExamDetails() {
   // const isLoadingQuestions = false;
   // const isErrorQuestions = true;
 
+  console.log(questions);
+  console.log(choices);
+
+  useEffect(() => {
+    currentQuestion && mdRef.current?.setMarkdown(currentQuestion?.description);
+  }, [currentQuestion]);
+
   const { mutate, isPending } = useMutation({
     mutationFn: async () => {
-      await submitAnswers(
+      await submitQuiz(
         (examData as any)._id,
         choices,
         (questions as any).filter((el: any) => el._id)
@@ -72,10 +93,14 @@ function ExamDetails() {
     onSuccess: () => {
       router.push(`/app/exams/result/${examID}`);
     },
+    onError: (error) => {
+      toast.error('An error occured when submitting the answers. Please try again later.');
+    },
   });
 
   useEffect(() => {
     if (questions && examData) {
+      setChoices(new Array((questions as any).length).fill(0));
       setCurrentQuestion((questions as any)[0]);
       setRemainingTimeMiliseconds((prev) => {
         if (prev === null) {
@@ -199,8 +224,20 @@ function ExamDetails() {
           <div className={styles.preview_container}>
             <div className={styles.preview_question_container}>
               <div className={styles.question_container}>
-                <p className={styles.question_describe}>{currentQuestion?.description}</p>
-                <p className={styles.question_title}>{currentQuestion?.text}</p>
+                <MDXEditor
+                  ref={mdRef}
+                  readOnly
+                  markdown={currentQuestion ? (currentQuestion as any).description : ''}
+                  plugins={[
+                    headingsPlugin(),
+                    listsPlugin(),
+                    quotePlugin(),
+                    thematicBreakPlugin(),
+                    markdownShortcutPlugin(),
+                  ]}
+                />
+                {/* <p className={styles.question_describe}>{currentQuestion?.description}</p> */}
+                {/* <p className={styles.question_title}>{currentQuestion?.text}</p> */}
               </div>
               <div className={styles.answers_container}>
                 <RadioGroup.Root
@@ -271,7 +308,8 @@ function ExamDetails() {
             <button
               className={styles.form_element_button}
               onClick={() => {
-                if (currentQuestion?.number === 10) {
+                if (choices.length === 0) return;
+                if (currentQuestion?.number === (questions as any).length) {
                   mutate();
                   return;
                 }

@@ -80,6 +80,26 @@ function createExam(exam: ExamState) {
   });
 }
 
+async function submitQuiz(examID: string, answers: number[], questions: string[]) {
+  const _answers: any = [];
+
+  for (let i = 0; i < questions.length; i++) {
+    _answers.push({
+      questionID: (questions[i] as any)._id,
+      answer: answers[i],
+    });
+  }
+
+  console.log(_answers);
+
+  const requestBase = new RequestBase();
+  await requestBase.post(`/exams/${examID}/answer/submit`, {
+    examID: examID,
+    userID: '0x0',
+    answers: _answers,
+  });
+}
+
 async function submitAnswers(examID: string, answers: number[], questions: string[]) {
   for (let i = 0; i < answers.length; i++) {
     const requestBase = new RequestBase();
@@ -114,4 +134,5 @@ export {
   submitAnswers,
   getScore,
   startExam,
+  submitQuiz,
 };
