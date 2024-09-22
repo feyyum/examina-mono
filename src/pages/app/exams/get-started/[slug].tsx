@@ -133,11 +133,15 @@ function ExamDetail() {
             <div className={styles.card_inner_container}>
               <div className={styles.meta_container}>
                 <p className={styles.invite_container}>
-                  <span>{(data as any).exam.creator}</span> invited you to join
+                  <span>{(data as any)?.exam.creator}</span> invited you to join
                 </p>
                 <div className={styles.title_container}>
                   <Image src={ExamIcon} alt="" />
-                  <h3>{(data as any).exam.title}</h3>
+                  <h3 title={(data as any)?.exam.title}>
+                    {(data as any)?.exam.title.length > 25
+                      ? `${(data as any)?.exam.title.substring(0, 25)}...`
+                      : (data as any)?.exam.title}
+                  </h3>
                 </div>
                 <div className={styles.deadline_container}>
                   <Image src={Clock} alt="" />
@@ -179,6 +183,7 @@ function ExamDetail() {
                       startExam(examID)
                         .then(() => {
                           router.push(`/app/exams/${(data as any).exam._id}`);
+                          toast.remove();
                           toast.success('You are ready to start the exam. Good luck!');
                         })
                         .catch(() => {

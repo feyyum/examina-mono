@@ -1,53 +1,88 @@
 .container {
   width: 1216px;
   margin: 0 auto;
-  padding: 4.875rem 0;
+  padding-bottom: 4.875rem;
+}
+
+.header_container {
+  padding: 2rem 0;
 }
 
 .exam_header_container {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: white;
+  padding: 20px;
+  border-top: 1px solid var(--gray-border);
+  border-bottom: 1px solid var(--gray-border);
+}
+
+.exam_header_text_container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-width: 70vw;
+  word-break: break-word; /* Uzun metinleri kırar */
+  overflow-wrap: break-word;
+}
+
+.exam_header_type {
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
 }
 
 .exam_header_title {
   color: var(--dark-blue-black);
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-style: normal;
   font-weight: 700;
-  line-height: 3rem;
-  letter-spacing: -0.18px;
+  line-height: 32px; /* 133.333% */
+  letter-spacing: -0.1px;
 }
 
 .timer_container {
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 1.25rem;
+  padding: 11px 10px;
   background-color: rgba(255, 0, 0, 0.1);
   border: 1px solid var(--rose-red);
-  border-radius: 0.6rem;
+  border-radius: 13.6px;
 }
 
 .timer_content {
   color: rgba(205, 0, 8, 0.76);
-  font-size: 2rem;
+  font-size: 17.191px;
   font-style: normal;
   font-weight: 700;
-  line-height: 2.75rem;
-  letter-spacing: -0.144px;
+  line-height: 22.102px; /* 128.571% */
+  letter-spacing: -0.074px;
 }
 
 .content_container {
   background-color: white;
-  border-radius: 1rem;
-  padding: 80px;
-  margin-top: 4.875rem;
+  border-radius: 14.966px;
+  border: 1px solid var(--gray-border);
+  padding: 56px;
+}
+
+.question_number {
+  color: #1c2024;
+  font-size: 21.046px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 29.465px; /* 140% */
+  letter-spacing: -0.084px;
 }
 
 .preview_container {
   display: flex;
-  gap: 4.6875rem;
+  margin-top: 0.5rem;
+  gap: 78.34px;
 }
 
 .preview_question_container {
@@ -56,9 +91,12 @@
 
 .question_container {
   border: 1px solid var(--gray-border);
-  border-radius: 12px;
-  margin-bottom: 3rem;
-  padding: 2rem 3rem;
+  min-height: 274px;
+  border-radius: 18px;
+  margin-bottom: 4rem;
+  padding: 2rem 2.875rem;
+  font-size: 16px !important;
+  font-style: normal;
 }
 
 .question_describe {
@@ -72,24 +110,27 @@
 }
 
 .preview_selector_container {
-  width: 360px;
+  width: 334px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .selector_container {
   display: flex;
-  justify-content: space-around;
   flex-wrap: wrap;
-  gap: 1.5rem;
+  gap: 12px;
+  margin-bottom: 84px;
 }
 
 .selector_box {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 8px;
+  border-radius: 5.298px;
   border: 1px solid var(--gray-border);
-  width: 3.25rem;
-  height: 3.25rem;
+  width: 44px;
+  height: 44px;
   cursor: pointer;
 }
 
@@ -99,8 +140,10 @@
 }
 
 .selector_box_text {
+  font-size: 25.667px;
+  font-style: normal;
   font-weight: 400;
-  font-size: 1.825rem;
+  line-height: 160%;
   color: var(--gray-dark);
 }
 
@@ -112,6 +155,11 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 3rem;
+}
+
+.form_element_button_container_questions {
+  display: flex;
+  justify-content: center;
 }
 
 .form_element_button {
@@ -127,6 +175,38 @@
   letter-spacing: -0.144px;
   color: white;
   cursor: pointer;
+}
+
+.form_element_button_next {
+  padding: 7.95px 34.5px;
+  border-radius: 5.612px;
+  background-color: var(--mina-purple);
+  border: none;
+  outline: none;
+  font-size: 19.643px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28.062px;
+  color: white;
+  cursor: pointer;
+  max-width: fit-content;
+  margin-inline: auto;
+}
+
+.form_element_button_finish {
+  padding: 7.95px 46px;
+  border-radius: 5.612px;
+  background-color: #e5484d;
+  border: none;
+  outline: none;
+  font-size: 19.643px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28.062px;
+  color: white;
+  cursor: pointer;
+  max-width: fit-content;
+  margin-inline: auto;
 }
 
 .error_description {
@@ -177,15 +257,21 @@
   }
 
   .preview_container {
-    flex-direction: column-reverse;
+    flex-direction: column;
   }
 
   .preview_selector_container {
     width: 100%;
   }
 
+  .preview_next_container {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 42px;
+  }
+
   .selector_container {
-    gap: 64px;
+    justify-content: center;
   }
 }
 
@@ -201,13 +287,6 @@
 
   .selector_container {
     gap: 18px;
-  }
-
-  .exam_header_container {
-    flex-direction: column;
-    gap: 2rem;
-    padding: 0 24px;
-    text-align: center;
   }
 
   .error_description {

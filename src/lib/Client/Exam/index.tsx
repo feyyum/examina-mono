@@ -85,15 +85,15 @@ async function submitQuiz(examID: string, answers: number[], questions: string[]
 
   for (let i = 0; i < questions.length; i++) {
     _answers.push({
-      questionID: (questions[i] as any)._id,
-      answer: answers[i],
+      questionID: questions[i],
+      answer: `${answers[i]}`,
     });
   }
 
   console.log(_answers);
 
   const requestBase = new RequestBase();
-  await requestBase.post(`/exams/${examID}/answer/submit`, {
+  await requestBase.post(`/exams/finishExam`, {
     examID: examID,
     answers: _answers,
   });

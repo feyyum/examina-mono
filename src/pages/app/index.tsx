@@ -94,7 +94,11 @@ function Application() {
                   <div className={styles.table_rows_container} key={exam._id}>
                     <div className={styles.table_row_container}>
                       <div className={`${styles.table_row_item_container}`}>
-                        <p className={styles.table_row_item}>{exam.title}</p>
+                        <p className={styles.table_row_item} title={exam.title}>
+                          {exam.title.length > 18
+                            ? `${exam.title.substring(0, 18)}...`
+                            : exam.title}
+                        </p>
                       </div>
                       <div className={`${styles.table_row_item_container}`}>
                         <p className={styles.table_row_item}>Active</p>

@@ -1,12 +1,13 @@
 import styles from '@/styles/components/DashboardHeader.module.css';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
+import { logout } from '@/lib/Client/Auth';
+import toast from 'react-hot-toast';
 
 // Images
 import Choz from '@/icons/choz.svg';
 import Avatar from '@/icons/profile_image.svg';
-import { logout } from '@/lib/Client/Auth';
-import toast from 'react-hot-toast';
+import Logout from '@/icons/arrow-right-start-on-rectangle.svg';
 
 function DashboardHeader({ withoutNav = false }) {
   const session = useSelector((state: any) => state.session);
@@ -23,7 +24,7 @@ function DashboardHeader({ withoutNav = false }) {
           </div>
         )}
         <div className={styles.profile_container}>
-          <div>
+          <div className={styles.wallet_address_container}>
             <a
               href={`https://minascan.io/mainnet/account/${session?.walletAddress}/`}
               target="_blank"
@@ -34,19 +35,18 @@ function DashboardHeader({ withoutNav = false }) {
                   session.walletAddress as string
                 ).slice(-5)}`}
             </a>
-            <p
-              className={styles.logout}
-              onClick={() =>
-                logout().then(() => {
-                  toast.success('Logged out successfully');
-                  window.location.href = '/';
-                })
-              }
-            >
-              Logout
-            </p>
           </div>
-          <Image src={Avatar} alt="" />
+          <Image
+            src={Logout}
+            alt=""
+            onClick={() =>
+              logout().then(() => {
+                toast.success('Logged out successfully');
+                window.location.href = '/';
+              })
+            }
+            style={{ cursor: 'pointer' }}
+          />
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 .container {
-  width: 1280px;
+  width: 1216px;
   margin: 0 auto;
 }
 
@@ -39,12 +39,18 @@
   gap: 1rem;
 }
 
+.wallet_address_container {
+  padding: 8px 12px;
+  background-color: rgba(249, 250, 251, 0.98);
+  border: 1px solid var(--gray-border);
+  border-radius: 16px;
+}
+
 .wallet_address {
-  font-size: 1rem;
+  font-size: 16px;
   font-style: normal;
   font-weight: 500;
-  line-height: 1.25rem; /* 144.444% */
-  letter-spacing: -0.04px;
+  line-height: 24px;
   text-decoration: none;
   color: var(--dark-blue-black);
 }
@@ -74,9 +80,5 @@
 
   .logo {
     margin-right: -1rem;
-  }
-
-  .wallet_address {
-    display: none;
   }
 }
