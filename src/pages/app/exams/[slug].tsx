@@ -75,14 +75,18 @@ function ExamDetails() {
   // const isLoadingQuestions = false;
   // const isErrorQuestions = true;
 
-  console.log(questions);
+  console.log('Questiıns', questions);
   console.log(choices);
+  console.log(currentQuestion);
 
   useEffect(() => {
-    currentQuestion && mdRef.current?.setMarkdown(currentQuestion?.description);
+    if (currentQuestion && mdRef.current) {
+      const description = currentQuestion.text || '';
+      mdRef.current.setMarkdown(description);
+    }
   }, [currentQuestion]);
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending, isError } = useMutation({
     mutationFn: async () => {
       await submitQuiz(
         (examData as any)._id,
@@ -100,14 +104,15 @@ function ExamDetails() {
 
   useEffect(() => {
     if (questions && examData) {
+      console.log('SELAM');
       setChoices(new Array((questions as any).length).fill(0));
       setCurrentQuestion((questions as any)[0]);
       setRemainingTimeMiliseconds((prev) => {
         if (prev === null) {
           setStartTimer(true);
           return Math.floor(
-            (new Date((examData as any).startDate).getTime() +
-              (examData as any).duration * 60000 -
+            (new Date((examData as any).exam.startDate).getTime() +
+              (examData as any).exam.duration * 60000 -
               new Date().getTime()) /
               1000
           );
@@ -208,7 +213,7 @@ function ExamDetails() {
     <Layout>
       <div className={styles.container}>
         <div className={styles.exam_header_container}>
-          <h1 className={styles.exam_header_title}>{examData && (examData as any).title}</h1>
+          <h1 className={styles.exam_header_title}>{examData && (examData as any).exam.title}</h1>
           <div className={styles.timer_container}>
             <Image src={Clock} alt="" />
             <p className={styles.timer_content}>
@@ -227,7 +232,7 @@ function ExamDetails() {
                 <MDXEditor
                   ref={mdRef}
                   readOnly
-                  markdown={currentQuestion ? (currentQuestion as any).description : ''}
+                  markdown={currentQuestion ? (currentQuestion as any).text : ''}
                   plugins={[
                     headingsPlugin(),
                     listsPlugin(),

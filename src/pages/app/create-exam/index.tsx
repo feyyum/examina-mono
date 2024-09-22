@@ -29,6 +29,8 @@ import Duplicate from '@/icons/document-duplicate.svg';
 import Trash from '@/icons/trash.svg';
 import QMark from '@/icons/question-mark-circle.svg';
 import PCircle from '@/icons/plus-circle.svg';
+import BCircle from '@/icons/arrow-right-circle-black.svg';
+import CDown from '@/icons/chevron-down.svg';
 
 // Classes
 import Question from '@/lib/Question';
@@ -46,6 +48,7 @@ import * as RadioGroup from '@radix-ui/react-radio-group';
 import { useAppSelector, useAppDispatch } from '../../../../hooks';
 import { setExam } from '../../../../features/client/exam';
 import DashboardHeader from '@/components/ui/DashboardHeader';
+import toast from 'react-hot-toast';
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -144,13 +147,16 @@ function CreateExam() {
                 information about the quiz.
               </p>
             </div>
+            <div>
+              <Image src={BCircle} alt="" />
+            </div>
           </div>
           <div className={styles.create_exam_form_container}>
             <div className={styles.create_exam_form_inner_container}>
               <div className={styles.form_element_container}>
                 <h3 className={styles.form_element_title}>
-                  {/* Quiz title <span className={styles.counter_text}>{exam.title.length}/120</span> */}
-                  Quiz title
+                  Quiz title <span className={styles.counter_text}>{exam?.title?.length}/120</span>
+                  {/* Quiz title */}
                 </h3>
                 <input
                   className={styles.form_element_input}
@@ -251,7 +257,7 @@ function CreateExam() {
               <div className={styles.form_element_container}>
                 <h3 className={styles.form_element_title}>
                   Quiz information for participants{' '}
-                  <span className={styles.counter_text}>(optional)</span>
+                  <span className={styles.counter_text}>{exam?.description?.length}/480</span>
                 </h3>
                 <textarea
                   className={styles.form_element_textarea}
@@ -259,7 +265,7 @@ function CreateExam() {
                   placeholder="Enter exam description"
                   value={exam.description}
                   onChange={(e) => dispatch(setExam({ ...exam, description: e.target.value }))}
-                  maxLength={1200}
+                  maxLength={480}
                 />
                 <p className={styles.from_element_sub_desc}>
                   A good description will help participants get accurate information about the quiz.
@@ -275,6 +281,7 @@ function CreateExam() {
                       exam.startDate === null ||
                       exam.duration === ''
                     ) {
+                      toast.error('Please fill all the fields.');
                       return;
                     }
                     setCurrentStep('1');
@@ -331,7 +338,7 @@ function CreateExam() {
                     <Select.Trigger className="SelectTrigger" aria-label="Type">
                       <Select.Value placeholder="Select question type" />
                       <Select.Icon className="SelectIcon">
-                        <Image src={ArrowBottom} alt="" width={12} />
+                        <Image src={CDown} alt="" width={12} />
                       </Select.Icon>
                     </Select.Trigger>
                     <Select.Portal>
@@ -392,7 +399,7 @@ function CreateExam() {
                     ]}
                   />
                 </div>
-                <div className={styles.form_element_container}>
+                <div className={styles.form_element_container_questions}>
                   <h3 className={styles.form_element_title}>
                     Enter the answer options of question and choose correct answer{' '}
                     {/* <span className={styles.counter_text}>
@@ -506,25 +513,6 @@ function CreateExam() {
                     <button
                       className={styles.form_element_button_back}
                       onClick={() => {
-                        // if (
-                        //   currentQuestion.text === '' ||
-                        //   currentQuestion.options.filter((el) => el.text === '').length > 0
-                        // ) {
-                        //   return;
-                        // }
-                        // if (exam.questions.length >= 10) {
-                        //   return;
-                        // }
-                        // const list = [...exam.questions];
-                        // list.push(currentQuestion);
-                        // dispatch(
-                        //   setExam({
-                        //     ...exam,
-                        //     questions: list,
-                        //   })
-                        // );
-                        // setQuestionID(questionID + 1);
-                        // setCurrentQuestion(new Question(questionID + 1));
                         setCurrentStep('0');
                       }}
                     >
@@ -533,25 +521,6 @@ function CreateExam() {
                     <button
                       className={styles.form_element_button_create}
                       onClick={() => {
-                        // if (
-                        //   currentQuestion.text === '' ||
-                        //   currentQuestion.options.filter((el) => el.text === '').length > 0
-                        // ) {
-                        //   return;
-                        // }
-                        // if (exam.questions.length >= 10) {
-                        //   return;
-                        // }
-                        // const list = [...exam.questions];
-                        // list.push(currentQuestion);
-                        // dispatch(
-                        //   setExam({
-                        //     ...exam,
-                        //     questions: list,
-                        //   })
-                        // );
-                        // setQuestionID(questionID + 1);
-                        // setCurrentQuestion(new Question(questionID + 1));
                         setPointer(exam.questions.length);
                         setCurrentQuestion(new Question(exam.questions.length + 1));
                       }}
@@ -631,7 +600,18 @@ function CreateExam() {
               className={styles.create_button_container}
               onClick={() => {
                 if (isPending) return;
+                if (exam.questions.length <= 1) {
+                  toast.error('You need to create at least 2 questions to create a quiz.');
+                  return;
+                }
+                const isTextEmpty = exam.questions.filter((el) => el.text === '').length > 0;
+                const isDescriptionEmpty =
+                  exam.questions.filter((el) => el.description === '').length > 0;
                 // setCurrentStep("2");
+                if (isTextEmpty || isDescriptionEmpty) {
+                  toast.error('You need to fill all questions with text.');
+                  return;
+                }
                 saveExam(exam);
               }}
             >

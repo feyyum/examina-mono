@@ -43,7 +43,7 @@ function ExamDetail() {
   // const isPending = true;
   // const isError = false;
 
-  //console.log(data);
+  console.log(data);
 
   if (isLoading || isPending) {
     return (
@@ -133,15 +133,15 @@ function ExamDetail() {
             <div className={styles.card_inner_container}>
               <div className={styles.meta_container}>
                 <p className={styles.invite_container}>
-                  <span>{(data as any).creator}</span> invited you to join
+                  <span>{(data as any).exam.creator}</span> invited you to join
                 </p>
                 <div className={styles.title_container}>
                   <Image src={ExamIcon} alt="" />
-                  <h3>{(data as any).title}</h3>
+                  <h3>{(data as any).exam.title}</h3>
                 </div>
                 <div className={styles.deadline_container}>
                   <Image src={Clock} alt="" />
-                  <p>{humanize((data as any).startDate)}</p>
+                  <p>{humanize((data as any).exam.startDate)}</p>
                 </div>
               </div>
               <div className={styles.card_content_container}>
@@ -152,18 +152,22 @@ function ExamDetail() {
                   </div>
                   <div className={styles.card_title}>
                     <h3 className={styles.card_title__bold}>Total Questions</h3>
-                    <p className={styles.card_title__normal}>10</p>
+                    <p className={styles.card_title__normal}>
+                      {(data as any).exam.questionCount ? (data as any).exam.questionCount : '10'}
+                    </p>
                   </div>
                   <div className={styles.card_title}>
                     <h3 className={styles.card_title__bold}>Duration</h3>
-                    <p className={styles.card_title__normal}>{(data as any).duration} minutes</p>
+                    <p className={styles.card_title__normal}>
+                      {(data as any).exam.duration} minutes
+                    </p>
                   </div>
                 </div>
                 <div className={styles.card_content_inner_container}>
                   <div className={styles.card_title}>
                     <h3 className={styles.card_title__bold}>Description</h3>
                   </div>
-                  <p className={styles.card_content}>{(data as any).description}</p>
+                  <p className={styles.card_content}>{(data as any).exam.description}</p>
                 </div>
               </div>
               <div className={styles.connect_container}>
@@ -174,7 +178,7 @@ function ExamDetail() {
                       toast.loading('Starting exam...');
                       startExam(examID)
                         .then(() => {
-                          router.push(`/app/exams/${(data as any)._id}`);
+                          router.push(`/app/exams/${(data as any).exam._id}`);
                           toast.success('You are ready to start the exam. Good luck!');
                         })
                         .catch(() => {
@@ -224,7 +228,7 @@ function ExamDetail() {
             </div>
           </div>
         </div>
-        <div className={`${styles.footer_container}`}>
+        {/* <div className={`${styles.footer_container}`}>
           <div className={styles.scale__container}>
             <Image src={Choz} alt="" />
             <div className={styles.footer_nav_container}>
@@ -240,7 +244,7 @@ function ExamDetail() {
             </div>
             <p className={styles.footer_copyright}>©2024 Choz</p>
           </div>
-        </div>
+        </div> */}
       </div>
     </Layout>
   );

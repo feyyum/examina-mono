@@ -95,7 +95,6 @@ async function submitQuiz(examID: string, answers: number[], questions: string[]
   const requestBase = new RequestBase();
   await requestBase.post(`/exams/${examID}/answer/submit`, {
     examID: examID,
-    userID: '0x0',
     answers: _answers,
   });
 }
