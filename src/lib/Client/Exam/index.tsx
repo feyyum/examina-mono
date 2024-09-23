@@ -99,6 +99,13 @@ async function submitQuiz(examID: string, answers: number[], questions: string[]
   });
 }
 
+async function sendEmail(email: string) {
+  const requestBase = new RequestBase();
+  await requestBase.post(`/user/put/email`, {
+    email: email,
+  });
+}
+
 async function submitAnswers(examID: string, answers: number[], questions: string[]) {
   for (let i = 0; i < answers.length; i++) {
     const requestBase = new RequestBase();
@@ -134,4 +141,5 @@ export {
   getScore,
   startExam,
   submitQuiz,
+  sendEmail,
 };
