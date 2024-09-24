@@ -173,13 +173,11 @@ export default function Home() {
               window.location.href = '/app'; // You are terrible at this
             }}
           >
-
-            {store.getState().session.session === initialState.session ? (
+            {(store as any).getState().session.session === initialState.session ? (
               <SidebarButton label="Connect Wallet" active />
             ) : (
               <SidebarButton label="Go to Dashboard" active />
             )}
-
           </div>
         </div>
       </div>
