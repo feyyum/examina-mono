@@ -20,6 +20,7 @@ import {
   InsertImage,
 } from '@mdxeditor/editor';
 import { pinata } from '../../../../utils/config';
+import imageCompression from 'browser-image-compression';
 
 import '@mdxeditor/editor/style.css';
 
@@ -67,9 +68,9 @@ const uploadFile = async (file: any) => {
     const keyRequest = await fetch('/api/key');
     const keyData = await keyRequest.json();
     const upload = await pinata.upload.file(file).key(keyData.JWT);
-    const ipfsUrl = await pinata.gateways.convert(upload.IpfsHash);
-    console.log(ipfsUrl);
-    return ipfsUrl;
+    // const ipfsUrl = await pinata.gateways.convert(upload.IpfsHash);
+    console.log(upload.IpfsHash);
+    return `/api/proxy?hash=${upload.IpfsHash}`;
   } catch (e) {
     console.log(e);
     alert('Trouble uploading file');
@@ -403,8 +404,15 @@ function CreateExam() {
                       markdownShortcutPlugin(),
                       imagePlugin({
                         imageUploadHandler: async (image) => {
+                          toast.success('Image compression started.');
+                          const options = {
+                            maxSizeMB: 1, // Maksimum dosya boyutu (MB)
+                            maxWidthOrHeight: 400, // Maksimum genişlik veya yükseklik (piksel)
+                            useWebWorker: true, // Web Worker kullanarak performansı artırma
+                          };
+                          const compressedFile = await imageCompression(image, options);
                           toast.loading('Uploading image...');
-                          const url = await uploadFile(image);
+                          const url = await uploadFile(compressedFile);
                           toast.remove();
                           if (!url) {
                             toast.error('Error uploading image.');
@@ -412,6 +420,7 @@ function CreateExam() {
                           }
                           return Promise.resolve(url);
                         },
+                        disableImageResize: true,
                         // imageAutocompleteSuggestions: [
                         //   'https://picsum.photos/200/300',
                         //   'https://picsum.photos/200',

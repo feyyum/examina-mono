@@ -5,8 +5,9 @@ import { useRouter } from 'next/router';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
-import { MDXEditor } from '@mdxeditor/editor';
 import {
+  imagePlugin,
+  MDXEditor,
   headingsPlugin,
   listsPlugin,
   quotePlugin,
@@ -258,6 +259,7 @@ function ExamDetails() {
                     quotePlugin(),
                     thematicBreakPlugin(),
                     markdownShortcutPlugin(),
+                    imagePlugin(),
                   ]}
                 />
                 {/* <p className={styles.question_describe}>{currentQuestion?.description}</p> */}
