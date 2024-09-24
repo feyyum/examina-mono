@@ -91,13 +91,13 @@ function Application() {
             {data &&
               (data as any)?.map((exam: any) => {
                 return (
-                  <div className={styles.table_rows_container} key={exam._id}>
+                  <div className={styles.table_rows_container} key={exam?._id}>
                     <div className={styles.table_row_container}>
                       <div className={`${styles.table_row_item_container}`}>
-                        <p className={styles.table_row_item} title={exam.title}>
-                          {exam.title.length > 18
-                            ? `${exam.title.substring(0, 18)}...`
-                            : exam.title}
+                        <p className={styles.table_row_item} title={exam?.title}>
+                          {exam?.title.length > 18
+                            ? `${exam?.title.substring(0, 18)}...`
+                            : exam?.title}
                         </p>
                       </div>
                       <div className={`${styles.table_row_item_container}`}>
@@ -105,31 +105,31 @@ function Application() {
                       </div>
                       <div className={`${styles.table_row_item_container}`}>
                         <p className={styles.table_row_item}>
-                          {formatDate(new Date(exam.startDate))}
+                          {formatDate(new Date(exam?.startDate))}
                         </p>
                       </div>
                       <div className={`${styles.table_row_item_container}`}>
                         <p className={styles.table_row_item}>
-                          {exam.creator.slice(0, 5)}...
-                          {exam.creator.slice(exam.creator.length - 4, exam.creator.length + 1)}
+                          {exam?.creator.slice(0, 5)}...
+                          {exam?.creator.slice(exam?.creator.length - 4, exam?.creator.length + 1)}
                         </p>
                       </div>
                       <div className={`${styles.table_row_item_container}`}>
-                        <p className={styles.table_row_item}>{exam.duration} min.</p>
+                        <p className={styles.table_row_item}>{exam?.duration} min.</p>
                       </div>
                       <div className={`${styles.table_row_item_container}`}>
                         <div
                           className={styles.table_row_item_edit_container}
                           onClick={() => {
                             navigator.clipboard
-                              .writeText(`https://choz.io/app/exams/get-started/${exam._id}`)
-                              .then(() => setCopied(exam._id));
+                              .writeText(`https://choz.io/app/exams/get-started/${exam?._id}`)
+                              .then(() => setCopied(exam?._id));
                           }}
                         >
                           {/* <Image src={Copy} alt="" /> */}
                           <Image src={Duplicate} alt="" />
                           <p className={styles.table_row_copy_link}>
-                            {copied === exam._id ? 'Copied' : 'Copy Link'}
+                            {copied === exam?._id ? 'Copied' : 'Copy Link'}
                           </p>
                         </div>
                       </div>

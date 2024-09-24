@@ -13,7 +13,7 @@ import { SidebarButton } from '@/components/ui/Buttons';
 
 // Images
 import BG from '@/images/landing-bg.png';
-import Team from '@/images/landing_team/team.svg';
+// import Team from '@/images/landing_team/team.svg';
 import Try from '@/images/landing_general/try_now.svg';
 import TryButton from '@/images/landing_general/try_button.svg';
 import Mina from '@/images/landing_general/mina.svg';
@@ -121,12 +121,12 @@ const techArr = [
   },
 ];
 
-const linkedinArr = [
-  'https://www.linkedin.com/in/sametdokmeci/',
-  'https://www.linkedin.com/in/yavuz-selim-tun%C3%A7er-6634581b4/',
-  'https://www.linkedin.com/in/uiesraakyazi/',
-  'https://www.linkedin.com/in/feyyaz-numan-cavlak/',
-];
+// const linkedinArr = [
+//   'https://www.linkedin.com/in/sametdokmeci/',
+//   'https://www.linkedin.com/in/yavuz-selim-tun%C3%A7er-6634581b4/',
+//   'https://www.linkedin.com/in/uiesraakyazi/',
+//   'https://www.linkedin.com/in/feyyaz-numan-cavlak/',
+// ];
 
 export default function Home() {
   const router = useRouter();
@@ -285,7 +285,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className={styles.section_container}>
+      {/* <div className={styles.section_container}>
         <div className={styles.container}>
           <h5 className={styles.section_title}>OUR TEAM</h5>
           <h1 className={styles.section_summary}>Meet our team</h1>
@@ -298,7 +298,7 @@ export default function Home() {
             })}
           </div>
         </div>
-      </div>
+      </div> */}
       <div className={styles.sub_section_container}>
         <div className={styles.container}>
           <div className={styles.sub_section_text_container}>

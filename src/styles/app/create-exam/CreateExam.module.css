@@ -28,8 +28,9 @@
   justify-content: center; */
   background-color: white;
   border-radius: 16px;
-  box-shadow: 0px 0px 6px -3px var(--mina-purple);
   width: 908px;
+  border: 1px solid var(--gray-border);
+  margin-bottom: 2rem;
 }
 
 .stepper_selector_container {
@@ -240,9 +241,7 @@
   margin: 1.5rem 0;
   background-color: #ffffff;
   border-radius: 16px;
-  box-shadow: 0px 2.133px 8.533px -4.267px var(--Overlays-Black-Alpha-2, rgba(0, 0, 0, 0.02)),
-    0px 1.6px 6.4px -2.133px var(--Overlays-Black-Alpha-2, rgba(0, 0, 0, 0.02)),
-    0px 1.067px 1.6px -1.067px var(--Neutral-color-Neutral-Alpha-3, rgba(0, 0, 59, 0.05));
+  border: 1px solid var(--gray-border);
   margin-bottom: 32px;
 }
 

@@ -11,12 +11,15 @@ import {
   headingsPlugin,
   listsPlugin,
   quotePlugin,
+  imagePlugin,
   thematicBreakPlugin,
   markdownShortcutPlugin,
   toolbarPlugin,
   UndoRedo,
   BoldItalicUnderlineToggles,
+  InsertImage,
 } from '@mdxeditor/editor';
+import { pinata } from '../../../../utils/config';
 
 import '@mdxeditor/editor/style.css';
 
@@ -53,6 +56,25 @@ import toast from 'react-hot-toast';
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 type Preview = Question | undefined;
+
+const uploadFile = async (file: any) => {
+  if (!file) {
+    alert('No file selected');
+    return;
+  }
+
+  try {
+    const keyRequest = await fetch('/api/key');
+    const keyData = await keyRequest.json();
+    const upload = await pinata.upload.file(file).key(keyData.JWT);
+    const ipfsUrl = await pinata.gateways.convert(upload.IpfsHash);
+    console.log(ipfsUrl);
+    return ipfsUrl;
+  } catch (e) {
+    console.log(e);
+    alert('Trouble uploading file');
+  }
+};
 
 function CreateExam() {
   const exam = useAppSelector((state) => state.exam);
@@ -94,7 +116,6 @@ function CreateExam() {
   const [pointer, setPointer] = useState<number>(0);
 
   const [currentQuestion, setCurrentQuestion] = useState<Question>(new Question(questionID));
-  const [previewQuestion, setPreviewQuestion] = useState<Preview>(exam.questions[0]);
 
   useEffect(() => {
     if (exam.questions.length === 0) {
@@ -118,12 +139,6 @@ function CreateExam() {
     dispatch(setExam({ ...exam, questions: temp }));
     mdRef.current?.setMarkdown(currentQuestion.description);
   }, [currentQuestion]);
-
-  useEffect(() => {
-    exam.questions.length > 0
-      ? setPreviewQuestion(exam.questions[0])
-      : setPreviewQuestion(undefined);
-  }, [exam.questions]);
 
   const createQuestionRef = useRef<any>(null);
   //console.log('REF', createQuestionRef);
@@ -386,13 +401,29 @@ function CreateExam() {
                       quotePlugin(),
                       thematicBreakPlugin(),
                       markdownShortcutPlugin(),
+                      imagePlugin({
+                        imageUploadHandler: async (image) => {
+                          toast.loading('Uploading image...');
+                          const url = await uploadFile(image);
+                          toast.remove();
+                          if (!url) {
+                            toast.error('Error uploading image.');
+                            return Promise.reject();
+                          }
+                          return Promise.resolve(url);
+                        },
+                        // imageAutocompleteSuggestions: [
+                        //   'https://picsum.photos/200/300',
+                        //   'https://picsum.photos/200',
+                        // ],
+                      }),
                       toolbarPlugin({
                         toolbarContents: () => (
                           <>
-                            {' '}
                             <UndoRedo />
                             <BoldItalicUnderlineToggles />
                             <CodeToggle />
+                            <InsertImage />
                           </>
                         ),
                       }),
@@ -521,8 +552,27 @@ function CreateExam() {
                     <button
                       className={styles.form_element_button_create}
                       onClick={() => {
-                        setPointer(exam.questions.length);
-                        setCurrentQuestion(new Question(exam.questions.length + 1));
+                        const questionsList = [...exam.questions];
+
+                        // Eğer currentQuestion henüz questionsList'e eklenmediyse ekle
+                        if (!questionsList[pointer]) {
+                          questionsList[pointer] = currentQuestion;
+                        }
+
+                        // Yeni soru numarasını hesapla
+                        const lastQuestionNumber =
+                          questionsList.length > 0
+                            ? Math.max(...questionsList.map((q) => q.number))
+                            : 0;
+                        const newQuestionNumber = lastQuestionNumber + 1;
+
+                        // Yeni soru oluştur
+                        const newQuestion = new Question(newQuestionNumber);
+
+                        // Soruları güncelle
+                        setPointer(questionsList.length);
+                        setCurrentQuestion(newQuestion);
+                        dispatch(setExam({ ...exam, questions: questionsList }));
                       }}
                     >
                       Create
@@ -558,13 +608,31 @@ function CreateExam() {
                             className={styles.question_sidebar_question_item_controller}
                             onClick={() => {
                               const list = [...exam.questions];
-                              list.push(list[_i]);
+
+                              // Seçili sorunun bir kopyasını oluştur
+                              const duplicatedQuestion = JSON.parse(JSON.stringify(list[_i]));
+
+                              // Yeni ID ata
+                              duplicatedQuestion.number = list[_i].number + 1;
+
+                              // Çoğaltılan soruyu orijinal sorunun hemen sonrasına ekle
+                              list.splice(_i + 1, 0, duplicatedQuestion);
+
+                              // Sonraki soruların ID'lerini bir arttır
+                              for (let j = _i + 2; j < list.length; j++) {
+                                list[j].number += 1;
+                              }
+
+                              // Durumu güncelle
                               dispatch(
                                 setExam({
                                   ...exam,
                                   questions: list,
                                 })
                               );
+
+                              // İşaretçiyi çoğaltılan soruya ayarla
+                              setPointer(_i + 1);
                             }}
                           />
                           {exam.questions.length > 1 && (
@@ -600,18 +668,36 @@ function CreateExam() {
               className={styles.create_button_container}
               onClick={() => {
                 if (isPending) return;
+
                 if (exam.questions.length <= 1) {
                   toast.error('You need to create at least 2 questions to create a quiz.');
                   return;
                 }
-                const isTextEmpty = exam.questions.filter((el) => el.text === '').length > 0;
-                const isDescriptionEmpty =
-                  exam.questions.filter((el) => el.description === '').length > 0;
-                // setCurrentStep("2");
-                if (isTextEmpty || isDescriptionEmpty) {
-                  toast.error('You need to fill all questions with text.');
-                  return;
+
+                for (let i = 0; i < exam.questions.length; i++) {
+                  const question = exam.questions[i];
+
+                  if (!question.text || question.text.trim() === '') {
+                    toast.error(`Please fill in the text for question ${i + 1}.`);
+                    return;
+                  }
+
+                  if (question.type === 'mc') {
+                    const emptyOptions = question.options.filter(
+                      (option) => !option.text || option.text.trim() === ''
+                    );
+                    if (emptyOptions.length > 0) {
+                      toast.error(`Please fill all options for question ${i + 1}.`);
+                      return;
+                    }
+                  }
+
+                  if (!question.correctAnswer) {
+                    toast.error(`Please select the correct answer for question ${i + 1}.`);
+                    return;
+                  }
                 }
+
                 saveExam(exam);
               }}
             >

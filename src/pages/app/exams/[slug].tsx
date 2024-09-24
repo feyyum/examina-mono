@@ -94,10 +94,15 @@ function ExamDetails() {
       );
     },
     onSuccess: () => {
-      toast.success(
-        'Your answers have been submitted successfully. Redirecting to the result page.'
+      toast.loading(
+        'Your answers have been submitted successfully. Redirecting to the result page.',
+        {
+          duration: 2000,
+        }
       );
-      router.push(`/app/exams/result/${examID}`);
+      setTimeout(() => {
+        window.location.href = `/app/exams/result/${examID}`;
+      }, 3000);
     },
     onError: (error) => {
       toast.error('An error occured when submitting the answers. Please try again later.');

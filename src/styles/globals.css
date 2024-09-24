@@ -1,6 +1,78 @@
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 /* @import "@radix-ui/themes/styles.css"; */
 
+/* @font-face {
+  font-family: 'Filson Pro';
+  src: url('../fonts/FilsonProRegular.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Filson Pro';
+  src: url('../fonts/FilsonProBold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Filson Pro';
+  src: url('../fonts/FilsonProLight.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Filson Pro';
+  src: url('../fonts/FilsonProLightItalic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Filson Pro';
+  src: url('../fonts/FilsonProRegularItalic.otf') format('opentype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Filson Pro';
+  src: url('../fonts/FilsonProBoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Filson Pro';
+  src: url('../fonts/FilsonProBlack.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Filson Pro';
+  src: url('../fonts/FilsonProBlackItalic.otf') format('opentype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kefir';
+  src: url('../fonts/Kefir-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+} */
+
 :root {
   --dark-blue-black: #1e293b;
   --mina-purple: #6366f1;
@@ -26,6 +98,10 @@
   padding: 0;
   font-family: 'Urbanist', sans-serif;
 }
+
+/* body {
+  font-family: 'Urbanist', sans-serif;
+} */
 
 table,
 th,

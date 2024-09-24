@@ -62,6 +62,7 @@
 }
 
 .hero_title {
+  font-family: 'Filson Pro', sans-serif;
   text-shadow: 0px 0px 0px var(--Overlays-Black-Alpha-1, rgba(0, 0, 0, 0.01)),
     0px 1.125px 4.5px var(--Neutral-color-Neutral-Alpha-4, rgba(2, 2, 52, 0.08)),
     0px 2.25px 1.125px var(--Overlays-Black-Alpha-1, rgba(0, 0, 0, 0.01)),

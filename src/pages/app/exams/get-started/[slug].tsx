@@ -22,6 +22,7 @@ import Choz from '@/icons/choz.svg';
 import { isMobile } from 'react-device-detect';
 import toast from 'react-hot-toast';
 import { setSession } from '../../../../../features/client/session';
+import { useEffect } from 'react';
 
 function ExamDetail() {
   const router = useRouter();
@@ -44,6 +45,15 @@ function ExamDetail() {
   // const isError = false;
 
   console.log(data);
+
+  useEffect(() => {
+    if (data && typeof (data as any).exam?.isCompleted === 'boolean') {
+      if ((data as any).exam.isCompleted === true) {
+        toast.error('This exam is already completed!');
+        router.push('/app/exams/result/' + (data as any).exam._id);
+      }
+    }
+  }, [data]);
 
   if (isLoading || isPending) {
     return (

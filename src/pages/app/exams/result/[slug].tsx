@@ -90,8 +90,6 @@ function ExamResult() {
                       className={styles.send_icon}
                       style={{
                         cursor: 'pointer',
-                        width: '20px',
-                        height: '20px',
                         transition: 'all 0.3s',
                       }}
                       onClick={() => {
