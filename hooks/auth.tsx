@@ -86,7 +86,7 @@ export async function authenticateWallet(address: string) {
   }
 }
 
-export async function authenticate(session: { userId: string; walletAddress: string }) {
+export async function authenticate(session: any) {
   if (session?.walletAddress) {
     return session;
   }
