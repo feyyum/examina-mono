@@ -4,15 +4,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { pinata } from '../../../utils/config'; // Dosya yolunu projenize göre ayarlayın
 import crypto from 'crypto';
 
-// Pinata SDK'nın server-side kullanımını sağlamak için import etmelisiniz
-import PinataClient from '@pinata/sdk';
-
-// Pinata istemcisi oluşturun (API anahtarlarınızı .env dosyanızda saklayın)
-const pinataClient = new PinataClient(
-  process.env.PINATA_API_KEY || '',
-  process.env.PINATA_SECRET_KEY || ''
-);
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', ['GET']);

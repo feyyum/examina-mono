@@ -421,10 +421,6 @@ function CreateExam() {
                           return Promise.resolve(url);
                         },
                         disableImageResize: true,
-                        // imageAutocompleteSuggestions: [
-                        //   'https://picsum.photos/200/300',
-                        //   'https://picsum.photos/200',
-                        // ],
                       }),
                       toolbarPlugin({
                         toolbarContents: () => (

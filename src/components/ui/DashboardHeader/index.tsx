@@ -7,12 +7,9 @@ import toast from 'react-hot-toast';
 // Images
 import Choz from '@/icons/choz.svg';
 import Avatar from '@/icons/profile_image.svg';
-
-import { logout } from '@/lib/Client/Auth';
+import Logout from '@/icons/arrow-right-start-on-rectangle.svg';
 import { resetSession } from '../../../../features/client/session';
 import { useDispatch } from 'react-redux';
-import toast from 'react-hot-toast';
-
 
 function DashboardHeader({ withoutNav = false }) {
   const session = useSelector((state: any) => state.session);
@@ -40,20 +37,6 @@ function DashboardHeader({ withoutNav = false }) {
                   session.walletAddress as string
                 ).slice(-5)}`}
             </a>
-
-            <p
-              className={styles.logout}
-              onClick={() =>
-                logout().then(() => {
-                  dispatch(resetSession());
-                  toast.success('Logged out successfully');
-                  window.location.href = '/';
-                })
-              }
-            >
-              Logout
-            </p>
-
           </div>
           <Image
             src={Logout}
