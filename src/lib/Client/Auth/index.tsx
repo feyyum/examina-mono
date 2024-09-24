@@ -1,6 +1,7 @@
 // import { PublicKey } from 'o1js';
+import { setSession, resetSession } from '../../../../features/client/session';
 import RequestBase from '../RequestBase';
-
+import { useDispatch } from 'react-redux';
 export interface SignedData {
   publicKey: string;
   data: string;
