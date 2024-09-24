@@ -6,6 +6,7 @@
   -o-background-size: cover;
   background-size: cover;
   background-position: center;
+  /* background-color: #f6f4f9; */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -123,6 +124,8 @@
   font-style: normal;
   font-weight: 400;
   line-height: 1.5rem; /* 150% */
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .connect_button_container {

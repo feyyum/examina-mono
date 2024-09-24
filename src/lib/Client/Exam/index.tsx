@@ -30,6 +30,23 @@ function getExamDetails(examID: string) {
   });
 }
 
+function startExam(examID: string) {
+  return new Promise((resolve, reject) => {
+    const requestBase = new RequestBase();
+    console.log(examID);
+    requestBase
+      .post(`/exams/startExam`, {
+        examId: examID,
+      })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
 function getExamQuestions(examID: string) {
   return new Promise((resolve, reject) => {
     const requestBase = new RequestBase();
@@ -63,6 +80,32 @@ function createExam(exam: ExamState) {
   });
 }
 
+async function submitQuiz(examID: string, answers: number[], questions: string[]) {
+  const _answers: any = [];
+
+  for (let i = 0; i < questions.length; i++) {
+    _answers.push({
+      questionID: questions[i],
+      answer: `${answers[i]}`,
+    });
+  }
+
+  console.log(_answers);
+
+  const requestBase = new RequestBase();
+  await requestBase.post(`/exams/finishExam`, {
+    examID: examID,
+    answers: _answers,
+  });
+}
+
+async function sendEmail(email: string) {
+  const requestBase = new RequestBase();
+  await requestBase.post(`/user/put/email`, {
+    email: email,
+  });
+}
+
 async function submitAnswers(examID: string, answers: number[], questions: string[]) {
   for (let i = 0; i < answers.length; i++) {
     const requestBase = new RequestBase();
@@ -89,4 +132,14 @@ function getScore(examID: string) {
   });
 }
 
-export { getExamList, createExam, getExamDetails, getExamQuestions, submitAnswers, getScore };
+export {
+  getExamList,
+  createExam,
+  getExamDetails,
+  getExamQuestions,
+  submitAnswers,
+  getScore,
+  startExam,
+  submitQuiz,
+  sendEmail,
+};

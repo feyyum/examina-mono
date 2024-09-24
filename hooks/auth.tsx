@@ -18,10 +18,10 @@ export async function switchChain(chainId: string) {
   }
 
   const chainRes = await mina.switchChain({
-    chainId: chainId,
+    networkID: chainId,
   });
 
-  if (chainRes.chainId !== chainId) {
+  if (chainRes.networkID !== chainId) {
     console.error('Failed to switch chain');
     return null;
   }
@@ -40,13 +40,13 @@ export async function connectWallet() {
     const accounts: string[] = await mina.getAccounts();
 
     if (accounts.length > 0) {
-      await switchChain('mainnet');
+      await switchChain('mina:mainnet');
       return accounts[0];
     }
 
     const publicKeyBase58: string = (await mina.requestAccounts())[0];
 
-    const chain = await switchChain('mainnet');
+    const chain = await switchChain('mina:mainnet');
 
     if (!chain) {
       throw new Error('Failed to switch chain. Please try again.');

@@ -2,7 +2,7 @@ import styles from '@/styles/app/exams/get-started/ExamDetailScreen.module.css';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
-import { getExamDetails } from '@/lib/Client/Exam';
+import { getExamDetails, startExam } from '@/lib/Client/Exam';
 import { humanize } from '../../../../../utils/formatter';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -22,6 +22,7 @@ import Choz from '@/icons/choz.svg';
 import { isMobile } from 'react-device-detect';
 import toast from 'react-hot-toast';
 import { setSession } from '../../../../../features/client/session';
+import { useEffect } from 'react';
 
 function ExamDetail() {
   const router = useRouter();
@@ -43,7 +44,16 @@ function ExamDetail() {
   // const isPending = true;
   // const isError = false;
 
-  //console.log(data);
+  console.log(data);
+
+  useEffect(() => {
+    if (data && typeof (data as any).exam?.isCompleted === 'boolean') {
+      if ((data as any).exam.isCompleted === true) {
+        toast.error('This exam is already completed!');
+        router.push('/app/exams/result/' + (data as any).exam._id);
+      }
+    }
+  }, [data]);
 
   if (isLoading || isPending) {
     return (
@@ -133,15 +143,19 @@ function ExamDetail() {
             <div className={styles.card_inner_container}>
               <div className={styles.meta_container}>
                 <p className={styles.invite_container}>
-                  <span>{(data as any).creator}</span> invited you to join
+                  <span>{(data as any)?.exam.creator}</span> invited you to join
                 </p>
                 <div className={styles.title_container}>
                   <Image src={ExamIcon} alt="" />
-                  <h3>{(data as any).title}</h3>
+                  <h3 title={(data as any)?.exam.title}>
+                    {(data as any)?.exam.title.length > 25
+                      ? `${(data as any)?.exam.title.substring(0, 25)}...`
+                      : (data as any)?.exam.title}
+                  </h3>
                 </div>
                 <div className={styles.deadline_container}>
                   <Image src={Clock} alt="" />
-                  <p>{humanize((data as any).startDate)}</p>
+                  <p>{humanize((data as any).exam.startDate)}</p>
                 </div>
               </div>
               <div className={styles.card_content_container}>
@@ -152,18 +166,22 @@ function ExamDetail() {
                   </div>
                   <div className={styles.card_title}>
                     <h3 className={styles.card_title__bold}>Total Questions</h3>
-                    <p className={styles.card_title__normal}>10</p>
+                    <p className={styles.card_title__normal}>
+                      {(data as any).exam.questionCount ? (data as any).exam.questionCount : '10'}
+                    </p>
                   </div>
                   <div className={styles.card_title}>
                     <h3 className={styles.card_title__bold}>Duration</h3>
-                    <p className={styles.card_title__normal}>{(data as any).duration} minutes</p>
+                    <p className={styles.card_title__normal}>
+                      {(data as any).exam.duration} minutes
+                    </p>
                   </div>
                 </div>
                 <div className={styles.card_content_inner_container}>
                   <div className={styles.card_title}>
                     <h3 className={styles.card_title__bold}>Description</h3>
                   </div>
-                  <p className={styles.card_content}>{(data as any).description}</p>
+                  <p className={styles.card_content}>{(data as any).exam.description}</p>
                 </div>
               </div>
               <div className={styles.connect_container}>
@@ -171,8 +189,17 @@ function ExamDetail() {
                   className={styles.connect_button_container}
                   onClick={async () => {
                     if (session?.walletAddress && !isMobile) {
-                      router.push(`/app/exams/${(data as any)._id}`);
-                      toast.success('You are ready to start the exam. Good luck!');
+                      toast.loading('Starting exam...');
+                      startExam(examID)
+                        .then(() => {
+                          router.push(`/app/exams/${(data as any).exam._id}`);
+                          toast.remove();
+                          toast.success('You are ready to start the exam. Good luck!');
+                        })
+                        .catch(() => {
+                          toast.remove();
+                          toast.error('Failed to start exam!');
+                        });
                       return;
                     }
                     const res = await authenticate(session as any);
@@ -216,7 +243,7 @@ function ExamDetail() {
             </div>
           </div>
         </div>
-        <div className={`${styles.footer_container}`}>
+        {/* <div className={`${styles.footer_container}`}>
           <div className={styles.scale__container}>
             <Image src={Choz} alt="" />
             <div className={styles.footer_nav_container}>
@@ -232,7 +259,7 @@ function ExamDetail() {
             </div>
             <p className={styles.footer_copyright}>©2024 Choz</p>
           </div>
-        </div>
+        </div> */}
       </div>
     </Layout>
   );

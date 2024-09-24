@@ -1,14 +1,18 @@
 import styles from '@/styles/components/DashboardHeader.module.css';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
+import { logout } from '@/lib/Client/Auth';
+import toast from 'react-hot-toast';
 
 // Images
 import Choz from '@/icons/choz.svg';
 import Avatar from '@/icons/profile_image.svg';
+
 import { logout } from '@/lib/Client/Auth';
 import { resetSession } from '../../../../features/client/session';
 import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
+
 
 function DashboardHeader({ withoutNav = false }) {
   const session = useSelector((state: any) => state.session);
@@ -21,13 +25,11 @@ function DashboardHeader({ withoutNav = false }) {
         </a>
         {withoutNav === false && (
           <div className={styles.header_nav_container}>
-            <p className={`${styles.header_nav_item} ${styles.header_nav_item_active}`}>
-              Assesments
-            </p>
+            <p className={`${styles.header_nav_item} ${styles.header_nav_item_active}`}>Quizzes</p>
           </div>
         )}
         <div className={styles.profile_container}>
-          <div>
+          <div className={styles.wallet_address_container}>
             <a
               href={`https://minascan.io/mainnet/account/${session?.walletAddress}/`}
               target="_blank"
@@ -38,6 +40,7 @@ function DashboardHeader({ withoutNav = false }) {
                   session.walletAddress as string
                 ).slice(-5)}`}
             </a>
+
             <p
               className={styles.logout}
               onClick={() =>
@@ -50,8 +53,19 @@ function DashboardHeader({ withoutNav = false }) {
             >
               Logout
             </p>
+
           </div>
-          <Image src={Avatar} alt="" />
+          <Image
+            src={Logout}
+            alt=""
+            onClick={() =>
+              logout().then(() => {
+                toast.success('Logged out successfully');
+                window.location.href = '/';
+              })
+            }
+            style={{ cursor: 'pointer' }}
+          />
         </div>
       </div>
     </div>
