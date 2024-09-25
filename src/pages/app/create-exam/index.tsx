@@ -258,6 +258,7 @@ function CreateExam() {
                       <Select.Content className="SelectContent">
                         <Select.Viewport className="SelectViewport">
                           <Select.Group>
+                            <SelectItem value="5">5 Minutes</SelectItem>
                             <SelectItem value="10">10 Minutes</SelectItem>
                             <SelectItem value="30">30 Minutes</SelectItem>
                             <SelectItem value="60">60 Minutes</SelectItem>
@@ -328,25 +329,25 @@ function CreateExam() {
                         options:
                           e === 'mc'
                             ? [
-                                {
-                                  number: 1,
-                                  text: '',
-                                },
-                                {
-                                  number: 2,
-                                  text: '',
-                                },
-                              ]
+                              {
+                                number: 1,
+                                text: '',
+                              },
+                              {
+                                number: 2,
+                                text: '',
+                              },
+                            ]
                             : [
-                                {
-                                  number: 1,
-                                  text: 'True',
-                                },
-                                {
-                                  number: 2,
-                                  text: 'False',
-                                },
-                              ],
+                              {
+                                number: 1,
+                                text: 'True',
+                              },
+                              {
+                                number: 2,
+                                text: 'False',
+                              },
+                            ],
                       });
                     }}
                     value={currentQuestion.type}
@@ -452,10 +453,9 @@ function CreateExam() {
                         return (
                           <div
                             key={i}
-                            className={`RadioGruopContainer ${
-                              el.number === currentQuestion.correctAnswer &&
+                            className={`RadioGruopContainer ${el.number === currentQuestion.correctAnswer &&
                               'RadioGroupContainer__active'
-                            }`}
+                              }`}
                           >
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                               <RadioGroup.Item

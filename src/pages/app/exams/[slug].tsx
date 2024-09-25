@@ -29,7 +29,7 @@ import Clock from '@/icons/clock_red.svg';
 import * as RadioGroup from '@radix-ui/react-radio-group';
 
 // API
-import { getExamQuestions, getExamDetails, submitAnswers, submitQuiz } from '@/lib/Client/Exam';
+import { getExamQuestions, getExamDetails, submitQuiz } from '@/lib/Client/Exam';
 
 type CurrentQuestion = Question | undefined;
 type Answer = 0 | 1 | 2 | 3 | 4 | 5;
@@ -45,7 +45,6 @@ function ExamDetails() {
   const [remainingTimeMiliseconds, setRemainingTimeMiliseconds] = useState<number | null>(null);
   const [startTimer, setStartTimer] = useState<boolean>(false);
 
-  console.log(currentQuestion);
 
   const {
     data: examData,
@@ -67,17 +66,7 @@ function ExamDetails() {
     enabled: !!examID,
   });
 
-  // const examData = undefined;
-  // const isloadingData = false;
-  // const isErrorExam = true;
 
-  // const questions = undefined;
-  // const isLoadingQuestions = false;
-  // const isErrorQuestions = true;
-
-  console.log('Questiıns', questions);
-  console.log(choices);
-  console.log(currentQuestion);
 
   useEffect(() => {
     if (currentQuestion && mdRef.current) {
@@ -88,7 +77,7 @@ function ExamDetails() {
 
   const { mutate, isPending, isError } = useMutation({
     mutationFn: async () => {
-      await submitQuiz(
+      return await submitQuiz(
         (examData as any).exam._id,
         choices,
         (questions as any).filter((el: any) => el._id)
@@ -101,9 +90,7 @@ function ExamDetails() {
           duration: 2000,
         }
       );
-      setTimeout(() => {
-        window.location.href = `/app/exams/result/${examID}`;
-      }, 3000);
+      window.location.href = `/app/exams/result/${examID}`;
     },
     onError: (error) => {
       toast.error('An error occured when submitting the answers. Please try again later.');
@@ -126,7 +113,7 @@ function ExamDetails() {
             (new Date((examData as any).exam.startDate).getTime() +
               (examData as any).exam.duration * 60000 -
               new Date().getTime()) /
-              1000
+            1000
           );
         }
         return prev - 1;
@@ -231,8 +218,8 @@ function ExamDetails() {
             <p className={styles.timer_content}>
               {remainingTimeMiliseconds
                 ? `${Math.floor(remainingTimeMiliseconds / 60)}:${(remainingTimeMiliseconds % 60)
-                    .toString()
-                    .padStart(2, '0')}`
+                  .toString()
+                  .padStart(2, '0')}`
                 : '-'}
             </p>
           </div>
@@ -276,10 +263,9 @@ function ExamDetails() {
                       return (
                         <div
                           key={i}
-                          className={`RadioGruopContainer ${
-                            el.number === choices[currentQuestion.number - 1] &&
+                          className={`RadioGruopContainer ${el.number === choices[currentQuestion.number - 1] &&
                             'RadioGroupContainer__active'
-                          } RadioGruopContainerPreview`}
+                            } RadioGruopContainerPreview`}
                           onClick={() => {
                             const newChoices = [...choices];
                             newChoices[currentQuestion.number - 1] = el.number;
@@ -322,16 +308,14 @@ function ExamDetails() {
                       return (
                         <div
                           key={_i}
-                          className={`${styles.selector_box} ${
-                            el.number === currentQuestion?.number && styles.selector_box_active
-                          }`}
+                          className={`${styles.selector_box} ${el.number === currentQuestion?.number && styles.selector_box_active
+                            }`}
                           onClick={() => setCurrentQuestion(el)}
                         >
                           <p
-                            className={`${styles.selector_box_text} ${
-                              el.number === currentQuestion?.number &&
+                            className={`${styles.selector_box_text} ${el.number === currentQuestion?.number &&
                               styles.selector_box_text_active
-                            }`}
+                              }`}
                           >
                             {_i + 1}
                           </p>
