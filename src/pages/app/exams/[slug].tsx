@@ -80,7 +80,7 @@ function ExamDetails() {
       return await submitQuiz(
         (examData as any).exam._id,
         choices,
-        (questions as any).filter((el: any) => el._id)
+        (questions as any).map((el: any) => el._id)
       );
     },
     onSuccess: () => {
