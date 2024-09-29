@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
-  const url = `https://olive-solid-chinchilla-526.mypinata.cloud/ipfs/${hash}`;
+  const url = `https://gateway.pinata.cloud/ipfs/${hash}`;
 
   try {
     console.log('Proxying request to:', url);
