@@ -1,4 +1,5 @@
 import { useSession } from '@/hooks/useSession';
+import { Analytics } from '@vercel/analytics/react';
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
 
@@ -17,6 +18,7 @@ function Layout({ children }: Props) {
 
   return (
     <div>
+      <Analytics />
       <main>{children}</main>
       <Toaster position="top-left" />
     </div>
